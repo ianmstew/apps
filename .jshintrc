@@ -21,6 +21,10 @@
   // with underscores.
   "camelcase": true,
 
+  // Unfortunate overkill, but necessary for preceding || and &&.
+  // See https://github.com/jshint/jshint/issues/735.
+  "laxbreak": true,
+
   // Prohibit use of == and != in favor of === and !==.
   "eqeqeq": true,
 

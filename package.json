@@ -2,7 +2,7 @@
   "name": "endpoint-manager",
   "version": "0.0.1",
   "description": "Engine API Endpoint Manager",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "test": "node server.js"
   },
