@@ -1,51 +1,58 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   /* jshint camelcase:false */
 
   grunt.initConfig({
 
     path: {
       // Source folders
-      app: 'app',
-      manager: 'app/manager',
-      less: 'app/less',
+      app: 'client/app',
+      assets: 'client/assets',
+      style: 'client/style',
 
       // Intermediate folders (transient)
       temp: 'temp',
+      bower: 'bower_components',
+      vendor: 'client/vendor',
 
       // Output folders (transient)
-      dist: 'dist',
-      dist_style: 'dist/style',
-      dist_vendor: 'dist/vendor'
+      build: 'client-build',
+      build_style: 'client-build/style'
     },
 
     clean: {
-      dist: ['<%- path.dist %>', '<%- path.temp %>']
+      all: [
+        '<%- path.build %>',
+        '<%- path.temp %>',
+        '<%- path.vendor %>',
+        '<%- path.bower %>'
+      ],
+      build: [
+        '<%- path.build %>'
+      ]
     },
 
     less: {
       options: {
         paths: [
-          '<%- path.dist_vendor %>',
+          '<%- path.vendor %>',
           '<%- path.temp %>'
         ]
       },
 
       precompile: {
         files: {
-          '<%- path.temp %>/engine-ui-grid-precompile.less':
-              '<%- path.less %>/engine-ui-grid.less'
+          '<%- path.temp %>/engine-ui-grid-precompile.less': '<%- path.style %>/engine-ui-grid.less'
         }
       },
 
       app: {
         options: {
           sourceMap: true,
-          sourceMapFilename: '<%- path.dist_style %>/manager.css.map',
-          sourceMapBasepath: '<%- path.dist_style %>'
+          sourceMapFilename: '<%- path.build_style %>/app.css.map',
+          sourceMapBasepath: '<%- path.build_style %>'
         },
         files: {
-          '<%- path.dist_style %>/manager.css':
-              '<%- path.less %>/manager.less'
+          '<%- path.build_style %>/app.css': '<%- path.style %>/app.less'
         }
       }
     },
@@ -53,8 +60,7 @@ module.exports = function(grunt) {
     bower: {
       install: {
         options: {
-          targetDir: '<%- path.dist_vendor %>',
-          verbose: true,
+          targetDir: '<%- path.vendor %>',
           layout: 'byComponent',
           bowerOptions: {
             production: true
@@ -70,22 +76,26 @@ module.exports = function(grunt) {
         failOnError: true
       },
 
-      sync_app: {
+      // sync client/app, client/vendor, and client/index.html
+      sync_dev: {
         command: [
-          'cwd=$(pwd)',
-          'cd <%- path.app %>',
-          'rsync . $cwd/<%- path.dist %> ' +
-              '--update --delete --verbose --recursive ' +
-              '--exclude less --exclude style --exclude vendor' 
-        ].join('&&') 
+          'PROJ_ROOT=$(pwd)',
+          'cd client',
+          'rsync . $PROJ_ROOT/<%- path.build %> ' +
+              '--update --delete --recursive --exclude style'
+        ].join('&&')
       },
 
+      // build links to support relative paths found in sourcemaps
       sourcemap_links: {
         command: [
-          'mkdir -p <%- path.dist_style %>',
-          'cd <%- path.dist_style %>',
-          'rm -f app && ln -s ../../app app',
-          'rm -f dist && ln -s ../ dist'
+          'PROJ_ROOT=$(pwd)',
+          'mkdir -p <%- path.build_style %>',
+          'cd <%- path.build_style %>',
+          'rm -f app',
+          'ln -s $PROJ_ROOT/<%- path.app %> app',
+          'rm -f client-build',
+          'ln -s $PROJ_ROOT/<%- path.build %> client-build'
         ].join('&&')
       }
     },
@@ -95,7 +105,7 @@ module.exports = function(grunt) {
         jshintrc: true
       },
 
-      app: ['Gruntfile.js', 'app/manager/**/*.js']
+      app: ['Gruntfile.js', '<%- path.app %>/**/*.js']
     },
 
     jscs: {
@@ -103,26 +113,27 @@ module.exports = function(grunt) {
         config: '.jscsrc'
       },
 
-      app: ['Gruntfile.js', 'app/manager/**/*.js']
+      app: ['Gruntfile.js', '<%- path.app %>/**/*.js']
     },
 
     watch: {
       options: {
-        nospawn: true
+        spawn: false
       },
 
-      manager: {
+      app: {
         files: [
+          '<%- path.client %>/index.html',
           '<%- path.app %>/**/*',
-          '!<%- path.less %>/**/*'
+          '<%- path.assets %>/**/*'
         ],
-        tasks: ['shell:sync_app']
+        tasks: ['shell:sync_dev']
       },
 
-      less: {
+      style: {
         files: [
-          '<%- path.less %>/**/*',
-          '<%- path.dist_vendor %>/engine-ui/less/**/*'
+          '<%- path.style %>/**/*',
+          '<%- path.vendor %>/engine-ui/less/**/*'
         ],
         tasks: ['less:app']
       },
@@ -130,14 +141,14 @@ module.exports = function(grunt) {
       // Start livereload server at http://localhost:35729/livereload.js
       livereload: {
         options: {
-          cwd: '<%- path.dist %>',
+          cwd: '<%- path.build %>',
           livereload: true
         },
 
         files: [
           '*.html',
           'views/*.html',
-          'manager/**/*.html',
+          'app/**/*.html',
           'style/*.css'
         ]
       }
@@ -147,12 +158,13 @@ module.exports = function(grunt) {
   // bring in all grunt plugins from package.json
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('dist-dev', [
-    'shell:sync_app',
+  grunt.registerTask('build-dev', [
+    'clean:build',
     'bower',
+    'shell:sync_dev',
     'less',
     'shell:sourcemap_links'
   ]);
 
-  grunt.registerTask('default', ['dist-dev']);
+  grunt.registerTask('default', ['build-dev']);
 };

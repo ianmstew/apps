@@ -16,17 +16,14 @@
 
 ## Developing App (front end)
 
-1. Start Billing (see **Run**)
+1. Start server (see **Run**)
 1. Start watch command `$ grunt watch` (required to be running continually during front end development)
-1. `app` folder is compiled to `dist`, which is also the web server root.  Accessing `http://localhost:3000` reaches `dist/index.html`.
 1. Install [LiveReload Chrome extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) to take advatage of automatic brower refreshing while editing .html and .less files (optional)
 1. Before committing any front end code, run `$ grunt jshint` and solve Javascript syntax issues, then `$ grunt jscs` and solve any style issues.
 
-**IMPORTANT**: `dist` and `temp` are transient folders and will be erased.
+**IMPORTANT**: `client-build` and `temp` are transient folders and will be erased.
 
-## Sublime Text 3 Setup
-
-### While-you-type Javascript linting
+## While-you-type Javascript linting (Sublime Text 3)
 
 1. Install JSHint command line app `$ sudo npm install -g jshint`
 1. Install JSCS command line app `$sudo npm install -g jscs`
