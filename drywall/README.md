@@ -54,7 +54,6 @@ Installation
 ```bash
 $ git clone git@github.com:jedireza/drywall.git && cd ./drywall
 $ npm install && bower install
-$ mv ./config.example.js ./config.js #set mongodb and email credentials
 $ grunt
 ```
 
@@ -66,7 +65,7 @@ You need a few records in the database to start using the user system.
 Run these commands on mongo. __Obviously you should use your email address.__
 
 ```js
-use drywall; //your mongo db name
+use apinetwork; //your mongo db name
 ```
 
 ```js
