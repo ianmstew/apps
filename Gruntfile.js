@@ -3,6 +3,21 @@ var path = require('path');
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    path: {
+      // Source folders
+      app: 'client/app',
+      assets: 'client/assets',
+      style: 'client/style',
+
+      // Intermediate folders (transient)
+      temp: 'temp',
+      bower: 'bower_components',
+      vendor: 'client/vendor',
+
+      // Output folders (transient)
+      build: 'client-build',
+      build_style: 'client-build/style'
+    },
     copy: {
       vendor: {
         files: [
@@ -62,6 +77,9 @@ module.exports = function(grunt) {
       }
     },
     watch: {
+      options: {
+        spawn: false
+      },
       clientJS: {
          files: [
           'public/layouts/**/*.js', '!public/layouts/**/*.min.js',
@@ -80,6 +98,36 @@ module.exports = function(grunt) {
           'public/less/**/*.less'
          ],
          tasks: ['newer:less']
+      },
+      app: {
+        files: [
+          '<%- path.client %>/index.html',
+          '<%- path.app %>/**/*',
+          '<%- path.assets %>/**/*'
+        ],
+        tasks: ['shell:sync_dev']
+      },
+      style: {
+        files: [
+          '<%- path.style %>/**/*',
+          '<%- path.vendor %>/engine-ui/less/**/*'
+        ],
+        tasks: ['less:app']
+      },
+
+      // Start livereload server at http://localhost:35729/livereload.js
+      livereload: {
+        options: {
+          cwd: '<%- path.build %>',
+          livereload: true
+        },
+
+        files: [
+          '*.html',
+          'views/*.html',
+          'app/**/*.html',
+          'style/*.css'
+        ]
       }
     },
     uglify: {
@@ -129,6 +177,9 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
+      options: {
+        jshintrc: true
+      },
       client: {
         options: {
           jshintrc: '.jshintrc-client',
@@ -150,11 +201,22 @@ module.exports = function(grunt) {
           'schema/**/*.js',
           'views/**/*.js'
         ]
-      }
+      },
+      app: ['Gruntfile.js', '<%- path.app %>/**/*.js']
+    },
+    jscs: {
+      options: {
+        config: '.jscsrc'
+      },
+      app: ['Gruntfile.js', '<%- path.app %>/**/*.js']
     },
     less: {
       options: {
-        compress: true
+        compress: true,
+        paths: [
+          '<%- path.vendor %>',
+          '<%- path.temp %>'
+        ]
       },
       layouts: {
         files: {
@@ -174,9 +236,34 @@ module.exports = function(grunt) {
           dest: 'public/views/',
           ext: '.min.css'
         }]
+      },
+      precompile: {
+        files: {
+          '<%- path.temp %>/engine-ui-grid-precompile.less': '<%- path.style %>/engine-ui-grid.less'
+        }
+      },
+      app: {
+        options: {
+          sourceMap: true,
+          sourceMapFilename: '<%- path.build_style %>/app.css.map',
+          sourceMapBasepath: '<%- path.build_style %>'
+        },
+        files: {
+          '<%- path.build_style %>/app.css': '<%- path.style %>/app.less'
+        }
       }
+
     },
     clean: {
+      all: [
+        '<%- path.build %>',
+        '<%- path.temp %>',
+        '<%- path.vendor %>',
+        '<%- path.bower %>'
+      ],
+      build: [
+        '<%- path.build %>'
+      ],
       js: {
         src: [
           'public/layouts/**/*.min.js',
@@ -194,8 +281,53 @@ module.exports = function(grunt) {
       vendor: {
         src: ['public/vendor/**']
       }
+    },
+    bower: {
+      install: {
+        options: {
+          targetDir: '<%- path.vendor %>',
+          layout: 'byComponent',
+          bowerOptions: {
+            production: true
+          }
+        }
+      }
+    },
+    shell: {
+      options: {
+        stdout: true,
+        stderr: true,
+        failOnError: true
+      },
+
+      // sync client/app, client/vendor, and client/index.html
+      sync_dev: {
+        command: [
+          'PROJ_ROOT=$(pwd)',
+          'cd client',
+          'rsync . $PROJ_ROOT/<%- path.build %> ' +
+              '--update --delete --recursive --exclude style'
+        ].join('&&')
+      },
+
+      // build links to support relative paths found in sourcemaps
+      sourcemap_links: {
+        command: [
+          'PROJ_ROOT=$(pwd)',
+          'mkdir -p <%- path.build_style %>',
+          'cd <%- path.build_style %>',
+          'rm -f app',
+          'ln -s $PROJ_ROOT/<%- path.app %> app',
+          'rm -f client-build',
+          'ln -s $PROJ_ROOT/<%- path.build %> client-build'
+        ].join('&&')
+      }
     }
+
+
   });
+
+  require('load-grunt-tasks')(grunt);
 
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -207,7 +339,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-newer');
 
-  grunt.registerTask('default', ['copy:vendor', 'newer:uglify', 'newer:less', 'concurrent']);
+  grunt.registerTask('build-dev', [
+    'clean:build',
+    'bower',
+    'shell:sync_dev',
+    'less',
+    'shell:sourcemap_links'
+  ]);
+  grunt.registerTask('default', ['copy:vendor', 'newer:uglify', 'newer:less', 'concurrent', 'build-dev']);
   grunt.registerTask('build', ['copy:vendor', 'uglify', 'less']);
   grunt.registerTask('lint', ['jshint']);
 };
