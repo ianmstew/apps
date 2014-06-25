@@ -19,42 +19,6 @@ module.exports = function(grunt) {
       build_style: 'client-build/style'
     },
     copy: {
-      vendor: {
-        files: [
-          {
-            expand: true, cwd: 'bower_components/bootstrap/',
-            src: ['js/**', 'less/**'], dest: 'public/vendor/bootstrap/'
-          },
-          {
-            expand: true, cwd: 'bower_components/backbone/',
-            src: ['backbone.js'], dest: 'public/vendor/backbone/'
-          },
-          {
-            expand: true, cwd: 'bower_components/font-awesome/',
-            src: ['fonts/**', 'less/**'], dest: 'public/vendor/font-awesome/'
-          },
-          {
-            expand: true, cwd: 'bower_components/html5shiv/dist/',
-            src: ['html5shiv.js'], dest: 'public/vendor/html5shiv/'
-          },
-          {
-            expand: true, cwd: 'bower_components/jquery/dist/',
-            src: ['jquery.js'], dest: 'public/vendor/jquery/'
-          },
-          {
-            expand: true, cwd: 'bower_components/momentjs/',
-            src: ['moment.js'], dest: 'public/vendor/momentjs/'
-          },
-          {
-            expand: true, cwd: 'bower_components/respond/src/',
-            src: ['respond.js'], dest: 'public/vendor/respond/'
-          },
-          {
-            expand: true, cwd: 'bower_components/underscore/',
-            src: ['underscore.js'], dest: 'public/vendor/underscore/'
-          }
-        ]
-      }
     },
     concurrent: {
       dev: {
@@ -329,7 +293,7 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.loadNpmTasks('grunt-contrib-copy');
+/*  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-less');
@@ -337,7 +301,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
-  grunt.loadNpmTasks('grunt-newer');
+  grunt.loadNpmTasks('grunt-newer');*/
 
   grunt.registerTask('build-dev', [
     'clean:build',
@@ -346,7 +310,12 @@ module.exports = function(grunt) {
     'less',
     'shell:sourcemap_links'
   ]);
-  grunt.registerTask('default', ['copy:vendor', 'newer:uglify', 'newer:less', 'concurrent', 'build-dev']);
+  grunt.registerTask('default', [
+    'build-dev',
+    'newer:uglify', 
+    'newer:less', 
+    'concurrent'
+  ]);
   grunt.registerTask('build', ['copy:vendor', 'uglify', 'less']);
   grunt.registerTask('lint', ['jshint']);
 };

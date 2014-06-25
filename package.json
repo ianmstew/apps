@@ -37,22 +37,21 @@
     "passport-google-oauth": "^0.1.5",
     "passport-tumblr": "^0.1.2",
     "helmet": "^0.2.1",
-    "bcrypt": "^0.7.8"
-  },
-  "devDependencies": {
+    "bcrypt": "^0.7.8",
     "grunt": "^0.4.4",
+    "load-grunt-tasks": "^0.4.0",
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-contrib-less": "^0.11.0",
+    "grunt-contrib-copy": "^0.5.0",
     "grunt-concurrent": "^0.5.0",
     "grunt-nodemon": "^0.2.1",
     "grunt-newer": "^0.7.0",
-    "grunt-contrib-copy": "^0.5.0",
-    "load-grunt-tasks": "^0.4.0",
     "grunt-shell": "^0.6.4",
     "grunt-copy": "^0.1.0",
-    "grunt-jscs-checker": "^0.4.1"
+    "grunt-jscs-checker": "^0.4.1",
+    "grunt-bower-task": "^0.3.4"
   }
 }
