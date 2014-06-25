@@ -1,5 +1,5 @@
 {
-  "name": "billing",
+  "name": "endpoint-manager",
   "version": "0.0.1",
   "private": true,
   "ignore": [
@@ -16,7 +16,12 @@
     "requirejs-hogan-plugin": "~0.3.1",
     "engine-ui": "https://github.com/LDEngine/engine-ui.git#cdf5faea4724bbefd2c3c3824046ca0dc3992c7c",
     "spin.js": "~2.0.1",
-    "almond": "~0.2.9"
+    "almond": "~0.2.9",
+    "bootstrap": "~3.1.1",
+    "font-awesome": "~4.0.3",
+    "html5shiv": "~3.7.0",
+    "momentjs": "~2.5.0",
+    "respond": "~1.4.2"
   },
   "exportsOverride": {
     "backbone.wreqr": {
@@ -49,4 +54,5 @@
     }
   },
   "__comment": "Note: Marionette implies jquery, backbone, and underscore."
+
 }
