@@ -16,7 +16,7 @@ block body
   script(type='text/template', id='tmpl-header')
     div.page-header
       h1
-        a(href='/admin/categories/') Categories
+        a(data-bypass=true,href='/admin/categories/') Categories
         |  / <%- name %>
 
   script(type='text/template', id='tmpl-details')

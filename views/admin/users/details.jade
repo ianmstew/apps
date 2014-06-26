@@ -18,7 +18,7 @@ block body
   script(type='text/template', id='tmpl-header')
     div.page-header
       h1
-        a(href='/admin/users/') Users
+        a(data-bypass=true,href='/admin/users/') Users
         |  / <%= username %>
 
   script(type='text/template', id='tmpl-identity')

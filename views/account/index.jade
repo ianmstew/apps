@@ -4,7 +4,7 @@ block head
   title Account Area
 
 block neck
-  link(rel='stylesheet', href='/views/account/index.min.css?#{cacheBreaker}')
+  link(rel='stylesheet', data-bypass=true,href='/views/account/index.min.css?#{cacheBreaker}')
 
 block feet
   script(src='/views/account/index.min.js?#{cacheBreaker}')

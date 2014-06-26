@@ -4,13 +4,13 @@ html
     block head
       title #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
+    link(rel='stylesheet', data-bypass=true, href='/layouts/core.min.css?#{cacheBreaker}')
     block neck
   body
     div.navbar.navbar-default.navbar-fixed-top
       div.container
         div.navbar-header
-          a.navbar-brand(href='/account/')
+          a.navbar-brand(data-bypass=true, href='/account/')
             img.navbar-logo(src='/media/logo-symbol-64x64.png')
             span.navbar-brand-label #{projectName}
           button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
@@ -19,10 +19,10 @@ html
             span.icon-bar
         div.navbar-collapse.my-navbar-collapse.collapse
           ul.nav.navbar-nav
-            li: a(href='/account/') My Account
-            li: a(href='/account/settings/') Settings
+            li: a(data-bypass=true, href='/account/') My Account
+            li: a(data-bypass=true, href='/account/settings/') Settings
           ul.nav.navbar-nav.pull-right
-            li: a(href='/logout/')
+            li: a(data-bypass=true, href='/logout/')
               i.fa.fa-user
               |  Sign Out
 
@@ -36,8 +36,8 @@ html
           span.copyright.pull-right
             |&#169; #{copyrightYear} #{copyrightName}
           ul.links
-            li: a(href='/') Home
-            li: a(href='/logout/') Sign Out
+            li: a(data-bypass=true, href='/') Home
+            li: a(data-bypass=true, href='/logout/') Sign Out
           div.clearfix
 
     div.ajax-spinner

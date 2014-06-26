@@ -2,7 +2,7 @@ extends ../../../layouts/admin
 
 block head
   title Admin Groups / Details
-  link(rel='stylesheet', href='/views/admin/admin-groups/details.min.css?#{cacheBreaker}')
+  link(rel='stylesheet', data-bypass=true,href='/views/admin/admin-groups/details.min.css?#{cacheBreaker}')
 
 block feet
   script(src='/views/admin/admin-groups/details.min.js?#{cacheBreaker}')
@@ -18,7 +18,7 @@ block body
   script(type='text/template', id='tmpl-header')
     div.page-header
       h1
-        a(href='/admin/admin-groups/') Admin Groups
+        a(data-bypass=true,href='/admin/admin-groups/') Admin Groups
         |  / <%- name %>
 
   script(type='text/template', id='tmpl-details')
