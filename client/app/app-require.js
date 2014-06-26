@@ -16,8 +16,8 @@ require.config({
     'text':                    '../vendor/requirejs-hogan-plugin/text',
     
     // change to -prod for production
-    'lib/logger':              'lib/util/logger-dev',
-    'lib/eventDebugger':       'lib/util/eventDebugger-dev'
+    'lib/util/logger':              'lib/util/logger-dev',
+    'lib/util/eventDebugger':       'lib/util/eventDebugger-dev'
   },
 
   shim: {
