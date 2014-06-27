@@ -13,4 +13,7 @@ exports = module.exports = function(app, mongoose) {
   require('./schema/AdminGroup')(app, mongoose);
   require('./schema/Account')(app, mongoose);
   require('./schema/LoginAttempt')(app, mongoose);
+
+  // Things we added to Drywall
+  require( './schema/OAuthApp' )( app, mongoose );
 };
