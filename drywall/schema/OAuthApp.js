@@ -5,7 +5,7 @@ exports = module.exports = function( app, mongoose ) {
 		name: String,
 		clientId: { type: String, unique: true },
 		clientSecret: { type: String },
-		owner: Number
+		owner: String
 	});
 
 	oauthAppSchema.index( { clientId: 1 }, { unique: true });
