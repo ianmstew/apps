@@ -175,6 +175,8 @@ exports = module.exports = function(app, passport) {
   app.get( '/oauth/app/create', ensureAuthenticated, require( './oauth/app' ).create );
   app.get( '/oauth/app/list', ensureAuthenticated, require( './oauth/app' ).list );
   app.get( '/oauth/app/destroy', ensureAuthenticated, require( './oauth/app' ).destroy );
+  app.get( '/oauth/app/auth', ensureAuthenticated, require( './oauth/app' ).auth );
+  app.get( '/oauth/app/subauth', ensureAuthenticated, require( './oauth/app' ).authRemotes );
 
   //route not found
   app.all('*', require('./views/http/index').http404);

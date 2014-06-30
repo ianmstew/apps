@@ -58,5 +58,101 @@ module.exports = exports = {
 				}
 			}
 		);
+	},
+
+	auth: function( req, res ) {
+		if( !req.query.client_id )
+			res.send( 400, "Missing client_id parameter" );
+		else
+		{
+			req.app.db.models.OAuthApp.findOne( 
+				{ clientId: req.query.client_id },
+				function( error, clientApp ) {
+					if( error )
+						res.json( 400, error.toString() );
+					else
+					{
+						if( clientApp )
+						{
+							req.app.db.models.OAuthToken.findOne( 
+								{ clientId: req.query.client_id, user: req.user._id },
+								function( error, token ) {
+									if( error )
+										res.send( 500, error );
+									else
+									{
+										// No real approval to be done here - if you don't want to use this, don't sign up.
+										if( token )
+										{
+											res.redirect( '/oauth/app/subauth?token=' + token.token );
+										}
+										else
+										{
+											req.app.db.models.OAuthToken.create( 
+												{
+													token: uuid.v4(),
+													clientId: req.query.client_id,
+													user: req.user._id
+												},
+												function( err, newToken ) {
+													if( err )
+														res.json( err.toString() );
+													else
+													{
+														newToken.save( function( err, newToken ) {
+															if( err )
+																res.json( err.toString() );
+															else
+																res.redirect( '/oauth/app/subauth?token=' + newToken.token );
+														});
+
+													}
+												}
+											)
+										}
+									}
+								}
+							);
+						}
+						else
+							res.send( 404, "Invalid client_id" );
+					}
+				}
+			);
+		}
+	},
+
+	authRemotes: function( req, res ) {
+		console.log( req.query );
+		req.app.db.models.OAuthToken.findOne( 
+			{ token: req.query.token },
+			function( error, token ) {
+				if( error )
+					res.send( 500, error.toString() );
+				else
+				{
+					if( token )
+					{
+						req.app.db.models.OAuthApp.findOne( 
+							{ clientId: token.clientId },
+							function( error, clientApp ) {
+								if( error )
+									res.send( 500, error.toString() );
+								else if( clientApp )
+								{
+									res.send( 500, "Unimplemented, unauthenticate remote data sources for app: " + clientApp.clientId );
+								}
+								else
+									res.send( 404, "Token corresponds to nonexistent app." );
+							}
+						);
+					}
+					else
+					{
+						res.send( 400, "Invalid Token" );
+					}
+				}
+			}
+		);
 	}
 };
