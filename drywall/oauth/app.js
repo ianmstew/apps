@@ -23,7 +23,7 @@ module.exports = exports = {
 
 				}
 			}
-		)
+		);
 	},
 
 	list: function( req, res ) {
@@ -140,7 +140,11 @@ module.exports = exports = {
 									res.send( 500, error.toString() );
 								else if( clientApp )
 								{
-									res.send( 500, "Unimplemented, unauthenticate remote data sources for app: " + clientApp.clientId );
+									res.send( 500, "Unimplemented, authenticate remote data sources for app: " + clientApp.clientId );
+
+									// TODO: Get the list of data sources we need to authenticate with, and when we last authenticated.
+									// Hit the next one that we haven't authenticated with in the last minute.
+									// If we've got them all, then redirect to the app final callback.
 								}
 								else
 									res.send( 404, "Token corresponds to nonexistent app." );
