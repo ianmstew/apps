@@ -5,16 +5,20 @@ define(function (require) {
   Module = Marionette.Module.extend({
     startWithParent: false,
     controller: null,
+    started: false,
+    mainRegion: null,
 
-    onStart: function () {
-      this.controller = new this.moduleControllerClass({
-        module: this
-      });
+    onStart: function (options) {
+      if (this.started) return;
+      options.module = this;
+      this.controller = new this.moduleControllerClass(options);
+      this.started = true;
     },
 
     onStop: function () {
       this.controller.close();
       this.controller = null;
+      this.started = false;
     }
   });
 

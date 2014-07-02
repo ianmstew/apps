@@ -1,0 +1,14 @@
+{
+  "name": "Drywall",
+  "dependencies": {
+    "backbone": "~1.1.0",
+    "bootstrap": "~3.1.1",
+    "font-awesome": "~4.0.3",
+    "html5shiv": "~3.7.0",
+    "jquery": "~1.11.0",
+    "momentjs": "~2.5.0",
+    "respond": "~1.4.2",
+    "underscore": "~1.5.2",
+    "engine-ui": "https://github.com/LDEngine/engine-ui.git#cdf5faea4724bbefd2c3c3824046ca0dc3992c7c"
+  }
+}

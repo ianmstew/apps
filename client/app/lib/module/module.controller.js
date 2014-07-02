@@ -9,9 +9,11 @@ define(function (require) {
 
     localCh: null,
     router: null,
-    _forwardEvents: null,
+    mainRegion: null,
 
     constructor: function (options) {
+      this.mainRegion = options.mainRegion;
+
       if (this.routes) {
         this.router = new (Marionette.AppRouter.extend({
           appRoutes: this.routes,
@@ -19,16 +21,16 @@ define(function (require) {
         }))();
       }
 
-      // can be used optionally without a module (only runs on app events)
+      // can be used optionally without a module (only runs on global events)
       if (options.module) {
+        this.globalCh = globalCh;
         this.localCh = Wreqr.radio.channel(options.module.moduleName);
-        this._initEvents(this.moduleEvents, this.localCh);
-      } else if (this.moduleEvents) {
-        logger.error('To use moduleEvents, please supply a module instance to options');
+        this._initEvents(this.localEvents, this.localCh);
+      } else if (this.localEvents) {
+        logger.error('To use localEvents, please supply a module instance to options');
       }
 
-      this._initEvents(this.appEvents, globalCh);
-      this._initForwardEvents(this.forwardEvents);
+      this._initEvents(this.globalEvents, globalCh);
 
       ModuleController.__super__.constructor.apply(this, arguments);
     },
@@ -66,51 +68,6 @@ define(function (require) {
       });
     },
 
-    _initForwardEvents: function (events) {
-      var self = this;
-      if (!events) return;
-
-      this._forwardEvents = {};
-
-      _.each(events.vent, function (name) {
-        var handler = function () {
-          var origArgs = [name].concat(Array.prototype.slice.call(arguments, 0));
-          globalCh.vent.trigger.apply(globalCh.vent, origArgs);
-        };
-        self.localCh.vent.on(name, handler);
-        self._forwardEvents.vent = self._forwardEvents.vent || {};
-        self._forwardEvents.vent[name] = handler;
-      });
-
-      _.each(events.commands, function (name) {
-        var handler;
-        if (self.localCh.commands.getHandler(name)) {
-          logger.warn('Commands handler ' + name + ' already set; overwriting!');
-        }
-        handler = function () {
-          var origArgs = [name].concat(Array.prototype.slice.call(arguments, 0));
-          globalCh.commands.execute.apply(globalCh.commands, origArgs);
-        };
-        self.localCh.commands.setHandler(name, handler);
-        self._forwardEvents.commands = self._forwardEvents.commands || {};
-        self._forwardEvents.commands[name] = handler;
-      });
-
-      _.each(events.reqres, function (name) {
-        var handler;
-        if (self.localCh.reqres.getHandler(name)) {
-          logger.warn('Reqres handler ' + name + ' already set; overwriting!');
-        }
-        handler = function () {
-          var origArgs = [name].concat(Array.prototype.slice.call(arguments, 0));
-          return globalCh.reqres.request.apply(globalCh.reqres, origArgs);
-        };
-        self.localCh.reqres.setHandler(name, handler);
-        self._forwardEvents.reqres = self._forwardEvents.reqres || {};
-        self._forwardEvents.reqres[name] = handler;
-      });
-    },
-
     _closeEvents: function (events, channel) {
       if (!events) return;
 
@@ -128,9 +85,8 @@ define(function (require) {
     },
 
     onClose: function () {
-      this._closeEvents(this.appEvents);
-      this._closeEvents(this.moduleEvents);
-      this._closeEvents(this._forwardEvents);
+      this._closeEvents(this.globalEvents);
+      this._closeEvents(this.localEvents);
     }
   });
 
