@@ -9,15 +9,14 @@ require.config({
     'backbone.computedfields': '../vendor/backbone-computedfields/backbone.computedfields',
     'marionette':              '../vendor/marionette/backbone.marionette',
     'bootstrap':               '../vendor/bootstrap/bootstrap',
-    'parsley':                 '../vendor/parsleyjs/parsley',
     'spinner':                 '../vendor/spin.js/spin',
     'hogan':                   '../vendor/requirejs-hogan-plugin/hogan',
     'hgn':                     '../vendor/requirejs-hogan-plugin/hgn',
     'text':                    '../vendor/requirejs-hogan-plugin/text',
     
     // change to -prod for production
-    'lib/logger':              'lib/util/logger-dev',
-    'lib/eventDebugger':       'lib/util/eventDebugger-dev'
+    'lib/util/logger':              'lib/util/logger-dev',
+    'lib/util/eventDebugger':       'lib/util/eventDebugger-dev'
   },
 
   shim: {
@@ -25,9 +24,6 @@ require.config({
       exports: '_'
     },
     'bootstrap': {
-      deps: ['jquery']
-    },
-    'parsley': {
       deps: ['jquery']
     },
     'backbone.computedfields': {
@@ -40,4 +36,4 @@ require.config({
   }
 });
 
-require(['app-start']);
+require(['app-bootstrap']);

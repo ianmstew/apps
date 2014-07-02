@@ -1,6 +1,5 @@
 define(function (require) {
-  var Wreqr = require('backbone.wreqr'),
-      globalCh = new Wreqr.Channel('global');
-
+  var Wreqr = require('backbone.wreqr');
+  var globalCh = Wreqr.radio.channel('global');
   return globalCh;
 });

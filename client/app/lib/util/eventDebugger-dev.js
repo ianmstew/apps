@@ -1,13 +1,17 @@
 define(function (require) {
-  var appChannel = require('global.channel'),
+  var Wreqr = require('backbone.wreqr'),
       logger = require('lib/util/logger'),
       channels;
 
-  channels = {
-    'app': appChannel
-  };
+  channels = [
+    'global',
+    'dashboard',
+    'appmgr'
+  ];
 
-  _.each(channels, function (channel, channelName) {
+  _.each(channels, function (channelName) {
+    var channel = Wreqr.radio.channel(channelName);
+    
     channel.vent.trigger = _.wrap(
       channel.vent.trigger,
       function (fn) {

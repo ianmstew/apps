@@ -1,0 +1,6 @@
+node_modules
+bower_components
+build
+temp
+vendor
+.DS_Store

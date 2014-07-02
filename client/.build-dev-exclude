@@ -1,0 +1,12 @@
+.*
+
+style
+
+node_modules
+bower_components
+build
+temp
+
+Gruntfile.js
+bower.json
+package.json

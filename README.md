@@ -1,36 +1,61 @@
 # Welcome to the Engine API Endpoint Manager
 
-## Install
+Requirements
+------------
 
-1. Install latest Node.js
-1. Install latest MongoDB
-1. Ensure Mongo is running: `$ mongo` (Ctrl+C to quit)
-1. Install grunt comand line app `$ sudo npm install -g grunt-cli`
+You need [Node.js](http://nodejs.org/download/) and [MongoDB](http://www.mongodb.org/downloads) installed and running.
 
-## Run
+We use [Grunt](http://gruntjs.com/) as our task runner. Get the CLI (command line interface).
 
-1. `$ npm install`
-1. `$ grunt`
-1. `$ node server`
-1. Access `http://localhost:3000`
+```bash
+$ npm install grunt-cli -g
+```
 
-## Developing App (front end)
+We use [Bower](http://bower.io/) as our front-end package manager. Get the CLI (command line interface).
 
-1. Start server (see **Run**)
-1. Start watch command `$ grunt watch` (required to be running continually during front end development)
-1. Install [LiveReload Chrome extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) to take advatage of automatic brower refreshing while editing .html and .less files (optional)
-1. Before committing any front end code, run `$ grunt jshint` and solve Javascript syntax issues, then `$ grunt jscs` and solve any style issues.
+```bash
+$ npm install bower -g
+```
 
-**IMPORTANT**: `client-build` and `temp` are transient folders and will be erased.
+We use [`bcrypt`](https://github.com/ncb000gt/node.bcrypt.js) for hashing secrets. If you have issues during installation related to `bcrypt` then [refer to this wiki page](https://github.com/jedireza/drywall/wiki/bcrypt-Installation-Trouble).
 
-## While-you-type Javascript linting (Sublime Text 3)
+Install and Run
+------------
 
-1. Install JSHint command line app `$ sudo npm install -g jshint`
-1. Install JSCS command line app `$sudo npm install -g jscs`
-1. Install Sublime Package Control
-   * Within Sublime Text, follow instructions here: https://sublime.wbond.net/installation
-1. Install SublimeLinter
-   * Within Sublime Text, pres Ctrl+Shift+P (PC) Cmd+Shift+P (Mac) and type/select "Package Control: Install Package"
-   * Type/select "SublimeLinter"
-   * Type/select "SublineLinter-JSHint"
-   * Type/select "SublimeLinter-JSCS"
+```bash
+$ git clone https://github.com/LDEngine/endpoint-manager
+$ cd endpoint-manager
+$ npm install
+$ grunt
+```
+
+Setup
+------------
+
+You need a few records in the database to start using the user system.  First, start the mongo terminal:
+
+```bash
+$ mongo
+```
+
+Now, in the mogo terminal, run the following commands. __Make sure to substitute your actual email address below.__
+
+```js
+use apinetwork; // your mongo db name
+
+db.admingroups.insert({ _id: 'root', name: 'Root' });
+db.admins.insert({ name: {first: 'Root', last: 'Admin', full: 'Root Admin'}, groups: ['root'] });
+var rootAdmin = db.admins.findOne();
+db.users.save({ username: 'root', isActive: 'yes', email: 'your@email.address', roles: {admin: rootAdmin._id} });
+var rootUser = db.users.findOne();
+rootAdmin.user = { id: rootUser._id, name: rootUser.username };
+db.admins.save(rootAdmin);
+```
+
+Now just use the reset password feature to set a password.
+
+ - `http://localhost:3000/login/forgot/`
+ - Submit your email address and wait a second.
+ - Go check your email and get the reset link.
+ - `http://localhost:3000/login/reset/:email/:token/`
+ - Set a new password.
