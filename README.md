@@ -19,13 +19,14 @@ $ npm install bower -g
 
 We use [`bcrypt`](https://github.com/ncb000gt/node.bcrypt.js) for hashing secrets. If you have issues during installation related to `bcrypt` then [refer to this wiki page](https://github.com/jedireza/drywall/wiki/bcrypt-Installation-Trouble).
 
-Installation
+Install and Run
 ------------
 
 ```bash
 $ git clone https://github.com/LDEngine/endpoint-manager
 $ cd endpoint-manager
 $ npm install
+$ grunt
 ```
 
 Setup
@@ -58,14 +59,3 @@ Now just use the reset password feature to set a password.
  - Go check your email and get the reset link.
  - `http://localhost:3000/login/reset/:email/:token/`
  - Set a new password.
-
-Start Development Mode
----------------
-
-From endpoint-manager project root:
-
-```bash
-$ grunt
-```
-
-Open up browser to localhost:3000.
