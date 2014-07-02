@@ -23,7 +23,8 @@ Installation
 ------------
 
 ```bash
-$ git clone https://github.com/LDEngine/endpoint-manager && cd endpoint-manager
+$ git clone https://github.com/LDEngine/endpoint-manager
+$ cd endpoint-manager
 $ npm install
 ```
 
