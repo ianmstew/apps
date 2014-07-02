@@ -23,17 +23,20 @@ Installation
 ------------
 
 ```bash
-$ git clone git@github.com:jedireza/drywall.git && cd ./drywall
-$ npm install && bower install
-$ grunt
+$ git clone https://github.com/LDEngine/endpoint-manager && cd endpoint-manager
+$ npm install
 ```
 
 Setup
 ------------
 
-You need a few records in the database to start using the user system.
+You need a few records in the database to start using the user system.  First, start the mongo terminal:
 
-Run these commands on mongo. __Make sure to substitute your email address below.__
+```bash
+$ mongo
+```
+
+Now, in the mogo terminal, run the following commands. __Make sure to substitute your actual email address below.__
 
 ```js
 use apinetwork; // your mongo db name
@@ -55,18 +58,13 @@ Now just use the reset password feature to set a password.
  - `http://localhost:3000/login/reset/:email/:token/`
  - Set a new password.
 
+Start Development Mode
+---------------
 
-**IMPORTANT**: `build` and `temp` are transient folders and will be erased.
+From endpoint-manager project root:
 
-## While-you-type Javascript linting (Sublime Text 3)
+```bash
+$ grunt
+```
 
-1. Install JSHint command line app `$ sudo npm install -g jshint`
-1. Install JSCS command line app `$sudo npm install -g jscs`
-1. Install Sublime Package Control
-   * Within Sublime Text, follow instructions here: https://sublime.wbond.net/installation
-1. Install SublimeLinter
-   * Within Sublime Text, pres Ctrl+Shift+P (PC) Cmd+Shift+P (Mac) and type/select "Package Control: Install Package"
-   * Type/select "SublimeLinter"
-   * Type/select "SublineLinter-JSHint"
-   * Type/select "SublimeLinter-JSCS"
-
+Open up browser to localhost:3000.
