@@ -8,11 +8,6 @@ module.exports = function (grunt) {
           'server': 'default'
         }
       },
-      watch: {
-        projects: {
-          'client': 'watch'
-        }
-      },
       prod: {
         projects: {
           'client': 'build-prod',  // TODO

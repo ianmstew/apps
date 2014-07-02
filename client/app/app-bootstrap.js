@@ -15,7 +15,7 @@ define(function (require) {
   };
 
   // Pass to routre any hyperlinks tagged with "data-app"
-  $(document).on('click', 'a[data-app]', function (evt) {
+  $(document).on('click', '#content-region a:not([data-bypass])', function (evt) {
     var href = $(this).attr('href');
 
     if (href) {
