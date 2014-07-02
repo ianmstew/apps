@@ -8,33 +8,41 @@ html
     link(rel='stylesheet', href='/layouts/admin.min.css?#{cacheBreaker}')
     block neck
   body
-    div.navbar.navbar-inverse.navbar-fixed-top
-      div.container
-        div.navbar-header
-          a.navbar-brand(href='/admin/')
-            img.navbar-logo(src='/media/logo-symbol-64x64.png')
-            span.navbar-brand-label #{projectName}
-          button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        div.navbar-collapse.my-navbar-collapse.collapse
-          ul.nav.navbar-nav
-            li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown')
-                | System&nbsp;
-                span.caret
-              ul.dropdown-menu
-                li.dropdown-header Pivoted Settings
-                li: a(href='/admin/statuses/') Statuses
-                li: a(href='/admin/categories/') Categories
-                li.divider
-                li.dropdown-header User Admin
-                li: a(href='/admin/users/') Users
-                li: a(href='/admin/accounts/') Accounts
-                li: a(href='/admin/administrators/') Administrators
-                li: a(href='/admin/admin-groups/') Admin Groups
-          form.navbar-form.pull-right#_search
+    nav.navbar.navbar-default(role='navigation')
+          div
+              .navbar-header
+                a.navbar-brand(href='/')
+                  | APINetwork Documentation
+                button.navbar-toggle(type='button', data-toggle='collapse', data-target='#main-navigation')
+                  span.sr-only Toggle navigation
+                  span.icon-bar
+                  span.icon-bar
+                  span.icon-bar
+              //
+                 /.navbar-header
+              #main-navigation.collapse.navbar-collapse
+                ul.nav.navbar-nav.nav-pills.navbar-right
+                  li
+                    a(href='about') About
+                  li
+                    a(href='help') Help
+                  li.dropdown.avatar
+                    a.dropdown-toggle(href='#', data-toggle='dropdown')
+                      span.fa-stack.fa-lg
+                        i.fa.fa-circle.fa-stack-2x
+                        i.fa.fa-user.fa-stack-1x.fa-inverse
+                      | becky@engine.co
+                      b.caret
+                    ul.dropdown-menu
+                      li
+                        a(href='#') Account Settings
+                      li.divider
+                      li
+                        a(href='#') Log Out
+              //
+                 /#main-navigation
+            //
+               /.container-fluid 
 
     div.page
       div.container

@@ -1,0 +1,82 @@
+@import "bootstrap/less/mixins.less";
+
+//
+// Engine UI Mixins
+// --------------------------------------------------
+
+// Gradients
+// --------------------------------------------------
+
+#gradient {
+  .striped(@color: rgba(255,255,255,.15); @angle: -45deg) {
+    background-image: -webkit-linear-gradient(@angle, @color 25%, transparent 25%, transparent 50%, @color 50%, @color 75%, transparent 75%, transparent);
+    background-image: linear-gradient(@angle, @color 25%, transparent 25%, transparent 50%, @color 50%, @color 75%, transparent 75%, transparent);
+  }
+}
+
+// Focus Color
+// --------------------------------------------------
+.tab-focus() {
+  // Default
+  outline: thin dotted;
+  // WebKit
+  outline: 5px auto lighten(@brand-primary, 30%); // Previously -webkit-focus-ring-color
+  outline-offset: -2px;
+}
+
+// Alerts
+// --------------------------------------------------
+.alert-variant(@background; @border; @text-color) {
+  .alert-link {
+    color: @text-color; // Previously color: darken(@text-color, 10%)
+  }
+}
+
+// Buttons
+// --------------------------------------------------
+
+.btn-gray,
+.btn-gray-block,
+.btn-action,
+.btn-action-block,
+.btn-green,
+.btn-green-block,
+.btn-red,
+.btn-red-block,
+.btn-yellow,
+.btn-yellow-block {
+  &:extend(.btn all, .btn-md all);
+}
+
+.btn-gray-block,
+.btn-green-block,
+.btn-action-block,
+.btn-red-block,
+.btn-yellow-block {
+  &:extend(.btn-block all);
+}
+
+.btn-gray,
+.btn-gray-block {
+  &:extend(.btn-default all);
+}
+
+.btn-action,
+.btn-action-block {
+  &:extend(.btn-primary all);
+}
+
+.btn-green,
+.btn-green-block {
+  &:extend(.btn-success all);
+}
+
+.btn-red,
+.btn-red-block {
+  &:extend(.btn-danger all);
+}
+
+.btn-yellow,
+.btn-yellow-block {
+  &:extend(.btn-warning all);
+}

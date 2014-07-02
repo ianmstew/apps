@@ -1,8 +1,22 @@
 @import "../less/engineui-build.less";
 @import "bootstrap/less/mixins.less";
 
+// For APINetwork Blue Branding
+@footer-height:      60px;
+@brand-apiblue:      #007bb6;
+@brand-apibluelight: desaturate(lighten(@brand-apiblue, 20%), 45%);
+@brand-primary:      @brand-apiblue;
+@input-border-focus: @brand-apiblue;
+
+html,
 body {
-  padding-top: 66px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  width: 100%;
+  padding: 0;
 }
 
 h1, h2 {
@@ -53,33 +67,33 @@ select, textarea, input, .form-control {
   }
 }
 
-.footer {
-  margin-top: 50px;
-  color: #999;
+.sticky-footer-wrap {
+  position: relative;
+  min-height: 100%;
+}
 
-  .container {
-    border-top: 1px solid #ccc;
-    padding: 20px 5px 20px 5px;
-    border-radius: 4px;
-  }
-  a, a:visited {
-    color: #999;
-  }
-  .links {
-    margin: 0;
-    padding: 0;
+.content {
+  // make room for absolutely positioned stick-to-bottom footer
+  padding-bottom: @footer-height;
+}
 
-    li {
-      display: inline-block;
-      padding-right: 10px;
-      margin-right: 10px;
-      list-style: none;
-      border-right: 1px dotted #999;
-    }
-    li:last-child {
-      padding-right: 0;
-      margin-right: 0;
-      border: none;
+footer,
+.sticky-footer-wrap:after {
+  height: @footer-height;
+}
+
+footer {
+  position: relative;
+  clear: both;
+  width: 100%;
+  color: #FFF;
+  background-color: #393939;
+
+  > div {
+    &:extend(.container-fluid all);
+
+    > p {
+      padding-top: 20px;
     }
   }
 }

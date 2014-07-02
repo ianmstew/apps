@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <title>Engine API Endpoint Manager</title>
+      <link href="style/app.css" rel="stylesheet" />
+
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+    <body>
+        <div class="wrap">
+          <header>
+            <nav class="navbar navbar-default" role="navigation">
+              <div>
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">Engine API Endpoint Manager</a>
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div><!-- /.navbar-header -->
+                <div id="main-navigation" class="collapse navbar-collapse">
+                  <ul class="nav navbar-nav nav-pills navbar-right">
+                    <li>
+                      <a href="#">
+                        About
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        Help
+                      </a>
+                    </li>
+                    <li class="dropdown avatar">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                        </span>
+                        becky@engine.co<b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">Account Settings</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Log Out</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div><!-- /#main-navigation -->
+              </div><!-- /.container-fluid -->
+            </nav>
+          </header>
+
+          <main>
+            <div class="dashboard-wrapper">
+              <div class="dashboard-content">
+                <h1>
+                  My Apps
+                  <button class="btn-green">
+                    Create New App
+                  </button>
+
+                  <div class="js-toggle-btn">
+                    <a class="list-view" href="#js-toggle-view-list" data-toggle="tab">
+                      <i class="fa fa-list"></i>
+                    </a><!-- /.list-view -->
+
+                    <a class="grid-view" href="#js-toggle-view-grid" data-toggle="tab">
+                      <i class="fa fa-th"></i>
+                    </a><!-- /.grid-view -->
+                  </div><!-- /.js-toggle-layout -->
+                </h1>
+
+                <div class="app-none">
+                  You haven't created an app yet. <a href="#">Make your first app!</a>
+                </div><!-- /.app-none -->
+
+                <div class="tab-content">
+                  <div id="js-toggle-view-list" class="js-toggle-view tab-pane fade in active">
+                    <div class="js-sortable-apps">
+                      <ol class="app-list">
+                        <li class="app-item">
+                          <img class="app-logo" src="http://placekitten.com/g/50/50" />
+                          <p>
+                            <span class="app-title">
+                              App Title 1
+                            </span>
+                            <span class="app-description">
+                              This is an example of an app description.
+                            </span>
+                          </p>
+                          <div class="app-controls">
+                            <div class="remote-services">
+                              <a href="#">
+                                <i class="fa fa-facebook-square"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-twitter"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-google-plus-square"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-github"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-linkedin-square"></i>
+                              </a>
+                            </div><!-- /.remote-services -->
+
+                            <div class="actions">
+                              <a href="#">
+                                <i class="fa fa-plus-circle"></i>
+                                <i class="fa fa-gear"></i>
+                              </a>
+                            </div><!-- /.actions -->
+                          </div><!-- /.app-controls -->
+                        </li><!-- /.app-item -->
+
+                        <li class="app-item">
+                          <img class="app-logo" src="http://placekitten.com/g/50/50" />
+                          <p>
+                            <span class="app-title">
+                              App Title 2
+                            </span>
+                            <span class="app-description">
+                              This is an example of an app description.
+                            </span>
+                          </p>
+                          <div class="app-controls">
+                            <div class="remote-services">
+                              <a href="#">
+                                <i class="fa fa-facebook-square"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-twitter"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-google-plus-square"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-github"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-linkedin-square"></i>
+                              </a>
+                            </div><!-- /.remote-services -->
+
+                            <div class="actions">
+                              <a href="#">
+                                <i class="fa fa-plus-circle"></i>
+                                <i class="fa fa-gear"></i>
+                              </a>
+                            </div><!-- /.actions -->
+                          </div><!-- /.app-controls -->
+                        </li><!-- /.app-item -->
+
+                        <li class="app-item">
+                          <img class="app-logo" src="http://placekitten.com/g/50/50" />
+                          <p>
+                            <span class="app-title">
+                              App Title 3
+                            </span>
+                            <span class="app-description">
+                              This is an example of an app description.
+                            </span>
+                          </p>
+                          <div class="app-controls">
+                            <div class="remote-services">
+                              <a href="#">
+                                <i class="fa fa-facebook-square"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-twitter"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-google-plus-square"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-github"></i>
+                              </a>
+                              <a href="#">
+                                <i class="fa fa-linkedin-square"></i>
+                              </a>
+                            </div><!-- /.remote-services -->
+
+                            <div class="actions">
+                              <a href="#">
+                                <i class="fa fa-plus-circle"></i>
+                                <i class="fa fa-gear"></i>
+                              </a>
+                            </div><!-- /.actions -->
+                          </div><!-- /.app-controls -->
+                        </li><!-- /.app-item -->
+                      </ol><!-- /.app-list -->
+                    </div><!-- /.js-sortable-apps -->
+                  </div><!-- /#js-toggle-view-list -->
+
+                  <div id="js-toggle-view-grid" class="js-toggle-view tab-pane fade">
+                    <div class="js-sortable-apps">
+                      <ol class="app-list">
+                        <div class="container-app-item">
+                          <li class="app-item">
+                            <img class="app-logo" src="http://placekitten.com/g/50/50" />
+                            <p>
+                              <span class="app-title">
+                                App Title 1
+                              </span>
+                              <span class="app-description">
+                                This is an example of an app description.
+                              </span>
+                            </p>
+                            <div class="app-controls">
+                              <div class="remote-services">
+                                <a href="#">
+                                  <i class="fa fa-facebook-square"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-google-plus-square"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-github"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-linkedin-square"></i>
+                                </a>
+                              </div><!-- /.remote-services -->
+
+                              <div class="actions">
+                                <a href="#">
+                                  <i class="fa fa-plus-circle"></i>
+                                  <i class="fa fa-gear"></i>
+                                </a>
+                              </div><!-- /.actions -->
+                            </div><!-- /.app-controls -->
+                          </li><!-- /.app-item -->
+                        </div>
+
+                        <div class="container-app-item">
+                          <li class="app-item">
+                            <img class="app-logo" src="http://placekitten.com/g/50/50" />
+                            <p>
+                              <span class="app-title">
+                                App Title 1
+                              </span>
+                              <span class="app-description">
+                                This is an example of an app description.
+                              </span>
+                            </p>
+                            <div class="app-controls">
+                              <div class="remote-services">
+                                <a href="#">
+                                  <i class="fa fa-facebook-square"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-google-plus-square"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-github"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-linkedin-square"></i>
+                                </a>
+                              </div><!-- /.remote-services -->
+
+                              <div class="actions">
+                                <a href="#">
+                                  <i class="fa fa-plus-circle"></i>
+                                  <i class="fa fa-gear"></i>
+                                </a>
+                              </div><!-- /.actions -->
+                            </div><!-- /.app-controls -->
+                          </li><!-- /.app-item -->
+                        </div>
+
+                        <div class="container-app-item">
+                          <li class="app-item">
+                            <img class="app-logo" src="http://placekitten.com/g/50/50" />
+                            <p>
+                              <span class="app-title">
+                                App Title 1
+                              </span>
+                              <span class="app-description">
+                                This is an example of an app description.
+                              </span>
+                            </p>
+                            <div class="app-controls">
+                              <div class="remote-services">
+                                <a href="#">
+                                  <i class="fa fa-facebook-square"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-google-plus-square"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-github"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-linkedin-square"></i>
+                                </a>
+                              </div><!-- /.remote-services -->
+
+                              <div class="actions">
+                                <a href="#">
+                                  <i class="fa fa-plus-circle"></i>
+                                  <i class="fa fa-gear"></i>
+                                </a>
+                              </div><!-- /.actions -->
+                            </div><!-- /.app-controls -->
+                          </li><!-- /.app-item -->
+                        </div>
+
+                        <div class="container-app-item">
+                          <li class="app-item">
+                            <img class="app-logo" src="http://placekitten.com/g/50/50" />
+                            <p>
+                              <span class="app-title">
+                                App Title 1
+                              </span>
+                              <span class="app-description">
+                                This is an example of an app description.
+                              </span>
+                            </p>
+                            <div class="app-controls">
+                              <div class="remote-services">
+                                <a href="#">
+                                  <i class="fa fa-facebook-square"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-twitter"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-google-plus-square"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-github"></i>
+                                </a>
+                                <a href="#">
+                                  <i class="fa fa-linkedin-square"></i>
+                                </a>
+                              </div><!-- /.remote-services -->
+
+                              <div class="actions">
+                                <a href="#">
+                                  <i class="fa fa-plus-circle"></i>
+                                  <i class="fa fa-gear"></i>
+                                </a>
+                              </div><!-- /.actions -->
+                            </div><!-- /.app-controls -->
+                          </li><!-- /.app-item -->
+                        </div>
+                      </ol><!-- /.app-list -->
+                    </div><!-- /.js-sortable-apps -->
+                  </div><!-- /#js-toggle-view-grid -->
+                </div><!-- /.tab-content -->
+
+              </div><!-- /.dashboard-content -->
+            </div><!-- /.dashboard-wrapper -->
+          </main>
+        </div><!-- / #wrap -->
+
+        <footer>
+          <div>
+            <p>
+              Copyright &copy; 2014 Engine, Inc.
+              <a href="">
+                Legal
+              </a>
+              <a href="">
+                Terms of Service
+              </a>
+              <a href="">
+                Privacy
+              </a>
+              <a href="">
+                Contact
+              </a>
+            </p>
+          </div>
+        </footer>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+        <script src="lib/bootstrap.js"></script>
+        <script src="lib/manager-plugins.js"></script>
+        <script src="lib/jquery-sortable-min.js"></script>
+    </body>
+</html>

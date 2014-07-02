@@ -7,44 +7,54 @@ html
     link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
     block neck
   body
-    div.navbar.navbar-default.navbar-fixed-top
-      div.container
-        div.navbar-header
-          a.navbar-brand(href='/')
-            img.navbar-logo(src='/media/logo-symbol-64x64.png')
-            span.navbar-brand-label #{projectName}
-          button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        div.navbar-collapse.my-navbar-collapse.collapse
-          ul.nav.navbar-nav
-            li: a(href='/') Home
-            li: a(href='/about/') About
-            li: a(href='/signup/') Sign Up
-            li: a(href='/contact/') Contact
-          ul.nav.navbar-nav.navbar-right
-            if user && user.username
-              li: a(href='#{user.defaultReturnUrl}')
-                i.fa.fa-user
-                |  #{user.username}
-            else
-              li: a(href='/login/')
-                i.fa.fa-user
-                |  Sign In
+    div.sticky-footer-wrap
+      header#header-region
+        nav.navbar.navbar-default(role='navigation')
+          .navbar-header
+            a.navbar-brand(href='/')
+              | APINetwork Documentation
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#main-navigation')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+          //
+             /.navbar-header
+          #main-navigation.collapse.navbar-collapse
+            ul.nav.navbar-nav.nav-pills.navbar-right
+              li
+                a(href='about') About
+              li
+                a(href='help') Help
+              li.dropdown.avatar
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  span.fa-stack.fa-lg
+                    i.fa.fa-circle.fa-stack-2x
+                    i.fa.fa-user.fa-stack-1x.fa-inverse
+                  | becky@engine.co
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a(href='#') Account Settings
+                  li.divider
+                  li
+                    a(href='#') Log Out
 
-    div.page
-      div.container
+      main#content-region.content
         block body
 
-    div.footer
-      div.container
-        span.copyright.pull-right
-          |&#169; #{copyrightYear} #{copyrightName}
-        ul.links
-          li: a(href='/') Home
-          li: a(href='/contact/') Contact
-        div.clearfix
+      footer
+        div
+          p
+            | Copyright © 2014 Engine, Inc.
+            a(href='')
+              | Legal
+            a(href='')
+              | Terms of Service
+            a(href='')
+              | Privacy
+            a(href='')
+              | Contact
 
     div.ajax-spinner
       img(src='/media/ajax-pulse.gif')
