@@ -33,17 +33,15 @@ Setup
 
 You need a few records in the database to start using the user system.
 
-Run these commands on mongo. __Obviously you should use your email address.__
+Run these commands on mongo. __Make sure to substitute your email address below.__
 
 ```js
-use apinetwork; //your mongo db name
-```
+use apinetwork; // your mongo db name
 
-```js
 db.admingroups.insert({ _id: 'root', name: 'Root' });
 db.admins.insert({ name: {first: 'Root', last: 'Admin', full: 'Root Admin'}, groups: ['root'] });
 var rootAdmin = db.admins.findOne();
-db.users.save({ username: 'root', isActive: 'yes', email: 'your@email.addy', roles: {admin: rootAdmin._id} });
+db.users.save({ username: 'root', isActive: 'yes', email: 'your@email.address', roles: {admin: rootAdmin._id} });
 var rootUser = db.users.findOne();
 rootAdmin.user = { id: rootUser._id, name: rootUser.username };
 db.admins.save(rootAdmin);
@@ -58,7 +56,7 @@ Now just use the reset password feature to set a password.
  - Set a new password.
 
 
-**IMPORTANT**: `client-build` and `temp` are transient folders and will be erased.
+**IMPORTANT**: `build` and `temp` are transient folders and will be erased.
 
 ## While-you-type Javascript linting (Sublime Text 3)
 

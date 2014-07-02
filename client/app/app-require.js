@@ -9,7 +9,6 @@ require.config({
     'backbone.computedfields': '../vendor/backbone-computedfields/backbone.computedfields',
     'marionette':              '../vendor/marionette/backbone.marionette',
     'bootstrap':               '../vendor/bootstrap/bootstrap',
-    'parsley':                 '../vendor/parsleyjs/parsley',
     'spinner':                 '../vendor/spin.js/spin',
     'hogan':                   '../vendor/requirejs-hogan-plugin/hogan',
     'hgn':                     '../vendor/requirejs-hogan-plugin/hgn',
@@ -27,9 +26,6 @@ require.config({
     'bootstrap': {
       deps: ['jquery']
     },
-    'parsley': {
-      deps: ['jquery']
-    },
     'backbone.computedfields': {
       deps: ['backbone']
     }
@@ -40,4 +36,4 @@ require.config({
   }
 });
 
-require(['app-start']);
+require(['app-bootstrap']);
