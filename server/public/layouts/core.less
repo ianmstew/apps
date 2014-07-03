@@ -1,22 +1,12 @@
 @import "../less/engineui-build.less";
+@import "../less/brand-apinetwork.less";
 @import "bootstrap/less/mixins.less";
-
-// For APINetwork Blue Branding
-@footer-height:      60px;
-@brand-apiblue:      #007bb6;
-@brand-apibluelight: desaturate(lighten(@brand-apiblue, 20%), 45%);
-@brand-primary:      @brand-apiblue;
-@input-border-focus: @brand-apiblue;
 
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
-}
-body {
-  width: 100%;
-  padding: 0;
 }
 
 h1, h2 {
@@ -46,46 +36,158 @@ select, textarea, input, .form-control {
   padding-left: 12px;
 }
 
+.sticky-footer-wrap {
+  min-height: 100%;
+  height: 100%;
+  height: auto !important;
+  margin-bottom: -(@footer-height);
+
+  &:after {
+    content: "";
+    display: block;
+    height: @footer-height;
+  }
+}
+
 .navbar {
+  &:extend(.container-fluid);
+
   .box-shadow(0 2px 5px rgba(0,0,0,.125));
 
   .navbar-brand {
-    font-weight: bold;
-    color: #003d5f;
-    position: relative;
-    display: inline-block;
+    background: url('../media/api-network.png') no-repeat left center;
+    background-size: 40px;
+    padding-left: 55px;
 
+    /*
     .navbar-logo {
       position: absolute;
       top: 10px;
       height: 32px;
       width: 32px;
     }
+    */
   }
+  /*
   .navbar-brand-label {
     margin-left: 35px;
   }
+  */
 }
 
-.sticky-footer-wrap {
-  position: relative;
-  min-height: 100%;
+.avatar {
+  margin-top: -7px;
+  height: 50px;
 }
 
 .content {
-  // make room for absolutely positioned stick-to-bottom footer
-  padding-bottom: @footer-height;
+  height: 100%;
+
+  .main-content {
+    padding: 1%;
+  }
 }
 
-footer,
-.sticky-footer-wrap:after {
-  height: @footer-height;
+// For Landing Page Sign In/Up Forms
+.user-login {
+  &:extend(.row);
+
+  padding-top: 3%;
+  height: 100%;
+  text-align: center;
+  background-color: @gray-even-lighter;
+
+  .user-account-form,
+  > h1,
+  > h4 {
+    margin: 0 auto;
+  }
+
+  h1,
+  h4 {
+    width: 35%;
+  }
+
+  h1 {
+    line-height: 1.75em;
+  }
 }
+
+.user-account-form {
+  padding-top: 1.5%;
+  width: 30%;
+  height: 65vh;
+
+  div {
+    &:extend(.row);
+
+    .form-create-account,
+    .form-user-login {
+      &:extend(.col-xs-12, .col-md-6, .col-lg-6);
+
+      button.btn-create-account,
+      button.btn-user-login {
+        &:extend(.btn, .btn-lg, .btn-block);
+
+        margin: 0 auto;
+        text-transform: uppercase;
+        background: none;
+
+        &:active {
+          &:extend(.btn-primary);
+        }
+      }
+    }
+
+    .tab-content,
+    .tab-pane {
+      margin: 0;
+    }
+  }
+}
+
+.tab-content {
+  .tab-pane {
+
+    #register-form {
+      &:extend(.col-xs-12, .col-md-12, .col-lg-12);
+
+      padding-top: 2%;
+
+      form {
+
+        > button {
+          &:extend(.btn-lg);
+
+          text-transform: uppercase;
+        }
+
+        .form-group {
+          margin-left: 0;
+          margin-right: 0;
+          text-align: left;
+
+          > .checkbox {
+            margin: 0 0 0 0.5%;
+            padding-top: 0;
+          }
+
+          .forgot-password {
+            text-align: right;
+
+            i {
+              padding-right: 1%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// ******
 
 footer {
-  position: relative;
-  clear: both;
-  width: 100%;
+  height: @footer-height;
   color: #FFF;
   background-color: #393939;
 
@@ -94,6 +196,14 @@ footer {
 
     > p {
       padding-top: 20px;
+
+      a {
+        padding: 0 1%;
+
+        &:first-child {
+          padding-left: 2%;
+        }
+      }
     }
   }
 }

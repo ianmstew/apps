@@ -4,58 +4,17 @@ html
     block head
       title #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='icon', type='image/ico', href='http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_64,w_64/ecqtlr31kaa7kllvrz9o.png')
     link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
     block neck
   body
-    nav.navbar.navbar-default(role='navigation')
-    div
-        .navbar-header
-          a.navbar-brand(href='/')
-            | APINetwork Documentation
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#main-navigation')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        //
-           /.navbar-header
-        #main-navigation.collapse.navbar-collapse
-          ul.nav.navbar-nav.nav-pills.navbar-right
-            li
-              a(href='about') About
-            li
-              a(href='help') Help
-            li.dropdown.avatar
-              a.dropdown-toggle(href='#', data-toggle='dropdown')
-                span.fa-stack.fa-lg
-                  i.fa.fa-circle.fa-stack-2x
-                  i.fa.fa-user.fa-stack-1x.fa-inverse
-                | becky@engine.co
-                b.caret
-              ul.dropdown-menu
-                li
-                  a(href='#') Account Settings
-                li.divider
-                li
-                  a(href='#') Log Out
-        //
-           /#main-navigation
-      //
-         /.container-fluid 
+    div.sticky-footer-wrap
+      include includes/header.jade
 
-    div.page
-      div.container
+      main#content-region.content
         block body
 
-    div.footer
-      div.container
-        div.inner
-          span.copyright.pull-right
-            |&#169; #{copyrightYear} #{copyrightName}
-          ul.links
-            li: a(href='/') Home
-            li: a(href='/logout/') Sign Out
-          div.clearfix
+    include includes/footer.jade
 
     div.ajax-spinner
       img(src='/media/ajax-pulse.gif')
