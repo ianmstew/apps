@@ -4,51 +4,18 @@ html
     block head
       title #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='icon', type='image/ico', href='http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_64,w_64/ecqtlr31kaa7kllvrz9o.png')
     link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
     link(rel='stylesheet', href='/layouts/admin.min.css?#{cacheBreaker}')
     block neck
   body
-    div.navbar.navbar-inverse.navbar-fixed-top
-      div.container
-        div.navbar-header
-          a.navbar-brand(href='/admin/')
-            img.navbar-logo(src='/media/logo-symbol-64x64.png')
-            span.navbar-brand-label #{projectName}
-          button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        div.navbar-collapse.my-navbar-collapse.collapse
-          ul.nav.navbar-nav
-            li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown')
-                | System&nbsp;
-                span.caret
-              ul.dropdown-menu
-                li.dropdown-header Pivoted Settings
-                li: a(href='/admin/statuses/') Statuses
-                li: a(href='/admin/categories/') Categories
-                li.divider
-                li.dropdown-header User Admin
-                li: a(href='/admin/users/') Users
-                li: a(href='/admin/accounts/') Accounts
-                li: a(href='/admin/administrators/') Administrators
-                li: a(href='/admin/admin-groups/') Admin Groups
-          form.navbar-form.pull-right#_search
+    div.sticky-footer-wrap
+       include includes/header.jade
 
-    div.page
-      div.container
+      main#content-region.content
         block body
 
-    div.footer
-      div.container
-        div.inner
-          span.copyright.pull-right
-            |&#169; #{copyrightYear} #{copyrightName}
-          ul.links
-            li: a(href='/') Home
-            li: a(href='/logout/') Sign Out
-          div.clearfix
+    include includes/footer.jade
 
     div.ajax-spinner
       img(src='/media/ajax-pulse.gif')

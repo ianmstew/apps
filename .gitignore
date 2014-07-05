@@ -1,2 +1,6 @@
 node_modules
+bower_components
+client-build
+dist
+temp
 .DS_Store
