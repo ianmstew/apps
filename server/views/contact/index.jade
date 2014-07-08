@@ -10,17 +10,16 @@ block feet
   script(src='/views/contact/index.min.js?#{cacheBreaker}')
 
 block body
-  div.row
-    div.col-sm-6
-      div.page-header
-        h1 Send A Message
-      div#contact
+  h1 Send A Message
+  .row
+    div#contact.col-sm-6
     div.col-sm-6.special
-      div.page-header
-        h1 Contact Us
-      p.lead Freddy can't wait to hear from you.
-      i.fa.fa-reply-all.super-awesome
-      address 1428 Elm Street &bull; San Francisco, CA 94122
+      //
+        div.page-header
+          h1 Contact Us
+        p.lead Freddy can't wait to hear from you.
+        i.fa.fa-reply-all.super-awesome
+        address 1428 Elm Street &bull; San Francisco, CA 94122
 
   script(type='text/template', id='tmpl-contact')
     form

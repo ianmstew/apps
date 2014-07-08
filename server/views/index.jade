@@ -24,7 +24,7 @@ block body
             #createAccount.tab-pane.fade.in.active
               //
                  New User
-              #register-form
+              #signup
                 form.form-horizontal(role='form')
                   .form-group
                     label.sr-only(for='emailAddress') Email address
@@ -43,7 +43,7 @@ block body
                     //
                        /.checkbox
                     .col-sm-6.forgot-password
-                      a(href='#')
+                      a(href='/login/forgot/')
                         i.fa.fa-question-circle
                         | Forgot Password?
                     //
@@ -53,13 +53,13 @@ block body
                   button.btn-gray-block(type='submit')
                     | Create Account
               //
-                 /#register-form
+                 /#signup
             //
                /.tab-pane
             #userLogin.tab-pane.fade
               //
                  Existing User
-              #register-form
+              #login
                 form.form-horizontal(role='form')
                   .form-group
                     label.sr-only(for='emailAddress') Email address
@@ -82,10 +82,10 @@ block body
                        /.forgot-password
                   //
                      /.form-group
-                  button.btn-gray-block(type='submit')
+                  button.btn-gray-block(type='button')
                     | Log In
               //
-                 /#register-form
+                 /#login
             //
                /.tab-pane
           //
