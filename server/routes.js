@@ -177,7 +177,8 @@ exports = module.exports = function(app, passport) {
   app.get( '/oauth/app/destroy', ensureAuthenticated, require( './oauth/app' ).destroy );
   app.get( '/oauth/app/auth', ensureAuthenticated, require( './oauth/app' ).auth );
   app.get( '/oauth/app/subauth', ensureAuthenticated, require( './oauth/app' ).authRemotes );
-  app.get( '/oauth/api/connect', ensureAuthenticated, require( './oauth/api' ).connect );
+  app.post( '/oauth/api/connect', ensureAuthenticated, require( './oauth/api' ).connect );
+  app.post( '/oauth/api/update', ensureAuthenticated, require( './oauth/api' ).update );
   app.get( '/oauth/api/list', ensureAuthenticated, require( './oauth/api' ).list );
   app.get( '/oauth/api/disconnect', ensureAuthenticated, require( './oauth/api' ).disconnect );
 
