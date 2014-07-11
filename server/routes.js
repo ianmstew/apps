@@ -35,11 +35,24 @@ exports = module.exports = function(app, passport) {
   app.get('/contact/', require('./views/contact/index').init);
   app.post('/contact/', require('./views/contact/index').sendMessage);
 
+  //help
+  app.get('/help/', require('./views/help/index').init);
+
+  //legal
+  app.get('/legal/', require('./views/legal/index').init);
+
+  //terms of service
+  app.get('/terms/', require('./views/terms/index').init);
+
+  //privacy
+  app.get('/privacy/', require('./views/privacy/index').init);
+
   //sign up
-  app.get('/signup/', require('./views/signup/index').init);
-  app.post('/signup/', require('./views/signup/index').signup);
+  //app.get('/signup/', require('./views/signup/index').init);
+  //app.post('/signup/', require('./views/signup/index').signup);
 
   //social sign up
+  /*
   app.post('/signup/social/', require('./views/signup/index').signupSocial);
   app.get('/signup/twitter/', passport.authenticate('twitter', { callbackURL: '/signup/twitter/callback/' }));
   app.get('/signup/twitter/callback/', require('./views/signup/index').signupTwitter);
@@ -51,6 +64,7 @@ exports = module.exports = function(app, passport) {
   app.get('/signup/google/callback/', require('./views/signup/index').signupGoogle);
   app.get('/signup/tumblr/', passport.authenticate('tumblr', { callbackURL: '/signup/tumblr/callback/' }));
   app.get('/signup/tumblr/callback/', require('./views/signup/index').signupTumblr);
+  */
 
   //login/out
   app.get('/login/', require('./views/login/index').init);

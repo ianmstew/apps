@@ -1,8 +1,12 @@
 @import "../less/engineui-build.less";
+@import "../less/brand-apinetwork.less";
 @import "bootstrap/less/mixins.less";
 
+html,
 body {
-  padding-top: 66px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 h1, h2 {
@@ -32,54 +36,173 @@ select, textarea, input, .form-control {
   padding-left: 12px;
 }
 
-.navbar {
-  .box-shadow(0 2px 5px rgba(0,0,0,.125));
+.sticky-footer-wrap {
+  min-height: 100%;
+  margin-bottom: -@footer-height;
 
-  .navbar-brand {
-    font-weight: bold;
-    color: #003d5f;
-    position: relative;
-    display: inline-block;
-
-    .navbar-logo {
-      position: absolute;
-      top: 10px;
-      height: 32px;
-      width: 32px;
-    }
-  }
-  .navbar-brand-label {
-    margin-left: 35px;
+  &:after {
+    content: "";
+    display: block;
+    height: @footer-height;
   }
 }
 
-.footer {
-  margin-top: 50px;
-  color: #999;
+.navbar {
+  &:extend(.container-fluid);
 
-  .container {
-    border-top: 1px solid #ccc;
-    padding: 20px 5px 20px 5px;
-    border-radius: 4px;
-  }
-  a, a:visited {
-    color: #999;
-  }
-  .links {
-    margin: 0;
-    padding: 0;
-
+  .navbar-nav {
     li {
-      display: inline-block;
-      padding-right: 10px;
-      margin-right: 10px;
-      list-style: none;
-      border-right: 1px dotted #999;
+      a {
+        padding-bottom: 12px;
+      }
     }
-    li:last-child {
-      padding-right: 0;
-      margin-right: 0;
-      border: none;
+  }
+
+  padding-left: 0;
+  background: url('../media/api-network.png') no-repeat 15px center;
+  background-size: 40px;
+
+  .box-shadow(0 2px 5px rgba(0,0,0,.125));
+
+  a {
+    padding-left: 65px;
+
+    @media screen and (max-width: @screen-phone) {
+      display: none;
+    }
+  }
+}
+
+.avatar {
+  margin-top: -7px;
+  height: 50px;
+}
+
+.content {
+  height: 100%;
+}
+
+// For Landing Page Sign In/Up Forms
+.user-login {
+  &:extend(.row);
+
+  padding-top: 3%;
+  min-height: 100%;
+  text-align: center;
+  background-color: @gray-even-lighter;
+}
+
+// User
+.user-account-form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+
+  &:after {
+    content: "";
+    display: block;
+    height: ceil(@footer-height * 3.5);
+  }
+
+  // Use media queries to adjust to viewport
+  @media (max-width: @screen-desktop) {
+    width: 60%;
+  }
+
+  @media (max-width: @screen-tablet) {
+    width: 80%;
+  }
+
+  @media (max-width: @screen-phone) {
+    width: 80%;
+  }
+}
+
+// Forms for Create Account & Log In
+.tab-buttons {
+  &:extend(.row);
+
+  padding-top: 1%;
+
+  .btn-create-account,
+  .btn-user-login {
+    &:extend(.btn, .btn-lg, .btn-block);
+
+    outline: none;
+
+    margin: 0 auto;
+    text-transform: uppercase;
+    background: none;
+
+    &:active,
+    &:focus {
+      &:extend(.btn-primary);
+    }
+  }
+}
+
+.tab-content,
+.tab-pane {
+  margin: 0;
+}
+
+#signup,
+#login {
+  &:extend(.col-xs-12, .col-md-12, .col-lg-12);
+
+  padding-top: 2%;
+
+  .checkbox,
+  .forgot-password {
+    float: left;
+    padding-top: 0;
+    width: 50%;
+    min-height: 0;
+  }
+
+  .forgot-password {
+    text-align: right;
+
+    i {
+      padding-right: 1%;
+    }
+  }
+
+  .form-group {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+
+    button {
+      &:extend(.btn-lg);
+    }
+  }
+}
+// ******
+
+// For Static Pages
+.static-content {
+  padding: 0.5% 1%;
+}
+
+footer {
+  height: @footer-height;
+  color: #FFF;
+  background-color: #393939;
+
+  > div {
+    &:extend(.container-fluid all);
+
+    > p {
+      padding-top: 20px;
+
+      a {
+        padding: 0 1%;
+
+        &:first-child {
+          padding-left: 2%;
+        }
+      }
     }
   }
 }

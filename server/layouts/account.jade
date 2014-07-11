@@ -4,41 +4,17 @@ html
     block head
       title #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='icon', type='image/ico', href='http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_64,w_64/ecqtlr31kaa7kllvrz9o.png')
     link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
     block neck
   body
-    div.navbar.navbar-default.navbar-fixed-top
-      div.container
-        div.navbar-header
-          a.navbar-brand(href='/account/')
-            img.navbar-logo(src='/media/logo-symbol-64x64.png')
-            span.navbar-brand-label #{projectName}
-          button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        div.navbar-collapse.my-navbar-collapse.collapse
-          ul.nav.navbar-nav
-            li: a(href='/account/') My Account
-            li: a(href='/account/settings/') Settings
-          ul.nav.navbar-nav.pull-right
-            li: a(href='/logout/')
-              i.fa.fa-user
-              |  Sign Out
+    div.sticky-footer-wrap
+      include includes/header.jade
 
-    div.page
-      div.container
+      main#content-region.content
         block body
 
-    div.footer
-      div.container
-        div.inner
-          span.copyright.pull-right
-            |&#169; #{copyrightYear} #{copyrightName}
-          ul.links
-            li: a(href='/') Home
-            li: a(href='/logout/') Sign Out
-          div.clearfix
+    include includes/footer.jade
 
     div.ajax-spinner
       img(src='/media/ajax-pulse.gif')
