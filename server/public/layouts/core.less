@@ -46,32 +46,24 @@ select, textarea, input, .form-control {
     display: block;
     height: @footer-height;
   }
+
+  > div {
+    height: 100%;
+  }
 }
 
 .navbar {
   &:extend(.container-fluid);
 
+  padding-left: 0;
+  background: url('../media/api-network.png') no-repeat 1.25% center;
+  background-size: 40px;
+
   .box-shadow(0 2px 5px rgba(0,0,0,.125));
 
-  .navbar-brand {
-    background: url('../media/api-network.png') no-repeat left center;
-    background-size: 40px;
-    padding-left: 55px;
-
-    /*
-    .navbar-logo {
-      position: absolute;
-      top: 10px;
-      height: 32px;
-      width: 32px;
-    }
-    */
+  a {
+    padding-left: 65px;
   }
-  /*
-  .navbar-brand-label {
-    margin-left: 35px;
-  }
-  */
 }
 
 .avatar {
@@ -81,105 +73,97 @@ select, textarea, input, .form-control {
 
 .content {
   padding: 1%;
-  height: 100%;
+  // height: 100%;
 }
 
 // For Landing Page Sign In/Up Forms
 .user-login {
   &:extend(.row);
 
-  margin-left: -1%;
-  margin-right: -1%;
-  margin-top: -1%;
+  margin: -1% -1% 0 -1%;
   padding-top: 3%;
-  height: 100%;
   text-align: center;
   background-color: @gray-even-lighter;
-
-  .user-account-form,
-  > h1,
-  > h4 {
-    margin: 0 auto;
-  }
-
-  h1,
-  h4 {
-    width: 35%;
-  }
-
-  h1 {
-    line-height: 1.75em;
-  }
 }
 
+// User
 .user-account-form {
-  padding-top: 1.5%;
-  width: 30%;
-  height: 65vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  height: 67vh;
 
-  div {
-    &:extend(.row);
+  // Use media queries to adjust to viewport
+  @media (max-width: @screen-desktop) {
+    width: 60%;
+  }
 
-    .form-create-account,
-    .form-user-login {
-      &:extend(.col-xs-12, .col-md-6, .col-lg-6);
+  @media (max-width: @screen-tablet) {
+    width: 80%;
+  }
 
-      button.btn-create-account,
-      button.btn-user-login {
-        &:extend(.btn, .btn-lg, .btn-block);
+  @media (max-width: @screen-phone) {
+    width: 80%;
+  }
+}
 
-        margin: 0 auto;
-        text-transform: uppercase;
-        background: none;
+// Forms for Create Account & Log In
+.tab-buttons {
+  &:extend(.row);
 
-        &:active {
-          &:extend(.btn-primary);
-        }
-      }
-    }
+  padding-top: 1%;
 
-    .tab-content,
-    .tab-pane {
-      margin: 0;
+  .btn-create-account,
+  .btn-user-login {
+    &:extend(.btn, .btn-lg, .btn-block);
+
+    outline: none;
+
+    margin: 0 auto;
+    text-transform: uppercase;
+    background: none;
+
+    &:active,
+    &:focus {
+      &:extend(.btn-primary);
     }
   }
 }
 
-.tab-content {
-  .tab-pane {
+.tab-content,
+.tab-pane {
+  margin: 0;
+}
 
-    #signup {
-      &:extend(.col-xs-12, .col-md-12, .col-lg-12);
+#signup,
+#login {
+  &:extend(.col-xs-12, .col-md-12, .col-lg-12);
 
-      padding-top: 2%;
+  padding-top: 2%;
 
-      form {
+  .checkbox,
+  .forgot-password {
+    float: left;
+    padding-top: 0;
+    width: 50%;
+    min-height: 0;
+  }
 
-        > button {
-          &:extend(.btn-lg);
+  .forgot-password {
+    text-align: right;
 
-          text-transform: uppercase;
-        }
+    i {
+      padding-right: 1%;
+    }
+  }
 
-        .form-group {
-          margin-left: 0;
-          margin-right: 0;
-          text-align: left;
+  .form-group {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
 
-          > .checkbox {
-            margin: 0 0 0 0.5%;
-            padding-top: 0;
-          }
-
-          .forgot-password {
-            text-align: right;
-
-            i {
-              padding-right: 1%;
-            }
-          }
-        }
-      }
+    button {
+      &:extend(.btn-lg);
     }
   }
 }
