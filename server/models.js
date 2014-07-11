@@ -18,4 +18,5 @@ exports = module.exports = function(app, mongoose) {
   require( './schema/OAuthApp' )( app, mongoose );
   require( './schema/OAuthToken' )( app, mongoose );
   require( './schema/ApiConnection' )( app, mongoose );
+  require( './schema/ApiTokens')( app, mongoose );
 };
