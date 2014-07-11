@@ -7,11 +7,11 @@ block feet
   script(src='/views/login/forgot/index.min.js?#{cacheBreaker}')
 
 block body
-  div.row
-    div.col-sm-6
-      div.page-header
-        h1 Forgot Your Password?
+  .static-content.row
+    .col-md-6
+      h1 Forgot Your Password?
       div#forgot
+    .col-md-6
 
   script(type='text/template', id='tmpl-forgot')
     form

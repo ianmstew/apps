@@ -16,16 +16,24 @@ header#header-region
           a(href='/about/') About
         li
           a(href='/help/') Help
-        li.dropdown.avatar
-          a.dropdown-toggle(href='#', data-toggle='dropdown')
-            span.fa-stack.fa-lg
-              i.fa.fa-circle.fa-stack-2x
-              i.fa.fa-user.fa-stack-1x.fa-inverse
-            | becky@engine.co
-            b.caret
-          ul.dropdown-menu
-            li
-              a(href='#') Account Settings
-            li.divider
-            li
-              a(href='#') Log Out
+        if user && user.username
+          li.dropdown.avatar
+            a.dropdown-toggle(href='#{user.defaultReturnUrl}', data-toggle='dropdown')
+              span.fa-stack.fa-lg
+                i.fa.fa-circle.fa-stack-2x
+                i.fa.fa-user.fa-stack-1x.fa-inverse
+              | #{user.username}
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href='#') Account Settings
+              li.divider
+              li
+                a(href='/logout/') Log Out
+        else
+          li.dropdown.avatar
+            a(href='/login/')
+              span.fa-stack.fa-lg
+                i.fa.fa-circle.fa-stack-2x
+                i.fa.fa-user.fa-stack-1x.fa-inverse
+              | Sign In
