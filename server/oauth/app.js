@@ -177,8 +177,6 @@ module.exports = exports = {
 																	if( !tokens || 
 																		( new Date().getTime() - tokens.timestamp ) > 600000 )
 																	{
-																		console.log( 'Going to reauthenticate, existing tokens:' );
-																		console.log( tokens );
 																		done( connection );
 																	}
 																	else
@@ -191,11 +189,18 @@ module.exports = exports = {
 														function( unauthenticated ) {
 															if( unauthenticated )
 															{
-																// Authenticate that one, its callback should send us back here.
-																console.log( 'Need to authenticate to: ' );
-																console.log( unauthenticated );
+																// Authenticate that one, its callback should send us to oauth/app/subauth/callback.
+																req.session.apiNetworkCurrentRemote = unauthenticated._id;
+																req.session.save( function( error ) {
+																	if( error )
+																		console.trace( error );
 
-																req.app.passport.authenticate( 'remote', unauthenticated )( req, res );
+																	req.app.passport.authenticate( 'remote', {
+																		type: unauthenticated.type,
+																		connectionData: unauthenticated.connectionData,
+																		callback: '/oauth/app/subauth/callback'
+																	} )( req, res );
+																} );
 															}
 															else
 															{
