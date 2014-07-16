@@ -175,8 +175,10 @@ module.exports = exports = {
 																},
 																function( error, tokens ) {
 																	if( !tokens || 
-																		( new Date().getTime() - tokens.timestamp ) > 600000 )
+																		( new Date().getTime() - tokens.timestamp ) > 60000 )
 																	{
+																		console.log( 'Going to reauthenticate, existing tokens:' );
+																		console.log( tokens );
 																		done( connection );
 																	}
 																	else
@@ -192,57 +194,8 @@ module.exports = exports = {
 																// Authenticate that one, its callback should send us back here.
 																console.log( 'Need to authenticate to: ' );
 																console.log( unauthenticated );
-																req.app.db.models.ApiTokens.findOne(
-																	{
-																		user: req.user._id,
-																		apiConnection: unauthenticated._id
-																	},
-																	function( error, tokens ) {
-																		if( tokens ) 
-																		{
-																			tokens.timestamp = new Date().getTime();
-																			tokens.save( function( error ) {
-																				if( error )
-																					res.send( 500, error.toString );
-																				else
-																				{
-																					console.log( 'TODO: Remove this manual redirect to ourself.' );
-																					res.redirect( '/oauth/app/subauth' );
-																				}
-																			});
-																		}
-																		else
-																		{
-																			req.app.db.models.ApiTokens.create( 
-																				{
-																					apiConnection: unauthenticated._id,
-																					user: req.user._id,
-																					timestamp: new Date().getTime(),
-																					tokenSet: {
-																						"TODO": "REPLACE THIS WITH REAL TOKENS!"
-																					}
-																				},
-																				function( error, tokens ) {
-																					if( error )
-																						res.send( 500, error.toString() );
-																					else
-																						tokens.save( function( error ) {
-																							if( error )
-																								res.send( 500, error.toString );
-																							else
-																							{
-																								console.log( 'TODO: Remove this manual redirect to ourself.' );
-																								res.redirect( '/oauth/app/subauth' );
-																							}
-																						});
-																				}
-																			);
-																		}
-																	}
-																);
 
-																
-																//res.send( 500, "Unimplemented, store some tokens to test the loop." );
+																req.app.passport.authenticate( 'remote', unauthenticated )( req, res );
 															}
 															else
 															{
@@ -275,5 +228,84 @@ module.exports = exports = {
 				}
 			}
 		);
+	},
+
+	remoteAuthCallback: function( req, res ) {
+
+		// Check for existence of an API connection to help prevent abuse.
+		req.app.db.models.ApiConnection.findOne( 
+			{ _id: req.session.apiNetworkCurrentRemote },
+			function( error, connection ) {
+				if( error )
+					res.send( 500, error.toString() );
+				else
+				{
+					if( connection )
+					{
+						// See if we already have a token set for this connection.
+						req.app.db.models.ApiTokens.findOne(
+							{
+								apiConnection: connection._id,
+								user: req.user._id
+							},
+							function( error, tokens ) {
+								if( error )
+									res.send( 500, error.toString() );
+								else
+								{
+									if( tokens )
+									{
+										tokens.timestamp = new Date().getTime(),
+										tokens.tokenSet = {
+											"TODO": "REPLACE THIS WITH REAL UPDATED TOKENS!"
+										}
+										tokens.save( function( error ) {
+											if( error )
+												res.send( 500, error.toString() );
+											else
+												res.redirect( '/oauth/app/subauth' );
+										});
+									}
+									else
+									{
+										var tokenData = {
+											apiConnection: connection._id,
+											user: req.user._id,
+											timestamp: new Date().getTime(),
+											tokenSet: {
+												"TODO": "REPLACE THIS WITH REAL TOKENS!"
+											}
+										}
+
+										req.app.db.models.ApiTokens.create( 
+											tokenData,
+											function( error, tokens ) {
+												if( error )
+													res.send( 500, error.toString() );
+												else
+													tokens.save( function( error ) {
+														if( error )
+															res.send( 500, error.toString );
+														else
+															res.redirect( '/oauth/app/subauth' );
+													});
+											}
+										);
+
+									}
+								}
+							}
+						);
+
+					}
+					else
+					{
+						res.send( 404, 'No connection found!: ' + req.session.apiNetworkCurrentRemote );
+					}
+				}
+			}
+		);
+
+		
 	}
 };
