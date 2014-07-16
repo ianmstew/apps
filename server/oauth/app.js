@@ -175,7 +175,7 @@ module.exports = exports = {
 																},
 																function( error, tokens ) {
 																	if( !tokens || 
-																		( new Date().getTime() - tokens.timestamp ) > 60000 )
+																		( new Date().getTime() - tokens.timestamp ) > 600000 )
 																	{
 																		console.log( 'Going to reauthenticate, existing tokens:' );
 																		console.log( tokens );
