@@ -1,0 +1,36 @@
+header#header-region
+  nav.navbar.navbar-default(role='navigation')
+    .navbar-header
+      a.navbar-brand(href='/')
+        | APINetwork Application Manager
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='#main-navigation')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+    //
+       /.navbar-header
+    #main-navigation.collapse.navbar-collapse
+      ul.nav.navbar-nav.nav-pills.navbar-right
+        li: a(href='/about/') About
+        li: a(href='/help/') Help
+        if user && user.username
+          li.dropdown.avatar
+            a.dropdown-toggle(href='#{user.defaultReturnUrl}', data-toggle='dropdown')
+              span.fa-stack.fa-lg
+                i.fa.fa-circle.fa-stack-2x
+                i.fa.fa-user.fa-stack-1x.fa-inverse
+              | #{user.username}
+              b.caret
+            ul.dropdown-menu
+              li: a(href='/account/') My Account
+              li: a(href='/account/settings/') Settings
+              li.divider
+              li: a(href='/logout/') Log Out
+        else
+          li.dropdown.avatar
+            a(href='/login/')
+              span.fa-stack.fa-lg
+                i.fa.fa-circle.fa-stack-2x
+                i.fa.fa-user.fa-stack-1x.fa-inverse
+              | Sign In

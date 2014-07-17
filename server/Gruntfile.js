@@ -134,7 +134,10 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'public/views/',
-          src: ['**/*.js', '!**/*.min.js'],
+          src: [
+            '*.js', '!*.min.js',
+            '**/*.js', '!**/*.min.js'
+          ],
           dest: 'public/views/',
           ext: '.min.js'
         }]
