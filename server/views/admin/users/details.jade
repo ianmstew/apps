@@ -7,13 +7,11 @@ block feet
   script(src='/views/admin/users/details.min.js?#{cacheBreaker}')
 
 block body
-  div.row
-    div.col-xs-12
-      div#header
-      div#identity
-      div#roles
-      div#password
-      div#delete
+  div#header
+  div#identity
+  div#roles
+  div#password
+  div#delete
 
   script(type='text/template', id='tmpl-header')
     div.page-header

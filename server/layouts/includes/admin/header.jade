@@ -25,11 +25,17 @@ header#header-region
               | #{user.username}
               b.caret
             ul.dropdown-menu
-              li
-                a(href='#') Account Settings
+              li.dropdown-header Pivoted Settings
+              li: a(href='/admin/statuses/') Statuses
+              li: a(href='/admin/categories/') Categories
               li.divider
-              li
-                a(href='/logout/') Log Out
+              li.dropdown-header User Admin
+              li: a(href='/admin/users/') Users
+              li: a(href='/admin/accounts/') Accounts
+              li: a(href='/admin/administrators/') Administrators
+              li: a(href='/admin/admin-groups/') Admin Groups
+              li.divider
+              li: a(href='/logout/') Log Out
         else
           li.dropdown.avatar
             a(href='/login/')
