@@ -30,7 +30,7 @@ function ensureAccount(req, res, next) {
 
 exports = module.exports = function(app, passport) {
   //front end
-  app.get('/', require('./views/index').init);
+  app.get('/', require('./views/login/index').init);
   app.get('/about/', require('./views/about/index').init);
   app.get('/contact/', require('./views/contact/index').init);
   app.post('/contact/', require('./views/contact/index').sendMessage);
@@ -48,8 +48,8 @@ exports = module.exports = function(app, passport) {
   app.get('/privacy/', require('./views/privacy/index').init);
 
   //sign up
-  //app.get('/signup/', require('./views/signup/index').init);
-  //app.post('/signup/', require('./views/signup/index').signup);
+  app.get('/signup/', require('./views/signup/index').init);
+  app.post('/signup/', require('./views/signup/index').signup);
 
   //social sign up
   /*
