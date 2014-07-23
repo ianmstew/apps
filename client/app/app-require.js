@@ -1,22 +1,22 @@
 require.config({
 
   paths: {
-    'jquery':                  '../vendor/jquery/jquery',
-    'underscore':              '../vendor/underscore/underscore',
     'backbone':                '../vendor/backbone/backbone',
-    'backbone.wreqr':          '../vendor/backbone.wreqr/backbone.wreqr',
     'backbone.babysitter':     '../vendor/backbone.babysitter/backbone.babysitter',
     'backbone.computedfields': '../vendor/backbone-computedfields/backbone.computedfields',
-    'marionette':              '../vendor/marionette/backbone.marionette',
+    'backbone.radio':          '../vendor/backbone.radio/backbone.radio',
+    'backbone.wreqr':          '../vendor/backbone.wreqr/backbone.wreqr',
     'bootstrap':               '../vendor/bootstrap/bootstrap',
-    'spinner':                 '../vendor/spin.js/spin',
     'hogan':                   '../vendor/requirejs-hogan-plugin/hogan',
     'hgn':                     '../vendor/requirejs-hogan-plugin/hgn',
+    'jquery':                  '../vendor/jquery/jquery',
+    'marionette':              '../vendor/marionette/backbone.marionette',
+    'spinner':                 '../vendor/spin.js/spin',
     'text':                    '../vendor/requirejs-hogan-plugin/text',
+    'underscore':              '../vendor/underscore/underscore',
     
-    // change to -prod for production
-    'lib/util/logger':              'lib/util/logger-dev',
-    'lib/util/eventDebugger':       'lib/util/eventDebugger-dev'
+    // change -dev to -prod for production
+    'lib/util/logger':              'lib/util/logger-dev'
   },
 
   shim: {

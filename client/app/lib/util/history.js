@@ -2,7 +2,7 @@ define(function (require) {
   var Backbone = require('backbone');
 
   var history = {
-
+    
     start: function () {
       Backbone.history.start();
     },
