@@ -165,5 +165,5 @@ module.exports = function (grunt) {
     'shell:sourcemap_links'
   ]);
 
-  grunt.registerTask('default', ['build-dev', 'watch']);
+  grunt.registerTask('default', ['build-dev']);
 };
