@@ -39,10 +39,6 @@ block body
                   label
                     input(type='checkbox')
                     | Keep me logged in
-                .forgot-password
-                  a(href='/login/forgot/')
-                    i.fa.fa-question-circle
-                    | Forgot Password?
               .form-group
                 button.btn-gray-block(type='submit')
                   | Create Account
@@ -68,6 +64,40 @@ block body
               .form-group
                 button.btn-gray-block(type='button')
                   | Log In
+
+  script(type='text/template', id='tmpl-signup')
+    form.form-horizontal(role='form')
+      div.alerts
+        |<% _.each(errors, function(err) { %>
+        div.alert.alert-danger.alert-dismissable
+          button.close(type='button', data-dismiss='alert') &times;
+          |<%- err %>
+        |<% }); %>
+      //
+        .form-group(class!='<%- errfor.username ? "has-error" : "" %>')
+          label.sr-only(for='username') Pick Username
+          input#username.form-control(type='text', name='username', value!='<%= username %>', placeholder='Username')
+          span.help-block <%- errfor.username %>
+      .form-group(class!='<%- errfor.username ? "has-error" : "" %>')
+        label.sr-only(for='emailAddress') Email address
+        input#emailAddress.form-control(type='email', name='email', value!='<%= email %>', placeholder='E-mail Address')
+        span.help-block <%- errfor.email %>
+      .form-group(class!='<%- errfor.password ? "has-error" : "" %>')
+        label.sr-only(for='password') Password
+        input#password.form-control(type='password', name='password', value!='<%= password %>', placeholder='Enter Password')
+        span.help-block <%- errfor.password %>
+      .form-group
+        label.sr-only(for='confirmPassword') Password
+        input#confirmPassword.form-control(type='password', placeholder='Confirm Password')
+        span.help-block <%- errfor.password %>
+      .form-group
+        .checkbox
+          label
+            input(type='checkbox')
+            | Keep me logged in
+      .form-group
+        button.btn-gray-block.btn-signup(type='submit')
+          | Create Account
 
   script(type='text/template', id='tmpl-login')
     form.form-horizontal(role='form')
@@ -97,39 +127,3 @@ block body
       .form-group
         button.btn-gray-block.btn-login(type='button')
           | Log In
-
-  script(type='text/template', id='tmpl-signup')
-    form.form-horizontal(role='form')
-      div.alerts
-        |<% _.each(errors, function(err) { %>
-        div.alert.alert-danger.alert-dismissable
-          button.close(type='button', data-dismiss='alert') &times;
-          |<%- err %>
-        |<% }); %>
-      .form-group(class!='<%- errfor.username ? "has-error" : "" %>')
-        label.sr-only(for='username') Pick Username
-        input#username.form-control(type='text', name='username', value!='<%= username %>', placeholder='Username')
-        span.help-block <%- errfor.username %>
-      .form-group(class!='<%- errfor.username ? "has-error" : "" %>')
-        label.sr-only(for='emailAddress') Email address
-        input#emailAddress.form-control(type='email', name='email', value!='<%= email %>', placeholder='E-mail Address')
-        span.help-block <%- errfor.email %>
-      .form-group(class!='<%- errfor.password ? "has-error" : "" %>')
-        label.sr-only(for='password') Password
-        input#password.form-control(type='password', name='password', value!='<%= password %>', placeholder='Enter Password')
-        span.help-block <%- errfor.password %>
-      .form-group
-        label.sr-only(for='confirmPassword') Password
-        input#confirmPassword.form-control(type='password', placeholder='Confirm Password')
-      .form-group
-        .checkbox
-          label
-            input(type='checkbox')
-            | Keep me logged in
-        .forgot-password
-          a(href='/login/forgot/')
-            i.fa.fa-question-circle
-            | Forgot Password?
-      .form-group
-        button.btn-gray-block.btn-signup(type='submit')
-          | Create Account
