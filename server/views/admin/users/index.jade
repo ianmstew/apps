@@ -10,10 +10,11 @@ block feet
   script(src='/views/admin/users/index.min.js?#{cacheBreaker}')
 
 block body
-  div#header
-  div#filters
-  div#results-table
-  div#results-paging
+  .static-content
+    div#header
+    div#filters
+    div#results-table
+    div#results-paging
 
   script(type='text/template', id='tmpl-header')
     form.form-inline.pull-right

@@ -41,14 +41,9 @@ select, textarea, input, .form-control {
 
 .sticky-footer-wrap {
   min-height: 100%;
-  height: @full-height;
   margin-bottom: -@footer-height;
-
-  &:after {
-    content: "";
-    display: block;
-    // height: @footer-height;
-  }
+  height: 100%;
+  height: auto !important;
 }
 
 header {
@@ -100,6 +95,16 @@ header {
   height: 100%;
 }
 
+// Added for proper height and bg extend
+.user-login,
+.static-content {
+  &:after {
+    content: "";
+    display: block;
+    height: @footer-height;
+  }
+}
+
 // For Landing Page Sign In/Up Forms
 .user-login {
   &:extend(.row);
@@ -108,6 +113,9 @@ header {
   min-height: 100%;
   text-align: center;
   background-color: @gray-even-lighter;
+
+  &:after {
+  }
 }
 
 // User

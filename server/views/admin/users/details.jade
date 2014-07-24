@@ -7,17 +7,17 @@ block feet
   script(src='/views/admin/users/details.min.js?#{cacheBreaker}')
 
 block body
-  div#header
-  div#identity
-  div#roles
-  div#password
-  div#delete
+  .static-content
+    div#header
+    div#identity
+    div#roles
+    div#password
+    div#delete
 
   script(type='text/template', id='tmpl-header')
-    div.page-header
-      h1
-        a(href='/admin/users/') Users
-        |  / <%= username %>
+    h1
+      a(href='/admin/users/') Users
+      |  / <%= username %>
 
   script(type='text/template', id='tmpl-identity')
     fieldset
