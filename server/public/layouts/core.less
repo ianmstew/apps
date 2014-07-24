@@ -2,11 +2,14 @@
 @import "../less/brand-apinetwork.less";
 @import "bootstrap/less/mixins.less";
 
+// Needed for full height on containers
+@full-height: 100%;
+
 html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: @full-height;
 }
 
 h1, h2 {
@@ -38,18 +41,26 @@ select, textarea, input, .form-control {
 
 .sticky-footer-wrap {
   min-height: 100%;
+  height: @full-height;
   margin-bottom: -@footer-height;
 
   &:after {
     content: "";
     display: block;
-    height: @footer-height;
+    // height: @footer-height;
   }
+}
+
+header {
+  position: absolute;
+  width: 100%;
+  background: #fff;
 }
 
 .navbar {
   &:extend(.container-fluid);
 
+  /*
   .navbar-nav {
     li {
       a {
@@ -57,9 +68,10 @@ select, textarea, input, .form-control {
       }
     }
   }
+  */
 
   padding-left: 0;
-  background: url('../media/api-network.png') no-repeat 15px center;
+  background: url('../media/api-network.png') no-repeat 15px 13px;
   background-size: 40px;
 
   .box-shadow(0 2px 5px rgba(0,0,0,.125));
@@ -74,11 +86,17 @@ select, textarea, input, .form-control {
 }
 
 .avatar {
-  margin-top: -7px;
-  height: 50px;
+  .fa-stack {
+    height: 1em;
+  }
+
+  .fa-lg {
+    margin-top: -20px;
+  }
 }
 
 .content {
+  padding-top: 66px;
   height: 100%;
 }
 
@@ -119,6 +137,33 @@ select, textarea, input, .form-control {
 }
 
 // Forms for Create Account & Log In
+.nav-tabs {
+  border-bottom: 0;
+
+  .form-create-account,
+  .form-user-login {
+    // Need extend of col-*-6
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 50%;
+
+    @media (max-width: @screen-phone) {
+      // Need extend .col-*-12
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  // &:extend(.btn-primary);
+  color: @btn-primary-color;
+  background: @btn-primary-bg;
+  border: @btn-primary-border;
+}
+
 .tab-buttons {
   &:extend(.row);
 
@@ -130,14 +175,10 @@ select, textarea, input, .form-control {
 
     outline: none;
 
+    color: @btn-default-color;
     margin: 0 auto;
     text-transform: uppercase;
     background: none;
-
-    &:active,
-    &:focus {
-      &:extend(.btn-primary);
-    }
   }
 }
 
@@ -202,6 +243,16 @@ footer {
         &:first-child {
           padding-left: 2%;
         }
+
+        &:hover {
+          color: @brand-primary;
+          text-decoration: underline;
+        }
+      }
+
+      @media (max-width: @screen-tablet) {
+        padding-top: 10px;
+        font-size: 1em;
       }
     }
   }

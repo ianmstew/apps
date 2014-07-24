@@ -13,12 +13,12 @@ block body
       h1 Power your app with APINetwork.
         h4
           | Lorem ipsum dolor sit amet consectetur adipiscing elit.
-      .tab-buttons
-        .form-create-account.col-md-6
-          button.btn-create-account(href='#createAccount', data-toggle='tab')
+      ul.tab-buttons.nav.nav-tabs
+        li.form-create-account.active
+          a.btn-create-account(href='#createAccount', data-toggle='tab')
             | Create Account
-        .form-user-login.col-md-6
-          button.btn-user-login(href='#userLogin', data-toggle='tab')
+        li.form-user-login
+          a.btn-user-login(href='#userLogin', data-toggle='tab')
             | Login
 
       .tab-content
@@ -81,12 +81,12 @@ block body
       .form-group(class!='<%- errfor.username ? "has-error" : "" %>')
         label.sr-only(for='emailAddress') Email address
         input#emailAddress.form-control(type='email', name='email', value!='<%= email %>', placeholder='E-mail Address')
-        span.help-block <%- errfor.email %>
+        span.help-block <%- errfor.username %>
       .form-group(class!='<%- errfor.password ? "has-error" : "" %>')
         label.sr-only(for='password') Password
         input#password.form-control(type='password', name='password', value!='<%= password %>', placeholder='Enter Password')
         span.help-block <%- errfor.password %>
-      .form-group
+      .form-group(class!='<%- errfor.password ? "has-error" : "" %>')
         label.sr-only(for='confirmPassword') Password
         input#confirmPassword.form-control(type='password', placeholder='Confirm Password')
         span.help-block <%- errfor.password %>
