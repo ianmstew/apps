@@ -6,5 +6,7 @@ define(function (require) {
   require('lib/config/captureHrefs');
   require('lib/config/debugRadio');
 
-  require('app').start();
+  var App = require('app');
+
+  (new App()).start();
 });

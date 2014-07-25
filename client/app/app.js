@@ -2,29 +2,56 @@ define(function (require) {
   var Marionette = require('marionette'),
       history = require('lib/util/history'),
       channels = require('channels'),
-      appManager = require('modules/appManager/appManager'),
-      entities = require('modules/entities/entities');
+      AppManagerModule = require('modules/appManager/appManager.module'),
+      EntitiesModule = require('modules/entities/entities.module');
   
-  var app = new Marionette.Application();
+  var App = Marionette.Application.extend({
 
-  app.addRegions({
-    contentRegion: '#content-region'
-  });
+    regions: {
+      contentRegion: '#content-region'
+    },
 
-  app.addInitializer(function () {
-    appManager.triggerMethod('start', {
-      region: app.contentRegion
-    });
-    entities.triggerMethod('start');
-  });
+    modules: null,
 
-  app.on('start', function () {
-    history.start();
-    
-    if (history.getCurrentRoute() === '') {
-      channels.appManager.trigger('list:apps');
+    // runs 1st
+    constructor: function () {
+      App.__super__.constructor.apply(this, arguments);
+      _.bindAll(this, 'initializer');
+
+      this.modules = {
+        appManager: new AppManagerModule({
+          region: this.contentRegion
+        }),
+
+        // inject bootstrapped user data from server
+        entities: new EntitiesModule({
+          user: (window.bootstrap || {}).user
+        })
+      };
+
+      this.addInitializer(this.initializer);
+    },
+
+    // runs 2nd
+    onBeforeStart: function () {
+      // modules may depend on entities, so ensure they are running first
+      this.modules.entities.start();
+    },
+
+    // runs 3rd
+    initializer: function () {
+      this.modules.appManager.start();
+    },
+
+    // runs 4th
+    onStart: function () {
+      history.start();
+      
+      if (history.getCurrentRoute() === '') {
+        channels.appManager.trigger('list:apps');
+      }
     }
   });
 
-  return app;
+  return App;
 });

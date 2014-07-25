@@ -206,7 +206,7 @@ module.exports = function(grunt) {
         ]
       },
       vendor: {
-        src: ['public/vendor/**']
+        src: ['bower_components', 'public/vendor/**']
       }
     },
     shell: {
@@ -225,7 +225,22 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('default', ['shell:bower', 'copy:vendor', 'newer:uglify', 'newer:less', 'concurrent']);
-  grunt.registerTask('build', ['shell:bower', 'copy:vendor', 'uglify', 'less']);
+  grunt.registerTask('develop', [
+    'shell:bower',
+    'copy:vendor',
+    'newer:uglify',
+    'newer:less',
+    'concurrent'
+  ]);
+
+  grunt.registerTask('build', [
+    'shell:bower',
+    'copy:vendor',
+    'uglify',
+    'less'
+  ]);
+
   grunt.registerTask('lint', ['jshint']);
+
+  grunt.registerTask('default', ['develop']);
 };
