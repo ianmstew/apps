@@ -10,20 +10,18 @@ block feet
   script(src='/views/admin/accounts/index.min.js?#{cacheBreaker}')
 
 block body
-  div.row
-    div.col-xs-12
-      div#header
-      div#filters
-      div#results-table
-      div#results-paging
+  .static-content
+    div#header
+    div#filters
+    div#results-table
+    div#results-paging
 
   script(type='text/template', id='tmpl-header')
-    div.page-header
-      form.form-inline.pull-right
-        div.input-group
-          input.form-control(name='name', type='text', placeholder='enter a name', value!='<%- name.full %>')
-          button.btn.btn-primary.btn-add(type='button') Add New
-      h1 Accounts
+    form.form-inline.pull-right
+      div.input-group
+        input.form-control(name='name', type='text', placeholder='enter a name', value!='<%- name.full %>')
+        button.btn.btn-primary.btn-add(type='button') Add New
+    h1 Accounts
 
   script(type='text/template', id='tmpl-filters')
     form.filters
