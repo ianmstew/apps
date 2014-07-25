@@ -4,25 +4,20 @@ module.exports = function (grunt) {
     subgrunt: {
       dev: {
         projects: {
-          'client': 'default',
-          'server': 'default'
+          'client': ['build-dev', 'watch'],
+          'server': 'develop'
         }
       },
       prod: {
         projects: {
-          'client': 'build-prod',  // TODO
-          'server': 'build'
+          'client': ['clean', 'build-prod'],  // TODO
+          'server': ['clean', 'build']
         }
       },
       clean: {
         projects: {
           'client': 'clean',
           'server': 'clean'
-        }
-      },
-      watch: {
-        projects: {
-          'client': 'watch'
         }
       }
     }
@@ -31,9 +26,8 @@ module.exports = function (grunt) {
   // bring in all grunt plugins from package.json
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('build-dev', ['subgrunt:dev', 'subgrunt:watch']);
+  grunt.registerTask('develop', ['subgrunt:dev']);
   grunt.registerTask('build-prod', ['subgrunt:prod']);
-  grunt.registerTask('watch', ['subgrunt:watch']);
 
-  grunt.registerTask('default', ['build-dev']);
+  grunt.registerTask('default', ['develop']);
 };

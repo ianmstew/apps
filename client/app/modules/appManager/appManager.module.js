@@ -1,28 +1,20 @@
 define(function (require) {
-  var Marionette = require('marionette'),
+  var Module = require('lib/common/module'),
       channels = require('channels'),
       history = require('lib/util/history'),
-      ListManager = require('modules/appManager/list/ListManager');
+      AppListManager = require('modules/appManager/list/appList.manager');
 
-  var Router = Marionette.AppRouter.extend({
-    appRoutes: {
+  var AppManagerModule = Module.extend({
+
+    routes: {
       'apps': 'listApps',
       'apps/create': 'createApp'
-    }
-  });
+    },
 
-  var AppManager = Marionette.Controller.extend({
-
-    region: null,
-    router: null,
-    listManager: null,
+    appListManager: null,
 
     initialize: function () {
       _.bindAll(this, 'listApps', 'createApp', 'showView');
-
-      this.router = new Router({
-        controller: this
-      });
 
       this.listenTo(channels.appManager, 'list:apps', this.listApps);
       this.listenTo(channels.appManager, 'create:app', this.createApp);
@@ -30,12 +22,11 @@ define(function (require) {
     },
     
     onStart: function (options) {
-      this.region = options.region;
-      this.listManager = new ListManager();
+      this.appListManager = new AppListManager();
     },
 
     listApps: function () {
-      this.listManager.list();
+      this.appListManager.listApps();
       history.navigate('apps');
     },
 
@@ -45,9 +36,9 @@ define(function (require) {
     },
 
     showView: function (view) {
-      this.region.show(view);
+      this.getRegion().show(view);
     }
   });
 
-  return new AppManager();
+  return AppManagerModule;
 });
