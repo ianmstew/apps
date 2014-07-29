@@ -39,7 +39,7 @@ module.exports = exports = {
 
 	update: function( req, res ) {
 		try {
-			if( req.body.app && req.body.type )
+			if( req.body.app && req.body.type && req.body._id )
 			{
 				var data = {
 					_id: req.body._id,
@@ -67,6 +67,10 @@ module.exports = exports = {
 							res.json( 404 );
 					}
 				} );
+			}
+			else
+			{
+				res.json( 400, "Must include api _id, app, and type." );
 			}
 		} catch( error ) {
 

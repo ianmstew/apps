@@ -175,7 +175,7 @@ module.exports = exports = {
 																},
 																function( error, tokens ) {
 																	if( !tokens || 
-																		( new Date().getTime() - tokens.timestamp ) > 600000 )
+																		( new Date().getTime() - tokens.timestamp ) > 60000 )
 																	{
 																		done( connection );
 																	}
@@ -197,6 +197,7 @@ module.exports = exports = {
 
 																	req.app.passport.authenticate( 'remote', {
 																		type: unauthenticated.type,
+																		clientApp: clientApp._id,
 																		connectionData: unauthenticated.connectionData,
 																		callback: '/oauth/app/subauth/callback'
 																	} )( req, res );
@@ -261,9 +262,9 @@ module.exports = exports = {
 									if( tokens )
 									{
 										tokens.timestamp = new Date().getTime(),
-										tokens.tokenSet = {
-											"TODO": "REPLACE THIS WITH REAL UPDATED TOKENS!"
-										}
+										tokens.tokenSet = req.session.apiNetworkCurrentRemoteTokens;
+										console.log( 'Updating:' );
+										console.log( tokens.tokenSet );
 										tokens.save( function( error ) {
 											if( error )
 												res.send( 500, error.toString() );
@@ -277,10 +278,10 @@ module.exports = exports = {
 											apiConnection: connection._id,
 											user: req.user._id,
 											timestamp: new Date().getTime(),
-											tokenSet: {
-												"TODO": "REPLACE THIS WITH REAL TOKENS!"
-											}
+											tokenSet: req.session.apiNetworkCurrentRemoteTokens
 										}
+										console.log( 'Saving new:' );
+										console.log( tokenData );										
 
 										req.app.db.models.ApiTokens.create( 
 											tokenData,

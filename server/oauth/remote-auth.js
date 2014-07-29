@@ -1,48 +1,67 @@
 var FacebookStrategy = require( 'passport-facebook' ).Strategy;
+var _ = require( 'lodash' );
 
 module.exports = exports = {
 	strategies: function( passport ) {
 
-/*		TODO: I think we need a wrapper strategy here which will load 
-		      strategies on the fly to passport and call them appropriately
-		      (since each app has its own set of tokens for each API).
-
-		passport.use( 'facebook', new FacebookStrategy( 
-			{
-				clientID: TokenStore.tokens.facebook.clientID,
-				clientSecret: TokenStore.tokens.facebook.clientSecret,
-		    	callbackURL: "http://local.apinetwork.co:3000/oauth/callback/facebook",
-		    	enableProof: false,
-		    	passReqToCallback: true
-			},
-			function( req, accessToken, refreshToken, profile, done ) {
-				// Need to get the original user here, so we can add our new item to the session.
-				var allUserData = req.user ? req.user : {};
-				allUserData[ 'facebook' ] = {
-					owner: 'facebook:' + profile.id,
-					accessToken: accessToken
-				};
-				console.trace( '** Facebook strategy!' );
-				return done( null, allUserData );
+	    var multipass = new ( require( 'multi-passport' ).Strategy )( 
+			function( username, password, done ) {
+				return done( new Error( 'Unimplemented' ) );
 			}
-		));*/
+		);
+		multipass.register( 
+			'facebook', 
+			require( 'passport-facebook' ).Strategy,
+			function( options ) {
+				return _.extend( _.cloneDeep( options ), 
+					// Set this here - don't rely on the client API to specify where we should come back to
+					// for security reasons.
+					{ 
+						"callbackURL": 'http://local.apinetwork.co:3000/oauth/callback/facebook' ,
+						"passReqToCallback": true
+					} );
+			},
+			function() {
+				return function( req, accessToken, refreshToken, profile, done ) {
+					req.session.apiNetworkCurrentRemoteTokens = {
+						"accessToken": accessToken,
+						"refreshToken": refreshToken,
+						"profile": profile
+					}
+					done( null, profile );
+				}
+			}
+		);
+//		multipass.register( 'twitter', require( 'passport-twitter' ).Strategy );
 
-	  passport.use( 'remote', new ( require( 'multi-passport' ).Strategy )( 
-	    function( username, password, done ) {
-	      return done( new Error( 'Unimplemented' ) );
-	    }
-	  )); 
+		passport.use( 'remote', multipass ); 
 	},
 
 	callbacks: function( passport, app ) {
-		// TODO: 
+
 		app.get( '/oauth/callback/facebook',
-			passport.authenticate( 'facebook', { failureRedirect: '#auth-failure' } ),
 			function( req, res ) {
-				if( req.session[ 'auth-return' ] )
-					res.redirect( req.session[ 'auth-return' ]);
-				else
-					res.redirect( '/' );
+				req.app.db.models.ApiConnection.findOne( 
+					{ _id: req.session.apiNetworkCurrentRemote },
+					function( error, connection ) {
+						if( error )
+							res.send( 500, error.toString() );
+						else if( connection )
+						{
+							passport.authenticate( 
+								connection.app + ':' + connection.type,
+								{ session: false } 
+							)( req, res, function() {
+								if( error )
+									res.json( 401, error );
+								else
+								{
+									res.redirect( '/oauth/app/subauth/callback' );
+								}
+							} );
+						}
+					}
+				);
 			}
 		);
 
