@@ -4,7 +4,7 @@ define(function (require) {
       channels = require('channels'),
       AppManagerModule = require('modules/appManager/appManager.module'),
       EntitiesModule = require('modules/entities/entities.module');
-  
+
   var App = Marionette.Application.extend({
 
     regions: {
@@ -46,7 +46,7 @@ define(function (require) {
     // runs 4th
     onStart: function () {
       history.start();
-      
+
       if (history.getCurrentRoute() === '') {
         channels.appManager.trigger('list:apps');
       }

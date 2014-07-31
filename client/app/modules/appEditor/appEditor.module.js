@@ -9,9 +9,9 @@ define(function (require) {
   var AppEditorModule = Module.extend({
 
     routes: {
-      'apps/app': 'showOverview',
-      'apps/app/settings': 'showSettings',
-      'apps/app/services': 'showServices',
+      'apps/:id'          : 'showOverview',
+      'apps/:id/settings' : 'showSettings',
+      'apps/:id/services' : 'showServices',
     },
 
     initialize: function () {
@@ -27,15 +27,18 @@ define(function (require) {
     },
 
     showOverview: function () {
-      history.navigate('apps/app');
+      this.appOverview.//();
+      history.navigate('apps/:id');
     },
 
     showSettings: function () {
-      history.navigate('apps/app/settings');
+      this.appSettings.//();
+      history.navigate('apps/:id/settings');
     },
 
     showServices: function () {
-      history.navigate('apps/app/services');
+      this.appServices.//();
+      history.navigate('apps/:id/services');
     }
 
     showView: function (view) {
