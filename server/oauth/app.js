@@ -263,8 +263,6 @@ module.exports = exports = {
 									{
 										tokens.timestamp = new Date().getTime(),
 										tokens.tokenSet = req.session.apiNetworkCurrentRemoteTokens;
-										console.log( 'Updating:' );
-										console.log( tokens.tokenSet );
 										tokens.save( function( error ) {
 											if( error )
 												res.send( 500, error.toString() );
@@ -280,8 +278,6 @@ module.exports = exports = {
 											timestamp: new Date().getTime(),
 											tokenSet: req.session.apiNetworkCurrentRemoteTokens
 										}
-										console.log( 'Saving new:' );
-										console.log( tokenData );										
 
 										req.app.db.models.ApiTokens.create( 
 											tokenData,
