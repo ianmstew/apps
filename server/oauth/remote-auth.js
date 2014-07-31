@@ -29,6 +29,8 @@ module.exports = exports = {
 						"refreshToken": refreshToken,
 						"profile": profile
 					}
+/*					console.log( 'Set Facebook session current tokens:' );
+					console.log( req.session.apiNetworkCurrentRemoteTokens );*/
 					done( null, profile );
 				}
 			}
@@ -48,7 +50,16 @@ module.exports = exports = {
 					});
 			},
 			function() {
-
+				return function( req, token, tokenSecret, profile, done ) {
+ 					req.session.apiNetworkCurrentRemoteTokens = { 
+ 						'token': token, 
+						'tokenSecret': tokenSecret,
+						'profile': profile
+					};
+/*					console.log( 'Set Twitter session current tokens:' );
+					console.log( req.session.apiNetworkCurrentRemoteTokens );*/
+					done( null, profile );
+				}
 			}
 		);
 
