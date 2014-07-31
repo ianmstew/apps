@@ -175,7 +175,7 @@ module.exports = exports = {
 																},
 																function( error, tokens ) {
 																	if( !tokens || 
-																		( new Date().getTime() - tokens.timestamp ) > 600000 )
+																		( new Date().getTime() - tokens.timestamp ) > 30000 )
 																	{
 																		done( connection );
 																	}

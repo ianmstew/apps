@@ -5,6 +5,7 @@ module.exports = exports = {
 	strategies: function( passport ) {
 
 	    var multipass = new ( require( 'multi-passport' ).Strategy )( 
+	    	{ passport: passport },
 			function( username, password, done ) {
 				return done( new Error( 'Unimplemented' ) );
 			}
@@ -17,7 +18,7 @@ module.exports = exports = {
 					// Set this here - don't rely on the client API to specify where we should come back to
 					// for security reasons.
 					{ 
-						"callbackURL": 'http://local.apinetwork.co:3000/oauth/callback/facebook' ,
+						"callbackURL": 'http://local.apinetwork.co:3000/oauth/callback/facebook',
 						"passReqToCallback": true
 					} );
 			},
@@ -32,14 +33,31 @@ module.exports = exports = {
 				}
 			}
 		);
-//		multipass.register( 'twitter', require( 'passport-twitter' ).Strategy );
+		multipass.register( 
+			'twitter', 
+			require( 'passport-twitter' ).Strategy,
+			function( options ) {
+				return _.extend( _.cloneDeep( options ),
+					{
+						"requestTokenURL": "https://api.twitter.com/oauth/request_token",
+						"userAuthorizationURL": "https://api.twitter.com/oauth/authorize",
+						"accessTokenURL": "https://api.twitter.com/oauth/access_token",
+						"callbackUrl": "http://local.apinetwork.co:3000/oauth/callback/twitter",
+						// This one is required by passport strategies that extend OAuth.
+						"passReqToCallback": true
+					});
+			},
+			function() {
+
+			}
+		);
 
 		passport.use( 'remote', multipass ); 
 	},
 
 	callbacks: function( passport, app ) {
 
-		app.get( '/oauth/callback/facebook',
+		app.get( '/oauth/callback/:connectionType',
 			function( req, res ) {
 				req.app.db.models.ApiConnection.findOne( 
 					{ _id: req.session.apiNetworkCurrentRemote },
