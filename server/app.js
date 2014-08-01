@@ -30,6 +30,9 @@ app.db.once('open', function () {
 //config data models
 require('./models')(app, mongoose);
 
+// set up remote API authentication handlers.
+require( './oauth/remote-auth.js' ).strategies( passport );
+
 //settings
 app.disable('x-powered-by');
 app.set('port', config.port);
@@ -67,7 +70,9 @@ app.locals.copyrightName = app.config.companyName;
 app.locals.cacheBreaker = 'br34k-01';
 
 //setup passport
-require('./passport')(app, passport);
+app.passport = passport;
+require('./passport')( app );
+require( './oauth/remote-auth.js' ).callbacks( passport, app );
 
 //setup routes
 require('./routes')(app, passport);

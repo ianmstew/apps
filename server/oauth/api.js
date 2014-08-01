@@ -1,15 +1,15 @@
 module.exports = exports = {
 	connect: function( req, res ) {
 		try {
-			if( req.query.app && req.query.type )
+			if( req.body.app && req.body.type )
 			{
 				var data = {
-					app: req.query.app,
+					app: req.body.app,
 					owner: req.user._id,
-					type: req.query.type
+					type: req.body.type
 				};
-				if( req.query.connectionDataJson )
-					data.connectionData = JSON.parse( connectionDataJson );
+				if( req.body.connectionData )
+					data.connectionData = req.body.connectionData;
 
 				req.app.db.models.ApiConnection.create( 
 					data,
@@ -34,6 +34,46 @@ module.exports = exports = {
 
 		} catch( error ) {
 			res.json( 500, error.toString() );
+		}
+	},
+
+	update: function( req, res ) {
+		try {
+			if( req.body.app && req.body.type && req.body._id )
+			{
+				var data = {
+					_id: req.body._id,
+					app: req.body.app,
+					owner: req.user._id,
+					type: req.body.type
+				};
+				if( req.body.connectionData )
+					data.connectionData = req.body.connectionData;
+
+				req.app.db.models.ApiConnection.update( 
+				{ 
+					_id: data._id,
+					owner: data.owner
+				},
+				data,
+				function( error, numberAffected ) {
+					if( error )
+						res.send( 500, error.toString() );
+					else
+					{
+						if( numberAffected == 1 )
+							res.json( data );
+						else
+							res.json( 404 );
+					}
+				} );
+			}
+			else
+			{
+				res.json( 400, "Must include api _id, app, and type." );
+			}
+		} catch( error ) {
+
 		}
 	},
 
