@@ -1,4 +1,5 @@
 var uuid = require( 'node-uuid' );
+var async = require( 'async' );
 
 module.exports = exports = {
 	create: function( req, res ) {
@@ -84,7 +85,13 @@ module.exports = exports = {
 										// No real approval to be done here - if you don't want to use this, don't sign up.
 										if( token )
 										{
-											res.redirect( '/oauth/app/subauth?token=' + token.token );
+											req.session[ 'apiNetworkToken' ] = token.token;
+											req.session.save( function( error ) {
+												if( error )
+													res.send( 500, error.toString() );
+												else
+													res.redirect( '/oauth/app/subauth' );
+											});
 										}
 										else
 										{
@@ -103,7 +110,16 @@ module.exports = exports = {
 															if( err )
 																res.json( err.toString() );
 															else
-																res.redirect( '/oauth/app/subauth?token=' + newToken.token );
+															{
+																// Put the apiNetworkToken in the session.
+																req.session[ 'apiNetworkToken' ] = newToken.token;
+																req.session.save( function( error ) {
+																	if( error )
+																		res.send( 500, error.toString() );
+																	else
+																		res.redirect( '/oauth/app/subauth' );
+																});
+															}
 														});
 
 													}
@@ -123,9 +139,8 @@ module.exports = exports = {
 	},
 
 	authRemotes: function( req, res ) {
-		console.log( req.query );
 		req.app.db.models.OAuthToken.findOne( 
-			{ token: req.query.token },
+			{ token: req.session.apiNetworkToken },
 			function( error, token ) {
 				if( error )
 					res.send( 500, error.toString() );
@@ -140,8 +155,69 @@ module.exports = exports = {
 									res.send( 500, error.toString() );
 								else if( clientApp )
 								{
-									res.send( 500, "Unimplemented, authenticate remote data sources for app: " + clientApp.clientId );
 
+									req.app.db.models.ApiConnection.find( 
+										{ app: clientApp._id },
+										function( error, connections ) {
+											if( error )
+												res.send( 500, error.toString() );
+											else
+											{
+												if( connections )
+												{
+													// Search through all the connections until we find one for which we have tokens.
+													async.forEachSeries( connections, 
+														function( connection, done ) {
+															req.app.db.models.ApiTokens.findOne(
+																{ 
+																	user: req.user._id,
+																	apiConnection: connection._id
+																},
+																function( error, tokens ) {
+																	if( !tokens || 
+																		( new Date().getTime() - tokens.timestamp ) > 30000 )
+																	{
+																		done( connection );
+																	}
+																	else
+																	{
+																		done();
+																	}
+																}
+															);
+														},
+														function( unauthenticated ) {
+															if( unauthenticated )
+															{
+																// Authenticate that one, its callback should send us to oauth/app/subauth/callback.
+																req.session.apiNetworkCurrentRemote = unauthenticated._id;
+																req.session.save( function( error ) {
+																	if( error )
+																		console.trace( error );
+
+																	req.app.passport.authenticate( 'remote', {
+																		type: unauthenticated.type,
+																		clientApp: clientApp._id,
+																		connectionData: unauthenticated.connectionData,
+																		callback: '/oauth/app/subauth/callback'
+																	} )( req, res );
+																} );
+															}
+															else
+															{
+																// If we don't find any, send us to the calling application.
+																res.send( "TODO: All APIs authenticated, go back to app callback, with token: " + req.session.apiNetworkToken );
+															}
+														}
+													);
+												}
+												else
+												{
+													res.send( "TODO: No connected APIs, go back to app callback, with token: " + req.session.apiNetworkToken );
+												}
+											}
+										}
+									);
 									// TODO: Get the list of data sources we need to authenticate with, and when we last authenticated.
 									// Hit the next one that we haven't authenticated with in the last minute.
 									// If we've got them all, then redirect to the app final callback.
@@ -158,5 +234,80 @@ module.exports = exports = {
 				}
 			}
 		);
+	},
+
+	remoteAuthCallback: function( req, res ) {
+
+		// Check for existence of an API connection to help prevent abuse.
+		req.app.db.models.ApiConnection.findOne( 
+			{ _id: req.session.apiNetworkCurrentRemote },
+			function( error, connection ) {
+				if( error )
+					res.send( 500, error.toString() );
+				else
+				{
+					if( connection )
+					{
+						// See if we already have a token set for this connection.
+						req.app.db.models.ApiTokens.findOne(
+							{
+								apiConnection: connection._id,
+								user: req.user._id
+							},
+							function( error, tokens ) {
+								if( error )
+									res.send( 500, error.toString() );
+								else
+								{
+									if( tokens )
+									{
+										tokens.timestamp = new Date().getTime(),
+										tokens.tokenSet = req.session.apiNetworkCurrentRemoteTokens;
+										tokens.save( function( error ) {
+											if( error )
+												res.send( 500, error.toString() );
+											else
+												res.redirect( '/oauth/app/subauth' );
+										});
+									}
+									else
+									{
+										var tokenData = {
+											apiConnection: connection._id,
+											user: req.user._id,
+											timestamp: new Date().getTime(),
+											tokenSet: req.session.apiNetworkCurrentRemoteTokens
+										}
+
+										req.app.db.models.ApiTokens.create( 
+											tokenData,
+											function( error, tokens ) {
+												if( error )
+													res.send( 500, error.toString() );
+												else
+													tokens.save( function( error ) {
+														if( error )
+															res.send( 500, error.toString );
+														else
+															res.redirect( '/oauth/app/subauth' );
+													});
+											}
+										);
+
+									}
+								}
+							}
+						);
+
+					}
+					else
+					{
+						res.send( 404, 'No connection found!: ' + req.session.apiNetworkCurrentRemote );
+					}
+				}
+			}
+		);
+
+		
 	}
 };
