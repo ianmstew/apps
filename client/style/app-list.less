@@ -1,0 +1,41 @@
+// Dashboard: App List
+// --------------------------------------------------
+
+.js-app-list {
+  > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    > li {
+      margin: 0 0 15px 0;
+      padding: 0;
+      border: 1px #eee solid;
+      .border-radius(3px);
+
+      &:after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+
+      div {
+        width: 50%;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
+.app-info {
+  // width: 60%;
+  float: left;
+}
+
+.app-services {
+  // width: 40%;
+  float: right;
+  text-align: right;
+}

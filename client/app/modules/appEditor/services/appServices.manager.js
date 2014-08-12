@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette'),
-      channels = require('channels');
+      channels = require('channels'),
       AppServicesCollection = require('modules/entities/app/service.collection'),
       AppServicesView = require('modules/appEditor/services/appServices.view');
 

@@ -6,7 +6,7 @@ define(function (require) {
   var AppListView = Marionette.CompositeView.extend({
     template: template,
     childView: ListItem,
-    childViewContainer: '.js-list'
+    childViewContainer: '.js-app-list'
   });
 
   return AppListView;

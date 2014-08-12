@@ -3,7 +3,9 @@ define(function (require) {
       template = require('hgn!modules/appManager/list/appListItem.view');
 
   var AppListItemView = Marionette.ItemView.extend({
-    template: template
+    template: template,
+    className: "app-list-item",
+    tagName: "ul"
   });
 
   return AppListItemView;
