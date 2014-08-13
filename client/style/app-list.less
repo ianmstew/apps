@@ -1,16 +1,38 @@
 // Dashboard: App List
 // --------------------------------------------------
 
+// Move to variables
+@border-gray: 1px #eee solid;
+
+.js-app-list-toggle {
+  float: right;
+
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  i {
+    padding: 5px;
+    border: @border-gray;
+    .border-radius(3px);
+
+    &:hover {
+      background-color: @gray-even-lighter;
+    }
+  }
+}
 .js-app-list {
-  > ul {
+  ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 
-    > li {
+    li {
       margin: 0 0 15px 0;
       padding: 0;
-      border: 1px #eee solid;
+      border: @border-gray;
       .border-radius(3px);
 
       &:after {
@@ -24,6 +46,26 @@
         display: inline-block;
         margin: 0;
         padding: 0;
+      }
+
+      i {
+        color: @gray;
+        // font-size: 2em;
+      }
+    }
+  }
+}
+
+.app-create {
+  ul {
+    li {
+      padding: 0.75% 0;
+      color: @gray-darker;
+      text-align: center;
+      background-color: @gray-even-lighter;
+
+      &:hover {
+        background-color: @gray-lighter;
       }
     }
   }

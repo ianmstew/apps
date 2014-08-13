@@ -9,9 +9,9 @@ define(function (require) {
   var AppEditorModule = Module.extend({
 
     routes: {
-      'apps/:id'          : 'showOverview',
-      'apps/:id/settings' : 'showSettings',
-      'apps/:id/services' : 'showServices',
+      'apps/:id'          : 'showOverviewTab',
+      'apps/:id/settings' : 'showSettingsTab',
+      'apps/:id/services' : 'showServicesTab',
     },
 
     initialize: function () {
@@ -21,18 +21,21 @@ define(function (require) {
       channels.appManager.comply('show:overview:tab', this.showOverviewTab);
       channels.appManager.comply('show:settings:tab', this.showSettingsTab);
     },
+
+    showOverviewTab: function (view) {
+       this.getRegion().show(view);
+       history.navigate('apps/:id');
+    },
     
     showServicesTab: function (view) {
       // highlight the services tab and change any other wrapper stuff
       this.getRegion().show(view);
-    },
-
-    showOverviewTab: function (view) {
-      this.getRegion().show(view);
+      history.navigate('apps/:id/services');
     },
 
     showSettingsTab: function (view) {
       this.getRegion().show(view);
+      history.navigate('apps/:id/settings');
     },
 
     showView: function (view) {
