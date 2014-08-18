@@ -17,9 +17,9 @@ define(function (require) {
     initialize: function () {
       _.bindAll(this, 'showOverviewTab', 'showServicesTab', 'showSettingsTab');
 
-      channels.appManager.comply('show:services:tab', this.showServicesTab);
-      channels.appManager.comply('show:overview:tab', this.showOverviewTab);
-      channels.appManager.comply('show:settings:tab', this.showSettingsTab);
+      channels.appEditor.comply('show:services:tab', this.showServicesTab);
+      channels.appEditor.comply('show:overview:tab', this.showOverviewTab);
+      channels.appEditor.comply('show:settings:tab', this.showSettingsTab);
     },
 
     showOverviewTab: function (view) {
@@ -28,7 +28,6 @@ define(function (require) {
     },
     
     showServicesTab: function (view) {
-      // highlight the services tab and change any other wrapper stuff
       this.getRegion().show(view);
       history.navigate('apps/:id/services');
     },
@@ -41,26 +40,6 @@ define(function (require) {
     showView: function (view) {
       this.getRegion().show(view);
     }
-
-    /*
-    onStart: function () {
-    },
-
-    showOverview: function () {
-      this.appOverview.//();
-      history.navigate('apps/:id');
-    },
-
-    showSettings: function () {
-      this.appSettings.//();
-      history.navigate('apps/:id/settings');
-    },
-
-    showServices: function () {
-      this.appServices.//();
-      history.navigate('apps/:id/services');
-    }
-    */
   });
 
   return AppEditorModule;

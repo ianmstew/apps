@@ -7,7 +7,6 @@ define(function (require) {
   var AppEditorLayout = Marionett.Layout.extend({
 
     template: template;
-    // childView: appNav-region
 
     regions: {
       appNavRegion: "#appNav-region",
