@@ -7,6 +7,13 @@ define(function (require) {
     template: template,
     childView: ListItem,
     childViewContainer: '.js-app-list'
+
+    /*
+    events:{
+      // Need click event here for app item to lead to app detail
+    },
+    */
+    
   });
 
   return AppListView;

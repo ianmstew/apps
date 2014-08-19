@@ -11,6 +11,7 @@ define(function (require) {
       _.bindAll(this,
           'fetchApps', 'fetchApp',
           'fetchServices', 'fetchService',
+          'fetchAppOptions', 'fetchAppOption',
           'setUser', 'getUser');
 
       this._setUser((options || {}).user);
@@ -20,6 +21,9 @@ define(function (require) {
 
       channels.entities.comply('fetch:services', this.fetchServices);
       channels.entities.comply('fetch:service', this.fetchService);
+
+      channels.entities.comply('fetch:appOptions', this.fetchAppOptions);
+      channels.entities.comply('fetch:appOption', this.fetchAppOption);
 
       channels.entities.comply('set:user', this.setUser);
       channels.entities.reply('get:user', this.getUser);
@@ -171,6 +175,20 @@ define(function (require) {
 
       channels.entities.trigger('fetch:service', service, appId, serviceId);
     }
+
+    fetchAppOptions: function () {
+      var appOptions = [{
+      }];
+
+      channels.entities.trigger('fetch:appOptions', appOptions);
+    },
+
+    fetchAppOption: function (appOption) {
+      var appOption = {
+      };
+
+      channels.entities.trigger('fetch:appOption', );
+    },
   });
 
   return EntitiesModule;
