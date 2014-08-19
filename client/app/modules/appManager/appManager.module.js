@@ -20,7 +20,7 @@ define(function (require) {
       this.listenTo(channels.appManager, 'create:app', this.createApp);
       channels.appManager.comply('show:view', this.showView);
     },
-    
+
     onStart: function (options) {
       this.appListManager = new AppListManager();
     },

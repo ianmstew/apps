@@ -9,18 +9,16 @@ define(function (require) {
     var appEditorLayout = new AppEditorModule.Layout();
 
     initialize: function () {
-      this.apps = new OptionsCollection();
+      this.options = new OptionsCollection();
     },
 
     listOptions: function () {
-      // show view immediately
       var listView = new OptionsListView({
-        collection: this.apps
+        collection: this.options
       });
       channels.appEditor.command('show:view', listView);
 
-      this.listenToOnce(channels.entities, 'fetch:appOptions', this.resetApps);
-      channels.entities.command('fetch:appOptions');
+      channels.entities.command('fetch:options');
     },
 
   });

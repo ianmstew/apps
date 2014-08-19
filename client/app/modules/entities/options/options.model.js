@@ -3,10 +3,12 @@ define(function (require) {
 
   var OptionsModel = Backbone.Model.extend({
 
-    defaults:
-      { name: 'Overview' },
-      { name: 'Remote Services' },
-      { name: 'Settings' }
+    /*
+    defaults: {
+      id: null,
+      name: null
+    }
+    */
   });
 
   return OptionsModel;

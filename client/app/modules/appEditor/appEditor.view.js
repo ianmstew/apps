@@ -10,7 +10,7 @@ define(function (require) {
 
     regions: {
       appNavRegion: "#appNav-region",
-      mainRegion: "#appMain-region" // Pretty sure I don't like this naming convention
+      mainRegion: "#appMain-region" // pref naming convention?
     }
 
   });

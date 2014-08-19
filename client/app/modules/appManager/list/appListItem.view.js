@@ -7,8 +7,8 @@ define(function (require) {
     template: template,
     className: "app-list-item",
     tagName: "ul",
-    childViewContainer: ".app-services",
-    childView: ServiceView
+    childView: ServiceView,
+    childViewContainer: ".app-services"
   });
 
   return AppListItemView;
