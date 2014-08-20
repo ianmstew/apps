@@ -1,8 +1,16 @@
 define(function (require) {
-  var Marionette = require('marionette');
+  var Marionette = require('marionette'),
+      template = require('hgn!modules/appEditor/overview/appOverview.view');
 
   var appOverviewView = Marionette.view.extend({
-    template: template
+
+    template: template,
+
+    /*
+    regions: {
+      //regionName: "#region",
+    }
+    */
   });
 
   return appOverviewView;

@@ -3,15 +3,15 @@ define(function (require) {
       channels = require('channels');
       //
 
-  var AppOverviewManager = Marionette.Object.extend({
+  var AppSettingsManager = Marionette.Object.extend({
 
     initialize: function () {
     },
 
-    resetOverview: function () {
+    resetSettings: function () {
       // reset view model, triggering re-render
     }
   });
 
-  return AppOverviewManager;
+  return AppSettingsManager;
 });

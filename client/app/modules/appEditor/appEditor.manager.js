@@ -6,10 +6,21 @@ define(function (require) {
 
   var AppEditorManager = Marionette.Object.extend({
 
-    var appEditorLayout = new AppEditorModule.Layout();
-
     initialize: function () {
-      this.options = new OptionsCollection();
+
+      // this.appEditorLayout = new AppEditorModule.Layout();
+
+      this.options = new OptionsCollection([
+        {
+          name: 'Overview'
+        },
+        {
+          name: 'Remote Services'
+        }
+        {
+          name: 'Settings'
+        }
+      ]);
     },
 
     listOptions: function () {
@@ -17,8 +28,6 @@ define(function (require) {
         collection: this.options
       });
       channels.appEditor.command('show:view', listView);
-
-      channels.entities.command('fetch:options');
     },
 
   });

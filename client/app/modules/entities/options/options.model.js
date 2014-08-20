@@ -3,12 +3,9 @@ define(function (require) {
 
   var OptionsModel = Backbone.Model.extend({
 
-    /*
     defaults: {
-      id: null,
       name: null
     }
-    */
   });
 
   return OptionsModel;

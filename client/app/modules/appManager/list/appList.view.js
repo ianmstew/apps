@@ -4,15 +4,15 @@ define(function (require) {
       template = require('hgn!modules/appManager/list/appList.view'),
       templateEmpty = require('hgn!modules/appManager/list/appListItemNone.view');
 
-  var AppListView = Marionette.CompositeView.extend({
-    template: template,
-    emptyView: AppNoneView,
+  var AppNoneView = Marionette.CompositeView.extend({
+    template: templateEmpty,
     childView: ListItem,
     childViewContainer: '.js-app-list'
   });
-
-  var AppNoneView = Marionette.CompositeView.extend({
-    template: templateEmpty,
+  
+  var AppListView = Marionette.CompositeView.extend({
+    template: template,
+    emptyView: AppNoneView,
     childView: ListItem,
     childViewContainer: '.js-app-list'
   });
