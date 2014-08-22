@@ -15,7 +15,8 @@
     "marionette": "v2.1",
     "requirejs": "^2.1.14",
     "requirejs-hogan-plugin": "^0.3.1",
-    "spin.js": "^2.0.1"
+    "spin.js": "^2.0.1",
+    "es6-promise": "~1.0.0"
   },
   "exportsOverride": {
     "backbone.wreqr": {
@@ -46,6 +47,5 @@
     "parsleyjs": {
       ".": "parsley.js"
     }
-  },
-  "__comment": "Note: Marionette implies jquery, backbone, and underscore."
+  }
 }
