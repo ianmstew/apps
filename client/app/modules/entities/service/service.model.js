@@ -1,11 +1,9 @@
 define(function (require) {
   var Backbone = require('backbone');
 
-  var ServiceModel = Backbone.Model.extend({
+  var Service = Backbone.Model.extend({
 
     defaults: {
-      id: null,
-      appId: null,
       name: null,
       icon: null,
       dateAdded: null,
@@ -15,5 +13,5 @@ define(function (require) {
     }
   });
 
-  return ServiceModel;  
+  return Service;
 });

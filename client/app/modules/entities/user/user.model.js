@@ -3,8 +3,11 @@ define(function (require) {
 
   var UserModel = Backbone.Model.extend({
 
+    urlRoot: '/api/users',
+    idAttribute: '_id',
+
     defaults: {
-      id: null,
+      _id: null,
       name: null,
       avatar: null,
       email: null
