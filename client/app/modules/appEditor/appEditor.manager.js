@@ -16,7 +16,7 @@ define(function (require) {
         },
         {
           name: 'Remote Services'
-        }
+        },
         {
           name: 'Settings'
         }

@@ -3,7 +3,7 @@ define(function (require) {
       template = require('hgn!modules/appManager/list/appListItem.view'),
       ServiceView = require('hgn!modules/appManager/list/service.view');
 
-  var AppListItemView = Marionette.CompositeView.extend({
+  var AppListItemView = Marionette.ItemView.extend({
     template: template,
     className: "app-list-item",
     tagName: "ul",
