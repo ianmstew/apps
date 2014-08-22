@@ -1,5 +1,5 @@
 define(function (require) {
-  var Module = require('lib/common/module'),
+  var Module = require('lib/classes/module'),
       channels = require('channels'),
       history = require('lib/util/history'),
       AppListManager = require('modules/appManager/list/appList.manager'),
@@ -17,16 +17,21 @@ define(function (require) {
 
     initialize: function () {
       _.bindAll(this, 'listApps', 'createApp', 'showView');
-
-      this.listenTo(channels.appManager, 'list:apps', this.listApps);
-      this.listenTo(channels.appManager, 'create:app', this.createApp);
-
-      channels.appManager.comply('show:view', this.showView);
     },
 
     onStart: function (options) {
       this.appListManager = new AppListManager();
       this.createAppManager = new CreateAppManager();
+
+      channels.appManager.comply('list:apps', this.listApps);
+      channels.appManager.comply('create:app', this.createApp);
+      channels.appManager.comply('show:view', this.showView);
+    },
+
+    onStop: function () {
+      channels.appManager.stopComplying('list:apps');
+      channels.appManager.stopComplying('create:app');
+      channels.appManager.stopComplying('show:view');
     },
 
     listApps: function () {
