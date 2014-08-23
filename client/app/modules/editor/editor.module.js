@@ -43,6 +43,7 @@ define(function (require) {
       return new Promise(this.fetchServices);
     },
 
+    // NOTE: NOT WORKING YET :(
     fetchServices: function (resolve, reject) {
       Radio.channel('entities').request('fetch:app', this.appId)
         .then(function (app) {
