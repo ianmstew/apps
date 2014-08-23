@@ -62,12 +62,14 @@
   "disallowMultipleLineStrings": true,
   "requireDotNotation": true,
   "requireSpaceAfterLineComment": true,
+  "disallowYodaConditions": true,
 
   // JSHint formatting
   "requireCapitalizedConstructors": true,
   "maximumLineLength": 100,
   "validateQuoteMarks": { "mark": "'", "escape": true },
-  "requireCamelCaseOrUpperCaseIdentifiers": true
+  "requireCamelCaseOrUpperCaseIdentifiers": true,
+  "disallowMultipleVarDecl": true
 
   // TODOs (require new JSCS development)
   // - disallow "}else", require "} else"

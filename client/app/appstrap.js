@@ -1,6 +1,6 @@
 define(function (require) {
-  // Establish globals Backbone, $, _
-  require('backbone');
+  // Browser polyfills
+  require('es6-promise');
 
   // Initialize Twitter Bootstrap scripts
   require('bootstrap');
@@ -10,11 +10,9 @@ define(function (require) {
   require('backbone.computedfields');
   require('backbone.radio');
 
-  // Polyfills
-  require('es6-promise');
-
   // Configure global behavior and shim framework methods
-  require('lib/config/renderer');
+  require('lib/config/es6-promise-ajax.shim');
+  require('lib/config/renderer.shim');
+  require('lib/config/radio.shim');
   require('lib/config/capture-hrefs');
-  require('lib/config/es6-promise-ajax');
 });

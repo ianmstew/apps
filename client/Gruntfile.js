@@ -1,5 +1,6 @@
 module.exports = function (grunt) {
-  /* jshint camelcase:false */
+  // Note: inline supression not yet released to npm, but this will work soon.
+  /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 
   grunt.initConfig({
 
@@ -74,7 +75,7 @@ module.exports = function (grunt) {
       npm_assets: {
         files: [{
           src: 'node_modules/chai/chai.js',
-          dest: '<%- path.vendor %>/chai/chai.js' 
+          dest: '<%- path.vendor %>/chai/chai.js'
         }, {
           src: 'node_modules/chai-jquery/chai-jquery.js',
           dest: '<%- path.vendor %>/chai-jquery/chai-jquery.js'

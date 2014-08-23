@@ -1,7 +1,9 @@
 define(function (require) {
   require('appstrap');
-
   var App = require('app');
+  var app = new App();
 
-  (new App()).start();
+  app.start();
+
+  return app;
 });

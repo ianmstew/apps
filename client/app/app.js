@@ -1,9 +1,9 @@
 define(function (require) {
-  var Marionette = require('marionette'),
-      history = require('lib/util/history'),
-      channels = require('channels'),
-      AppManager = require('modules/appManager/appManager.module'),
-      Entities = require('modules/entities/entities.module');
+  var Marionette = require('marionette');
+  var history = require('lib/util/history');
+  var channels = require('channels');
+  var AppManager = require('modules/appManager/appManager.module');
+  var Entities = require('modules/entities/entities.module');
 
   var App = Marionette.Application.extend({
 
