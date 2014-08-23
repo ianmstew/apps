@@ -133,7 +133,7 @@ module.exports = function (grunt) {
         jshintrc: true
       },
 
-      app: ['Gruntfile.js', '<%- path.app %>/**/*.js']
+      app: ['Gruntfile.js', '<%- path.app %>/**/*.js', '<%- path.test %>/**/*.js']
     },
 
     jscs: {
@@ -141,7 +141,7 @@ module.exports = function (grunt) {
         config: '.jscsrc'
       },
 
-      app: ['Gruntfile.js', '<%- path.app %>/**/*.js']
+      app: ['Gruntfile.js', '<%- path.app %>/**/*.js', '<%- path.test %>/**/*.js']
     },
 
     watch: {

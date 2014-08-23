@@ -1,50 +1,47 @@
 define(function (require) {
-  var EntityModule = require('lib/classes/entity.module'),
-      channels = require('channels'),
-      User = require('modules/entities/user/user.model'),
-      App = require('modules/entities/app/app.model'),
-      Apps = require('modules/entities/app/apps.collection');
+  var EntityModule = require('lib/classes/entity.module');
+  var User = require('modules/entities/user/user.model');
+  var AppModel = require('modules/entities/app/app.model');
+  var AppsCollection = require('modules/entities/app/apps.collection');
 
   var EntitiesModule = EntityModule.extend({
+
+    channelName: 'entities',
 
     apps: null,
     user: null,
 
     initialize: function () {
-      _.bindAll(this, 'getApps', 'getApp', 'getUser');
-      this.apps = new Apps();
-      this.user = new User();
+      _.bindAll(this, 'fetchApps', 'fetchApp', 'fetchUser');
     },
 
     onStart: function () {
-      channels.entities.reply('apps', this.getApps);
-      channels.entities.reply('app', this.getApp);
-      channels.entities.reply('user', this.getUser);
+      this.channel.reply('fetch:apps', this.fetchApps);
+      this.channel.reply('fetch:app', this.fetchApp);
+      this.channel.reply('fetch:user', this.fetchUser);
     },
 
     onStop: function () {
-      channels.entities.stopReplying('apps');
-      channels.entities.stopReplying('app');
-      channels.entities.stopReplying('user');
+      this.channel.stopReplying('fetch:apps');
+      this.channel.stopReplying('fetch:app');
+      this.channel.stopReplying('fetch:user');
     },
 
-    getUser: function (options) {
-      return (options || {}).fetch
-        ? this.fetch(this.user, { url: '/api/users/current' })
-        : this.user;
+    fetchUser: function () {
+      var user = new User();
+      return this.fetch(user, { url: '/api/users/current' });
     },
 
-    getApps: function (options) {
-      return (options || {}).fetch
-        ? this.fetch(this.apps)
-        : this.apps;
+    fetchApps: function () {
+      var apps = new AppsCollection();
+      return this.fetch(apps);
     },
 
-    getApp: function (appId, options) {
-      var app = new App(appId);
-      return (options || {}).fetch
-        ? this.fetch(app)
-        : app;
+    fetchApp: function (appId) {
+      var app = new AppModel({
+        _id: appId
+      });
+      return this.fetch(app);
     }
   });
 

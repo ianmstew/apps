@@ -1,8 +1,8 @@
 define(function (require) {
-  var Backbone = require('backbone'),
-      Module = require('lib/classes/module'),
-      channels = require('channels'),
-      logger = require('lib/util/logger');
+  var Backbone = require('backbone');
+  var Radio = require('backbone.radio');
+  var Module = require('lib/classes/module');
+  var logger = require('lib/util/logger');
 
   var EntityModule = Module.extend({
 
@@ -24,7 +24,7 @@ define(function (require) {
           return model;
         })
         .catch(function (error) {
-          channels.error.trigger('fetch');
+          Radio.channel('error').trigger('fetch');
           throw error;
         });
     }

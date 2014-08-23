@@ -1,20 +1,17 @@
 define(function (require) {
-  var Apps = require('modules/entities/app/apps.collection'),
-      App = require('modules/entities/app/app.model'),
-      User = require('modules/entities/user/user.model'),
-      apiData = require('test/data/api-data');
+  var Apps = require('modules/entities/app/apps.collection');
+  var App = require('modules/entities/app/app.model');
+  var User = require('modules/entities/user/user.model');
+  var apiData = require('test/data/api-data');
 
   describe('API', function () {
 
     describe('Apps', function () {
-      var app1 = new App();
-      var app2 = new App();
-      var app1Id, app2Id, startingAppsCount;
-
-      before(function () {
-        app1.set(app1.parse(apiData.apps[0]));
-        app2.set(app2.parse(apiData.apps[1]));
-      });
+      var app1 = new App(apiData.apps[0]);
+      var app2 = new App(apiData.apps[1]);
+      var app1Id;
+      var app2Id;
+      var startingAppsCount;
 
       it('Get all apps', function () {
         var apps = new Apps();
@@ -40,7 +37,7 @@ define(function (require) {
 
       it('Get all apps should return 2 additional', function () {
         var apps = new Apps();
-        
+
         return apps.fetch().then(function (data) {
           apps.size().should.equal(startingAppsCount + 2);
         });

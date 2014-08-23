@@ -1,6 +1,6 @@
 define(function (require) {
-  var sinon = require('sinon'),
-      database = require('test/data/database');
+  var sinon = require('sinon');
+  var database = require('test/data/database');
 
   var server = sinon.fakeServer.create();
   var CONTENT_JSON = { 'Content-Type': 'application/json' };

@@ -1,10 +1,14 @@
 define(function (require) {
-  var Radio = require('backbone.radio'),
-      channels = require('channels');
-  
+  var Radio = require('backbone.radio');
+
   Radio.DEBUG = true;
 
-  _.each(channels, function (channel, channelKey) {
-    Radio.tuneIn(channelKey);
+  _.each([
+    'manager',
+    'editor',
+    'entities',
+    'error'
+  ], function (channelName) {
+    Radio.tuneIn(channelName);
   });
 });

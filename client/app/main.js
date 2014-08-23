@@ -28,8 +28,7 @@
       'sinon-chai':              '../vendor/sinon-chai/sinon-chai',
 
       // change -dev to -prod for production
-      'lib/util/logger':         'lib/util/logger-dev',
-      'app-bootstrap':           'app-bootstrap-dev'
+      'lib/util/logger':         'lib/util/logger-dev'
     },
 
     shim: {

@@ -14,5 +14,5 @@ define(function (require) {
     }
   });
 
-  return UserModel;  
+  return UserModel;
 });

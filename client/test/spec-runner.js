@@ -1,14 +1,12 @@
 define(function (require) {
-  // Prepare app environment
   require('appstrap');
   require('test/util/fake-server');
-
-  var mocha = require('mocha'),
-      chai = require('chai'),
-      chaiJquery = require('chai-jquery'),
-      chaiAsPromised = require('chai-as-promised'),
-      sinon = require('sinon'),
-      sinonChai = require('sinon-chai');
+  var mocha = require('mocha');
+  var chai = require('chai');
+  var chaiJquery = require('chai-jquery');
+  var chaiAsPromised = require('chai-as-promised');
+  var sinon = require('sinon');
+  var sinonChai = require('sinon-chai');
 
   function setupTestHelpers() {
     beforeEach(function () {

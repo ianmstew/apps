@@ -1,22 +1,18 @@
 define(function (require) {
-  var EntitiesModule = require('modules/entities/entities.module'),
-      // UserModel = require('modules/entities/user/user.model'),
-      // AppModel = require('modules/entities/app/app.model'),
-      AppCollection = require('modules/entities/app/apps.collection'),
-      channels = require('channels');
+  var Radio = require('backbone.radio');
+  var EntitiesModule = require('modules/entities/entities.module');
+  // var UserModel = require('modules/entities/user/user.model');
+  // var AppModel = require('modules/entities/app/app.model');
+  var AppCollection = require('modules/entities/app/apps.collection');
 
   describe('Entities', function () {
+    var entitiesChannel = Radio.channel('entities');
     var entities = new EntitiesModule();
     entities.start();
 
     describe('Apps', function () {
-      it('Request should immediately return a collection', function () {
-        return channels.entities.request('apps')
-          .should.be.an.instanceOf(AppCollection);
-      });
-
-      it('Request with {fetch:true} should eventually resolve to a collection', function () {
-        return channels.entities.request('apps', { fetch: true })
+      it('Request "fetch:apps" should eventually resolve to a collection', function () {
+        return entitiesChannel.request('fetch:apps')
           .should.eventually.be.an.instanceOf(AppCollection);
       });
 

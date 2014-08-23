@@ -48,8 +48,5 @@
   "maxstatements": 15,
 
   // Prevent excessive branching
-  "maxcomplexity": 3,
-
-  // Movin' on up
-  "es5": true
+  "maxcomplexity": 5
 }

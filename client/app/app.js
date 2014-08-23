@@ -1,9 +1,10 @@
 define(function (require) {
   var Marionette = require('marionette');
+  var Radio = require('backbone.radio');
   var history = require('lib/util/history');
-  var channels = require('channels');
-  var AppManager = require('modules/appManager/appManager.module');
-  var Entities = require('modules/entities/entities.module');
+  var ManagerModule = require('modules/manager/manager.module');
+  var EditorModule = require('modules/editor/editor.module');
+  var EntitiesModule = require('modules/entities/entities.module');
 
   var App = Marionette.Application.extend({
 
@@ -25,16 +26,19 @@ define(function (require) {
       history.start();
 
       if (history.getCurrentRoute() === '') {
-        channels.appManager.command('list:apps');
+        Radio.channel('manager').command('list:apps');
       }
     },
 
     createModules: function () {
       this.modules = {
-        manager: new AppManager({
+        manager: new ManagerModule({
           region: this.getRegion('contentRegion')
         }),
-        entities: new Entities()
+        editor: new EditorModule({
+          region: this.getRegion('contentRegion')
+        }),
+        entities: new EntitiesModule()
       };
     },
 
@@ -44,6 +48,7 @@ define(function (require) {
 
     startModules: function () {
       this.modules.manager.start();
+      this.modules.editor.start();
     }
   });
 

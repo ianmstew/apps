@@ -1,12 +1,12 @@
 define(function (require) {
-  var Backbone = require('backbone'),
-      App = require('modules/entities/app/app.model');
+  var Backbone = require('backbone');
+  var AppModel = require('modules/entities/app/app.model');
 
-  var Apps = Backbone.Collection.extend({
+  var AppsCollection = Backbone.Collection.extend({
 
     url: '/api/apps',
-    model: App
+    model: AppModel
   });
 
-  return Apps;
+  return AppsCollection;
 });
