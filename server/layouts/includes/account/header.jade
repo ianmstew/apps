@@ -14,16 +14,18 @@ header#header-region
       ul.nav.navbar-nav.nav-pills.navbar-right
         li: a(href='/about/') About
         li: a(href='/help/') Help
-        if user && user.username
-          li.dropdown.avatar
-            a.dropdown-toggle(href='#{user.defaultReturnUrl}', data-toggle='dropdown')
-              span.fa-stack.fa-lg
-                i.fa.fa-circle.fa-stack-2x
-                i.fa.fa-user.fa-stack-1x.fa-inverse
-              | #{user.username}
-              b.caret
-            ul.dropdown-menu
-              li: a(href='/account/') My Account
-              li: a(href='/account/settings/') Settings
-              li.divider
-              li: a(href='/logout/') Log Out
+        li: a(href='/logout/') Log Out
+        //
+          if user && user.username
+            li.dropdown.avatar
+              a.dropdown-toggle(href='#{user.defaultReturnUrl}', data-toggle='dropdown')
+                span.fa-stack.fa-lg
+                  i.fa.fa-circle.fa-stack-2x
+                  i.fa.fa-user.fa-stack-1x.fa-inverse
+                | #{user.username}
+                b.caret
+              ul.dropdown-menu
+                li: a(href='/account/') My Account
+                li: a(href='/account/settings/') Settings
+                li.divider
+                li: a(href='/logout/') Log Out

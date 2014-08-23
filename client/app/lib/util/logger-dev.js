@@ -12,11 +12,15 @@ define(function (require) {
     },
 
     warn: function () {
-      console.warn.apply(console, arguments);
+      var args = Array.prototype.slice.call(arguments);
+      var stack = new Error().stack.replace(/^Error/, '');
+      console.warn.apply(console, args.concat(stack));
     },
 
     error: function () {
-      console.error.apply(console, arguments);
+      var args = Array.prototype.slice.call(arguments);
+      var stack = new Error().stack.replace(/^Error/, '');
+      console.error.apply(console, args.concat(stack));
     }
   };
 

@@ -6,14 +6,9 @@ block head
 
 block neck
   link(rel='stylesheet', href='/views/account/index.min.css?#{cacheBreaker}')
-  script.
-    window.bootstrap = {
-      user: !{user},
-      account: !{account}
-    };
 
 block feet
-  script(src='/client/vendor/requirejs/require.js', data-main='/client/app/app-require.js')
+  script(src='/client/vendor/requirejs/require.js', data-main='/client/app/main.js')
 
 block body
   .static-content

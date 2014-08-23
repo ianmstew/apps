@@ -1,11 +1,13 @@
 module.exports = function (grunt) {
-  /* jshint camelcase:false */
+  // Note: inline supression not yet released to npm, but this will work soon.
+  /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 
   grunt.initConfig({
 
     path: {
       // Source folders
       app: 'app',
+      test: 'test',
       assets: 'assets',
       style: 'style',
 
@@ -69,6 +71,33 @@ module.exports = function (grunt) {
       }
     },
 
+    copy: {
+      npm_assets: {
+        files: [{
+          src: 'node_modules/chai/chai.js',
+          dest: '<%- path.vendor %>/chai/chai.js'
+        }, {
+          src: 'node_modules/chai-jquery/chai-jquery.js',
+          dest: '<%- path.vendor %>/chai-jquery/chai-jquery.js'
+        }, {
+          src: 'node_modules/mocha/mocha.js',
+          dest: '<%- path.vendor %>/mocha/mocha.js'
+        }, {
+          src: 'node_modules/mocha/mocha.css',
+          dest: '<%- path.vendor %>/mocha/css/mocha.css'
+        }, {
+          src: 'node_modules/sinon/pkg/sinon.js',
+          dest: '<%- path.vendor %>/sinon/sinon.js'
+        }, {
+          src: 'node_modules/sinon-chai/lib/sinon-chai.js',
+          dest: '<%- path.vendor %>/sinon-chai/sinon-chai.js'
+        }, {
+          src: 'node_modules/chai-as-promised/lib/chai-as-promised.js',
+          dest: '<%- path.vendor %>/chai-as-promised/chai-as-promised.js'
+        }]
+      }
+    },
+
     shell: {
       options: {
         stdout: true,
@@ -76,7 +105,7 @@ module.exports = function (grunt) {
         failOnError: true
       },
 
-      // sync client/app, client/vendor, and client/index.html
+      // sync development resources, jekyll-style (everything except for build-dev-exclude)
       sync_dev: {
         command: [
           'PROJ_ROOT=$(pwd)',
@@ -104,7 +133,7 @@ module.exports = function (grunt) {
         jshintrc: true
       },
 
-      app: ['Gruntfile.js', '<%- path.app %>/**/*.js']
+      app: ['Gruntfile.js', '<%- path.app %>/**/*.js', '<%- path.test %>/**/*.js']
     },
 
     jscs: {
@@ -112,7 +141,7 @@ module.exports = function (grunt) {
         config: '.jscsrc'
       },
 
-      app: ['Gruntfile.js', '<%- path.app %>/**/*.js']
+      app: ['Gruntfile.js', '<%- path.app %>/**/*.js', '<%- path.test %>/**/*.js']
     },
 
     watch: {
@@ -124,7 +153,8 @@ module.exports = function (grunt) {
         files: [
           'index.html',
           '<%- path.app %>/**/*',
-          '<%- path.assets %>/**/*'
+          '<%- path.assets %>/**/*',
+          '<%- path.test %>/**/*'
         ],
         tasks: ['shell:sync_dev']
       },
@@ -157,9 +187,11 @@ module.exports = function (grunt) {
   // bring in all grunt plugins from package.json
   require('load-grunt-tasks')(grunt);
 
+  grunt.registerTask('libs', ['bower', 'copy:npm_assets']);
+
   grunt.registerTask('build-dev', [
     'clean:build',
-    'bower',
+    'libs',
     'shell:sync_dev',
     'less',
     'shell:sourcemap_links'
