@@ -9,34 +9,47 @@ define(function (require) {
   var AppEditorModule = Module.extend({
 
     routes: {
-      'apps/:id/overview' : 'showOverviewTab',
-      'apps/:id/settings' : 'showSettingsTab',
-      'apps/:id/services' : 'showServicesTab'
+      'apps/:id/overview':'showOverviewTab',
+      'apps/:id/settings':'showSettingsTab',
+      'apps/:id/services':'showServicesTab'
     },
 
+    // Collection here?
+    appOverviewManager: null,
+    appSettingsManager: null,
+    appServicesManager: null,
+
     initialize: function () {
-      _.bindAll(this, 'showOverviewTab', 'showServicesTab', 'showSettingsTab');
+      _.bindAll(this, 'showOverviewTab', 'showServicesTab', 'showSettingsTab', 'showView');
 
       channels.appEditor.comply('show:services:tab', this.showServicesTab);
       channels.appEditor.comply('show:overview:tab', this.showOverviewTab);
       channels.appEditor.comply('show:settings:tab', this.showSettingsTab);
+
+      channels.appManager.comply('show:view', this.showView);
     },
 
+    onStart: function (options) {
+      this.appOverviewManager = new AppOverviewManager();
+      this.appServicesManager = new AppServicesManager();
+      this.appSettingsManager = new AppSettingsManager();
+    },
+
     showOverviewTab: function (view) {
-       console.log('Overview shown here');
-       this.getRegion().show(view);
-       history.navigate('apps/:id/overview');
+      console.log('Overview shown here');
+      this.appOverviewManager.showOverviewTab();
+      history.navigate('apps/:id/overview');
     },
     
     showServicesTab: function (view) {
       console.log('Services shown here');
-      this.getRegion().show(view);
+      this.appServicesManager.showServicesTab();
       history.navigate('apps/:id/services');
     },
 
     showSettingsTab: function (view) {
       console.log('Settings shown here');
-      this.getRegion().show(view);
+      this.appSettingsManager.showSettingsTab();
       history.navigate('apps/:id/settings');
     },
 
