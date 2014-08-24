@@ -6,8 +6,6 @@ define(function (require) {
 
   var ManagerModule = Module.extend({
 
-    channelName: 'manager',
-
     routes: {
       'apps': 'listApps',
       'apps/create': 'createApp'
@@ -16,6 +14,14 @@ define(function (require) {
     presenters: {
       'list': ListPresenter,
       'create': CreatePresenter
+    },
+
+    channelName: 'manager',
+
+    channelEvents: {
+      'list:apps': ['comply', 'listApps'],
+      'create:app': ['comply', 'createApp'],
+      'show:view': ['comply', 'showView']
     },
 
     listPresenter: null,

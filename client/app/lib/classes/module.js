@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var Radio = require('backbone.radio');
+  var HasChannelMixin = require('lib/util/has-channel.mixin');
 
   /*
    * Module is a lightweight class that implements:
@@ -11,27 +11,16 @@ define(function (require) {
    */
   var Module = Marionette.Object.extend({
 
-    channelName: null,
-    channel: null,
     isRunning: null,
     region: null,
     _router: null,
     _presenters: null,
-    _repliers: null,
-    _compliers: null,
 
     constructor: function (options) {
-      _.extend(this, _.pick(options || {}, 'region', 'channelName'));
-
-      this._constructRoutes(this.routes || {});
-
       Module.__super__.constructor.apply(this, arguments);
-    },
-
-    _attachChannel: function (channelName) {
-      this._repliers = [];
-      this._compliers = [];
-      this.channel = Radio.channel(channelName);
+      _.extend(this, _.pick(options || {}, 'region', 'channelName'));
+      HasChannelMixin.mixinto(this);
+      this._constructRoutes(this.routes || {});
     },
 
     _constructRoutes: function (routes) {
@@ -59,33 +48,10 @@ define(function (require) {
     },
 
     _destructPresenters: function (presenters) {
-      this._presenters = _.map(presenters, _.bind(function (value, key, list) {
-        value.destroy();
+      this._presenters = _.map(presenters, function (presenter) {
+        presenter.destroy();
         return null;
-      }), this);
-    },
-
-    _detachChannel: function (channel) {
-      _.each(this._compliers, function (complier) {
-        var channel = complier[0];
-        var command = complier[1];
-        channel.stopComplying(command);
-      });
-      _.each(this._repliers, function (replier) {
-        var channel = replier[0];
-        var request = replier[1];
-        channel.stopReplying(request);
-      });
-    },
-
-    complyWith: function (channel, command, complier) {
-      channel.comply(command, complier);
-      this._compliers.push([channel, command]);
-    },
-
-    replyWith: function (channel, request, replier) {
-      channel.reply(request, replier);
-      this._repliers.push([channel, request]);
+      }, this);
     },
 
     getPresenter: function (presenter) {
@@ -94,7 +60,6 @@ define(function (require) {
 
     start: function (options) {
       this.triggerMethod('before:start', options);
-      this._attachChannel(this.channelName);
       this._constructPresenters(this.presenters || {});
       this.isRunning = true;
       this.triggerMethod('start', options);
@@ -103,7 +68,6 @@ define(function (require) {
     stop: function (options) {
       this.triggerMethod('before:stop', options);
       this._destructPresenters(this.presenters || {});
-      this._detachChannel(this.channel);
       this.isRunning = false;
       this.triggerMethod('stop', options);
     }

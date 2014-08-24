@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var Radio = require('backbone.radio');
+  var HasChannelMixin = require('lib/util/has-channel.mixin');
 
   /*
    * Presenter is a lightweight class that contains a Radio channel
@@ -12,7 +12,7 @@ define(function (require) {
 
     constructor: function (options) {
       _.extend(this, _.pick(options || {}, 'channelName'));
-      this.channel = Radio.channel(this.channelName);
+      HasChannelMixin.mixinto(this);
       Presenter.__super__.constructor.apply(this, arguments);
     }
   });
