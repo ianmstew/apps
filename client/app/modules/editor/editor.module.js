@@ -8,8 +8,6 @@ define(function (require) {
 
   var EditorModule = Module.extend({
 
-    channelName: 'editor',
-
     routes: {
       'apps/:id/overview': 'showOverviewTab',
       'apps/:id/settings': 'showSettingsTab',
@@ -22,21 +20,20 @@ define(function (require) {
       'settings': SettingsPresenter
     },
 
-    // Collection here?
+    channelName: 'editor',
+
+    channelEvents: {
+      'fetch:services': ['reply', 'getServices'],
+      'show:services:tab': ['comply', 'showServicesTab'],
+      'show:overview:tab': ['comply', 'showOverviewTab'],
+      'show:settings:tab': ['comply', 'showSettingsTab'],
+      'show:view': ['comply', 'showView']
+    },
+
     appId: null,
 
     initialize: function () {
-      _.bindAll(this,
-        'showOverviewTab', 'showServicesTab', 'showSettingsTab', 'showView',
-        'getServices', 'fetchServices');
-    },
-
-    onStart: function (options) {
-      this.replyWith(this.channel, 'fetch:services', this.getServices);
-      this.complyWith(this.channel, 'show:services:tab', this.showServicesTab);
-      this.complyWith(this.channel, 'show:overview:tab', this.showOverviewTab);
-      this.complyWith(this.channel, 'show:settings:tab', this.showSettingsTab);
-      this.complyWith(this.channel, 'show:view', this.showView);
+      _.bindAll(this, 'fetchServices');
     },
 
     getServices: function () {
