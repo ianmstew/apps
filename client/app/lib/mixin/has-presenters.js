@@ -4,7 +4,7 @@ define(function (require) {
 
     _initialize: function (options) {
       // { initialize: false } will defer intialization
-      var initialize = (options || {}).initialize !== false;
+      var initialize = (this.options || {}).initialize !== false;
       if (this.presenters && initialize) this.constructPresenters();
       if (this.presenters) this.on('destroy', _.bind(this.destructPresenters, this));
     },
