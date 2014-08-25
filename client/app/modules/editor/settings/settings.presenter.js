@@ -4,9 +4,9 @@ define(function (require) {
 
   var SettingsPresenter = Presenter.extend({
 
-    show: function () {
+    onPresent: function () {
       var settingsView = new SettingsView();
-      this.region.show(settingsView);
+      this.show(settingsView);
     }
   });
 
