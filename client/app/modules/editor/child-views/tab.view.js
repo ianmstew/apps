@@ -23,11 +23,8 @@ define(function (require) {
     },
 
     tabShown: function (tab) {
-      var shouldSelect = this.model.get('name') === tab;
-      var isSelected = this.state.get('selected')
-      if (shouldSelect !== isSelected) {
-        this.state.set('selected', shouldSelect);
-      }
+      var selected = this.model.get('name') === tab;
+      this.state.set('selected', selected);
     }
   });
 
