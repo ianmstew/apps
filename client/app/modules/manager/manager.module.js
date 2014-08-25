@@ -6,6 +6,8 @@ define(function (require) {
 
   var ManagerModule = Module.extend({
 
+    channelName: 'manager',
+
     routes: {
       'apps': 'listApps',
       'apps/create': 'createApp'
@@ -16,25 +18,9 @@ define(function (require) {
       'create': CreatePresenter
     },
 
-    channelName: 'manager',
-
     channelEvents: {
       'list:apps': ['comply', 'listApps'],
-      'create:app': ['comply', 'createApp'],
-      'show:view': ['comply', 'showView']
-    },
-
-    listPresenter: null,
-    createPresenter: null,
-
-    initialize: function () {
-      _.bindAll(this, 'listApps', 'createApp', 'showView');
-    },
-
-    onStart: function (options) {
-      this.complyWith(this.channel, 'list:apps', this.listApps);
-      this.complyWith(this.channel, 'create:app', this.createApp);
-      this.complyWith(this.channel, 'show:view', this.showView);
+      'create:app': ['comply', 'createApp']
     },
 
     listApps: function () {
@@ -43,13 +29,8 @@ define(function (require) {
     },
 
     createApp: function () {
-      console.log('creating app here!');
       this.getPresenter('create').show();
       history.navigate('apps/create');
-    },
-
-    showView: function (view) {
-      this.region.show(view);
     }
   });
 

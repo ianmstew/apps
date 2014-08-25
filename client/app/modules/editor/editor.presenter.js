@@ -1,34 +1,26 @@
 define(function (require) {
   var Presenter = require('lib/classes/presenter');
-  var OptionsCollection = require('modules/entities/options/options.collection');
-  var OptionsListView = require('modules/editor/editor.view');
+  var TabsCollection = require('modules/editor/entities/tabs.collection');
+  var EditorView = require('modules/editor/editor.view');
 
   var EditorPresenter = Presenter.extend({
 
     initialize: function () {
-
-      // this.editorLayout = new AppEditorModule.Layout();
-
-      this.options = new OptionsCollection([
-        {
-          name: 'Overview'
-        },
-        {
-          name: 'Remote Services'
-        },
-        {
-          name: 'Settings'
-        }
-      ]);
+      this.tabs = new TabsCollection([{
+        name: 'Overview'
+      }, {
+        name: 'Remote Services'
+      }, {
+        name: 'Settings'
+      }]);
     },
 
-    listOptions: function () {
-      var listView = new OptionsListView({
-        collection: this.options
+    show: function () {
+      this.listView = new EditorView({
+        collection: this.tabs
       });
-      this.channel.command('show:view', listView);
-    },
-
+      this.region.show(this.listView);
+    }
   });
 
   return EditorPresenter;

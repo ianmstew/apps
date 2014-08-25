@@ -1,6 +1,8 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var HasChannelMixin = require('lib/util/has-channel.mixin');
+  var HasChannel = require('lib/mixin/has-channel');
+  var HasRegion = require('lib/mixin/has-region');
+  var HasPresenters = require('lib/mixin/has-presenters');
 
   /*
    * Module is a lightweight class that implements:
@@ -12,14 +14,13 @@ define(function (require) {
   var Module = Marionette.Object.extend({
 
     isRunning: null,
-    region: null,
     _router: null,
-    _presenters: null,
 
     constructor: function (options) {
       Module.__super__.constructor.apply(this, arguments);
-      _.extend(this, _.pick(options || {}, 'region', 'channelName'));
-      HasChannelMixin.mixinto(this);
+      HasChannel.mixInto(this);
+      HasRegion.mixInto(this);
+      HasPresenters.mixInto(this, { initialize: false });
       this._constructRoutes(this.routes || {});
     },
 
@@ -30,44 +31,16 @@ define(function (require) {
       }))();
     },
 
-    _constructPresenters: function (presenters) {
-      this._presenters = _.chain(presenters)
-        .pairs()
-        .map(function (pair) {
-          var name = pair[0];
-          var PresenterClass = pair[1];
-          return [name, new PresenterClass({ channelName: this.channelName })];
-        }, this)
-        .reduce(function (presentersObj, pair) {
-          var name = pair[0];
-          var presenter = pair[1];
-          presentersObj[name] = presenter;
-          return presentersObj;
-        }, {})
-        .value();
-    },
-
-    _destructPresenters: function (presenters) {
-      this._presenters = _.map(presenters, function (presenter) {
-        presenter.destroy();
-        return null;
-      }, this);
-    },
-
-    getPresenter: function (presenter) {
-      return this._presenters[presenter];
-    },
-
     start: function (options) {
       this.triggerMethod('before:start', options);
-      this._constructPresenters(this.presenters || {});
+      if (this.presenters) this.constructPresenters();
       this.isRunning = true;
       this.triggerMethod('start', options);
     },
 
     stop: function (options) {
       this.triggerMethod('before:stop', options);
-      this._destructPresenters(this.presenters || {});
+      if (this.presenters) this.destructPresenters();
       this.isRunning = false;
       this.triggerMethod('stop', options);
     }

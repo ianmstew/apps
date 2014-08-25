@@ -3,13 +3,6 @@ define(function (require) {
 
   var OverviewPresenter = Presenter.extend({
 
-    initialize: function () {
-    },
-
-    resetOverview: function () {
-      // reset view model, triggering re-render
-    },
-
     show: function () {
       console.log('Overview shown here');
     }

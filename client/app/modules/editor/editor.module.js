@@ -1,12 +1,13 @@
 define(function (require) {
   var Module = require('lib/classes/module');
-  var Radio = require('backbone.radio');
   var history = require('lib/util/history');
   var OverviewPresenter = require('modules/editor/overview/overview.presenter');
   var SettingsPresenter = require('modules/editor/settings/settings.presenter');
   var ServicesPresenter = require('modules/editor/services/services.presenter');
 
   var EditorModule = Module.extend({
+
+    channelName: 'editor',
 
     routes: {
       'apps/:id/overview': 'showOverviewTab',
@@ -20,35 +21,17 @@ define(function (require) {
       'settings': SettingsPresenter
     },
 
-    channelName: 'editor',
-
     channelEvents: {
-      'fetch:services': ['reply', 'getServices'],
+      'appId': ['reply', 'getAppId'],
       'show:services:tab': ['comply', 'showServicesTab'],
       'show:overview:tab': ['comply', 'showOverviewTab'],
-      'show:settings:tab': ['comply', 'showSettingsTab'],
-      'show:view': ['comply', 'showView']
+      'show:settings:tab': ['comply', 'showSettingsTab']
     },
 
     appId: null,
 
-    initialize: function () {
-      _.bindAll(this, 'fetchServices');
-    },
-
-    getServices: function () {
-      return new Promise(this.fetchServices);
-    },
-
-    // NOTE: NOT WORKING YET :(
-    fetchServices: function (resolve, reject) {
-      Radio.channel('entities').request('fetch:app', this.appId)
-        .then(function (app) {
-          resolve(app.get('services'));
-        })
-        .catch(function () {
-          reject();
-        });
+    getAppId: function () {
+      return this.appId;
     },
 
     showOverviewTab: function (appId) {
@@ -67,10 +50,6 @@ define(function (require) {
       this.appId = appId || this.appId;
       this.getPresenter('settings').show();
       history.navigate('apps/' + this.appId + '/settings');
-    },
-
-    showView: function (view) {
-      this.region.show(view);
     }
   });
 
