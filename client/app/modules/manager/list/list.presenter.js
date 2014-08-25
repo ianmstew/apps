@@ -19,7 +19,7 @@ define(function (require) {
       var listView = new ListView({
         collection: apps
       });
-      this.channel.command('show:view', listView);
+      this.region.show(listView);
     }
   });
 

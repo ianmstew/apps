@@ -15,27 +15,17 @@ define(function (require) {
       services: []
     },
 
-    parse: function (response, options) {
-      // if (response.services) {
-      //   if (this.services) {
-      //     // Keep the child collection intact if it exists
-      //     this.services.reset(response.services);
-      //     delete response.services;
-      //   } else {
-      //     // Create a new child collection if not
-      //     
-      //   }
-      // }
-      if (response.services) {
-        response.services = new ServicesCollection(response.services);
+    parse: function (data, options) {
+      if (_.isArray(data.services)) {
+        data.services = new ServicesCollection(data.services);
       }
-      return response;
+      return data;
     },
 
     toJSON: function () {
-      var attributes = _.clone(this.attributes);
-      attributes.services = _.map((attributes.services || {}).models, _.clone);
-      return attributes;
+      var attrs = _.clone(this.attributes);
+      if (attrs.services) attrs.services = _.map(attrs.services.models, _.clone);
+      return attrs;
     }
   });
 

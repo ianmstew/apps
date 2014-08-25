@@ -60,6 +60,7 @@ define(function (require) {
     var response;
 
     if (app) {
+      delete app.services;
       response = JSON.stringify(app);
       xhr.respond(200, CONTENT_JSON, response);
     } else {

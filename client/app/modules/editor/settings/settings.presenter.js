@@ -3,9 +3,6 @@ define(function (require) {
 
   var SettingsPresenter = Presenter.extend({
 
-    initialize: function () {
-    },
-
     show: function () {
       console.log('Settings shown here');
     }

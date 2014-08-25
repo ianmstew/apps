@@ -4,14 +4,10 @@ define(function (require) {
 
   var CreatePresenter = Presenter.extend({
 
-    initialize: function () {
-    },
-
     show: function () {
-      // show view immediately
       var createView = new CreateView();
-      this.channel.command('show:view', createView);
-    },
+      this.region.show(createView);
+    }
   });
 
   return CreatePresenter;

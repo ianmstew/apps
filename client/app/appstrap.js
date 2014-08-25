@@ -10,13 +10,13 @@ define(function (require) {
   require('backbone.computedfields');
   require('backbone.radio');
   require('backbone.stickit');
-  require('lib/config/backbone-events-radio.shim');
-  require('lib/config/backbone-promise-ajax.shim');
-  require('lib/config/backbone-set-parse.shim');
+  require('lib/shim/backbone-events-radio');
+  require('lib/shim/backbone-promise-ajax');
+  require('lib/shim/backbone-set-parse');
 
   // Marionette
   require('marionette');
-  require('lib/config/marionette-renderer.shim');
-  require('lib/config/marionette-radio.shim');
-  require('lib/config/marionette-capture-hrefs');
+  require('lib/shim/marionette-renderer');
+  require('lib/shim/marionette-radio');
+  require('lib/config/history-capture-hrefs');
 });
