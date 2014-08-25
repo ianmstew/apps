@@ -2,16 +2,10 @@ define(function (require) {
   var Marionette = require('marionette');
   var template = require('hgn!modules/editor/overview/overview.view');
 
-  var appOverviewView = Marionette.view.extend({
+  var OverviewView = Marionette.ItemView.extend({
 
-    template: template,
-
-    /*
-    regions: {
-      //regionName: "#region",
-    }
-    */
+    template: template
   });
 
-  return appOverviewView;
+  return OverviewView;
 });

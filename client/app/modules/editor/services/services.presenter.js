@@ -10,7 +10,7 @@ define(function (require) {
     },
 
     show: function () {
-      this.fetchServices.then(this.servicesReady);
+      this.fetchServices().then(this.servicesReady);
     },
 
     fetchServices: function () {
@@ -18,7 +18,8 @@ define(function (require) {
     },
 
     _fetchServices: function (resolve, reject) {
-      Radio.channel('entities').request('fetch:app', this.appId)
+      var appId = this.channel.request('appId');
+      Radio.channel('entities').request('fetch:app', appId)
         .then(function (app) {
           resolve(app.get('services'));
         })
