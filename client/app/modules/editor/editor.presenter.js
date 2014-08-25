@@ -29,7 +29,7 @@ define(function (require) {
     onShow: function () {
       var contentRegion = this.editorView.getRegion('content');
       this.channel.trigger('show:tab', this.tab);
-      this.getPresenter(this.tab).present({ region: contentRegion })
+      this.getPresenter(this.tab).present({ region: contentRegion });
     }
   });
 
