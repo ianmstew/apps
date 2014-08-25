@@ -9,7 +9,7 @@ define(function (require) {
       _.bindAll(this, 'fetchServices', 'servicesReady');
     },
 
-    show: function () {
+    onPresent: function () {
       this.fetchServices().then(this.servicesReady);
     },
 
@@ -36,7 +36,7 @@ define(function (require) {
           appId: appId
         }
       });
-      this.region.show(servicesView);
+      this.show(servicesView);
     }
   });
 

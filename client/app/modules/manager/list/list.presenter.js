@@ -11,7 +11,7 @@ define(function (require) {
       _.bindAll(this, 'appsReady');
     },
 
-    show: function () {
+    onPresent: function () {
       Radio.channel('entities').request('fetch:apps').then(this.appsReady);
     },
 
@@ -19,7 +19,7 @@ define(function (require) {
       var listView = new ListView({
         collection: apps
       });
-      this.region.show(listView);
+      this.show(listView);
     }
   });
 

@@ -2,18 +2,36 @@ define(function (require) {
   var Marionette = require('marionette');
   var template = require('hgn!modules/editor/editor.view');
   var HasState = require('lib/mixin/has-state');
+  var TabsCollection = require('modules/editor/entities/tabs.collection');
+  var TabsView = require('modules/editor/child-views/tabs.view');
 
   var EditorView = Marionette.LayoutView.extend({
 
     template: template,
 
-    initialize: function () {
-      HasState.mixInto(this);
-    },
-
     regions: {
       tabs: '.js-editor-tabs',
-      main: '.js-editor-main'
+      content: '.js-editor-content'
+    },
+
+    initialize: function () {
+      this.tabs = new TabsCollection([{
+        name: 'overview',
+        title: 'Overview'
+      }, {
+        name: 'services',
+        title: 'Remote Services'
+      }, {
+        name: 'settings',
+        title: 'Settings'
+      }]);
+    },
+
+    onShow: function () {
+      var tabsView = new TabsView({
+        collection: this.tabs
+      });
+      this.getRegion('tabs').show(tabsView);
     }
   });
 

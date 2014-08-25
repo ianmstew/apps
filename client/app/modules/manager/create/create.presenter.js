@@ -4,9 +4,9 @@ define(function (require) {
 
   var CreatePresenter = Presenter.extend({
 
-    show: function () {
+    onPresent: function () {
       var createView = new CreateView();
-      this.region.show(createView);
+      this.show(createView);
     }
   });
 

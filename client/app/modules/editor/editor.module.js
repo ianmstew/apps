@@ -1,9 +1,7 @@
 define(function (require) {
   var Module = require('lib/classes/module');
   var history = require('lib/util/history');
-  var OverviewPresenter = require('modules/editor/overview/overview.presenter');
-  var SettingsPresenter = require('modules/editor/settings/settings.presenter');
-  var ServicesPresenter = require('modules/editor/services/services.presenter');
+  var EditorPresenter = require('modules/editor/editor.presenter');
 
   var EditorModule = Module.extend({
 
@@ -16,9 +14,7 @@ define(function (require) {
     },
 
     presenters: {
-      'overview': OverviewPresenter,
-      'services': ServicesPresenter,
-      'settings': SettingsPresenter
+      'editor': EditorPresenter
     },
 
     channelEvents: {
@@ -36,19 +32,19 @@ define(function (require) {
 
     showOverviewTab: function (appId) {
       this.appId = appId || this.appId;
-      this.getPresenter('overview').show();
+      this.getPresenter('editor').present({ tab: 'overview' });
       history.navigate('apps/' + this.appId + '/overview');
     },
 
     showServicesTab: function (appId) {
       this.appId = appId || this.appId;
-      this.getPresenter('services').show();
+      this.getPresenter('editor').present({ tab: 'services' });
       history.navigate('apps/' + this.appId + '/services');
     },
 
     showSettingsTab: function (appId) {
       this.appId = appId || this.appId;
-      this.getPresenter('settings').show();
+      this.getPresenter('editor').present({ tab: 'settings' });
       history.navigate('apps/' + this.appId + '/settings');
     }
   });

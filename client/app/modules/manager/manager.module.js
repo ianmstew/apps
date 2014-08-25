@@ -24,12 +24,12 @@ define(function (require) {
     },
 
     listApps: function () {
-      this.getPresenter('list').show();
+      this.getPresenter('list').present();
       history.navigate('apps');
     },
 
     createApp: function () {
-      this.getPresenter('create').show();
+      this.getPresenter('create').present();
       history.navigate('apps/create');
     }
   });
