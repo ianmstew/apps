@@ -1,13 +1,21 @@
 define(function (require) {
   var Backbone = require('backbone');
   var Marionette = require('marionette');
-  var _Util = require('lib/util/underscore-util');
 
   var HasState = {
 
+    state: null,
+    defaultState: null,
+    initialState: null,
+
     _initialize: function (options) {
-      this.defaultState = _.extend(this.defaultState || {}, (this.options || {}).state);
-      this.state = new Backbone.Model(this.defaultState);
+      var state = (options || {}).state;
+      if (state && state instanceof Backbone.Model) {
+        this.state = state;
+      } else {
+        this.initialState = _.defaults({}, state, this.defaultState);
+        this.state = new Backbone.Model(this.initialState);
+      }
       if (this.stateEvents) this._attachStateEvents();
       if (this.serializeData) this._wrapSerializeData();
     },
@@ -21,18 +29,19 @@ define(function (require) {
     },
 
     _serializeDataWrapper: function (serializeData) {
-      var data = _Util.yieldToWrapFn(serializeData, arguments, this);
+      var origArgs = Array.prototype.slice.call(this, 1);
+      var data = serializeData.apply(this, origArgs);
       data.state = this.state.toJSON();
       return data;
     },
 
     resetState: function () {
-      this.state.set(this.defaultState);
+      this.state.set(this.initialState);
     },
 
-    mixInto: function (target) {
-      _.extend(target, _.omit(this, '_initialize', 'mixInto'));
-      this._initialize.call(target);
+    mixinto: function (target) {
+      _.defaults(target, _.omit(this, '_initialize', 'mixinto'));
+      this._initialize.call(target, target.options);
     }
   };
 

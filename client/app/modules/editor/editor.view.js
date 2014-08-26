@@ -1,7 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
   var template = require('hgn!modules/editor/editor.view');
-  var HasState = require('lib/mixin/has-state');
   var TabsCollection = require('modules/editor/entities/tabs.collection');
   var TabsView = require('modules/editor/child-views/tabs.view');
 

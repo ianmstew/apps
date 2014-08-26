@@ -18,9 +18,9 @@ define(function (require) {
 
     constructor: function (options) {
       Module.__super__.constructor.apply(this, arguments);
-      HasChannel.mixInto(this);
-      HasRegion.mixInto(this);
-      HasPresenters.mixInto(this, { initialize: false });
+      HasChannel.mixinto(this);
+      HasRegion.mixinto(this);
+      HasPresenters.mixinto(this, { initialize: false });
       this._constructRoutes(this.routes || {});
     },
 

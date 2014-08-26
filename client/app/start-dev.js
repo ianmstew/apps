@@ -1,6 +1,7 @@
 define(function (require) {
   require('appstrap');
-  require('test/util/debug-radio');
+  require('lib/util/debug-radio');
+  require('lib/util/debug-rsvp');
   require('test/util/fake-server');
   require('test/util/fake-data');
   var App = require('app');

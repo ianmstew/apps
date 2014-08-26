@@ -17,7 +17,9 @@
     "spin.js": "^2.0.1",
     "es6-promise": "~1.0.0",
     "backbone.stickit": "~0.8.0",
-    "backbone.computedfields": "~0.0.7"
+    "backbone.computedfields": "~0.0.7",
+    "backbone.syphon": "~0.4.1",
+    "rsvp": "~3.0.13"
   },
   "exportsOverride": {
     "backbone.wreqr": {
@@ -53,6 +55,9 @@
     },
     "simply-deferred": {
       ".": "deferred.js"
+    },
+    "backbone.syphon": {
+      ".": "lib/amd/backbone.syphon.js"
     }
   }
 }
