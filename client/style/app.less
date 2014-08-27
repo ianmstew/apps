@@ -6,6 +6,7 @@
 @import "dashboard.less";
 @import "user-login.less";
 @import "app-list.less";
+@import "navs.less";
 
 // Manager Styles
 // --------------------------------------------------
@@ -54,15 +55,14 @@ a.nav-previous {
   text-decoration: none;
 }
 
-footer {
-  p {
-    > a {
-      padding: 0 0.5%;
+.section-gray {
+  margin-bottom: 1%;
+  padding: 10px;
+  .border-radius (3px);
+  background-color: @gray-even-lighter;
 
-      &:first-child {
-        padding-left: 1%;
-      }
-    }
+  h3 {
+    margin-top: 0;
   }
 }
 
@@ -105,109 +105,6 @@ footer {
   background-color: @brand-linkedin;
 }
 
-// Options Separator (---OR---)
-// --------------------------------------------------
-
-/*
-.hr-or {
-  padding-bottom: 2%;
-  line-height: 0.5em;
-  text-align: center;
-
-  span {
-    display: inline-block;
-    position: relative;
-  }
-
-  &:before,
-  &:after {
-    content: "";
-    position: relative;
-    height: 5px;
-    border-bottom: 1px solid @gray-lighter;
-    border-top: 1px solid @gray-lighter;
-  }
-
-  &:before {
-    right: 100%;
-    margin-right: 15px;
-  }
-
-  &:after {
-    left: 100%;
-    margin-left: 15px;
-  }
-}
-*/
-
-// Table Actions
-// --------------------------------------------------
-/*
-.table-actions {
-  //&:extend(.row);
-
-  display: block;
-  clear: both;
-
-  > h4 {
-    &:extend(.pull-left);
-
-    > button {
-      &:extend(.btn, .btn-success, .btn-xs);
-
-      margin-left: 1%;
-    }
-  }
-
-  .form-payments {
-    form {
-      .form-group {
-        text-align: right;
-      }
-    }
-  }
-
-  .table-actions-form {
-    &:extend(.pull-right all);
-
-    width: 50%;
-
-    form {
-
-      .form-group {
-        &:extend(.pull-left all);
-
-        > input,
-          div input,
-          select {
-            &:extend(.form-control all, .input-sm all);
-        }
-
-        > input,
-          div input {
-        }
-
-        .input-group {
-          input {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-        }
-
-        .input-group-btn {
-          button {
-            &:extend(.input-sm all);
-
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-        }
-      }
-    }
-  }
-}
-*/
-
 // Dropdown menus
 // --------------------------------------------------
 .avatar {
@@ -249,6 +146,14 @@ footer {
 
     > p {
       padding-top: 20px;
+
+      > a {
+        padding: 0 0.5%;
+
+        &:first-child {
+          padding-left: 1%;
+        }
+      }
     }
   }
 }
