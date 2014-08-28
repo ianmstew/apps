@@ -1,11 +1,15 @@
 @import "engine-ui-import.less";
 @import "document.less";
+@import "variables.less";
 @import "mixins.less";
-@import "app-overview.less";
+@import "navs.less";
 @import "bars.less";
 @import "dashboard.less";
 @import "user-login.less";
+@import "create-app.less";
+@import "app-overview.less";
 @import "app-list.less";
+@import "app-detail.less";
 
 // Manager Styles
 // --------------------------------------------------
@@ -22,7 +26,7 @@ body {
 .wrap {
     width: 100%;
     min-height: 100%;
-    margin-bottom: -60px; /* equal to footer height */
+    margin-bottom: -(@footer-height); /* equal to footer height */
 }
 
 .wrap {
@@ -47,20 +51,71 @@ main {
   height: 100%;
 }
 
+.section-gray {
+  margin-bottom: 1%;
+  padding: 10px;
+  .border-radius (3px);
+  background-color: @gray-even-lighter;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+
+.form-group {
+  box-sizing: border-box;
+
+  &:before {
+    display: table;
+    content: " ";
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
 a.nav-previous {
   &:extend(.pull-right all);
 
   margin: 2.5% 2% 0;
   text-decoration: none;
 }
+// Footer
+// --------------------------------------------------
+
+footer,
+.wrap:after {
+  height: @footer-height;
+}
 
 footer {
-  p {
-    > a {
-      padding: 0 0.5%;
+  // margin-top: 60px;
+  position: relative;
+  clear: both;
+  width: 100%;
+  color: #FFF;
+  background-color: #393939;
 
-      &:first-child {
-        padding-left: 1%;
+  > div {
+    &:extend(.container-fluid all);
+
+    > p {
+      padding-top: 20px;
+
+      > a {
+        padding: 0 0.5%;
+
+        &:first-child {
+          padding-left: 1%;
+        }
       }
     }
   }
@@ -105,109 +160,6 @@ footer {
   background-color: @brand-linkedin;
 }
 
-// Options Separator (---OR---)
-// --------------------------------------------------
-
-/*
-.hr-or {
-  padding-bottom: 2%;
-  line-height: 0.5em;
-  text-align: center;
-
-  span {
-    display: inline-block;
-    position: relative;
-  }
-
-  &:before,
-  &:after {
-    content: "";
-    position: relative;
-    height: 5px;
-    border-bottom: 1px solid @gray-lighter;
-    border-top: 1px solid @gray-lighter;
-  }
-
-  &:before {
-    right: 100%;
-    margin-right: 15px;
-  }
-
-  &:after {
-    left: 100%;
-    margin-left: 15px;
-  }
-}
-*/
-
-// Table Actions
-// --------------------------------------------------
-/*
-.table-actions {
-  //&:extend(.row);
-
-  display: block;
-  clear: both;
-
-  > h4 {
-    &:extend(.pull-left);
-
-    > button {
-      &:extend(.btn, .btn-success, .btn-xs);
-
-      margin-left: 1%;
-    }
-  }
-
-  .form-payments {
-    form {
-      .form-group {
-        text-align: right;
-      }
-    }
-  }
-
-  .table-actions-form {
-    &:extend(.pull-right all);
-
-    width: 50%;
-
-    form {
-
-      .form-group {
-        &:extend(.pull-left all);
-
-        > input,
-          div input,
-          select {
-            &:extend(.form-control all, .input-sm all);
-        }
-
-        > input,
-          div input {
-        }
-
-        .input-group {
-          input {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-        }
-
-        .input-group-btn {
-          button {
-            &:extend(.input-sm all);
-
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-        }
-      }
-    }
-  }
-}
-*/
-
 // Dropdown menus
 // --------------------------------------------------
 .avatar {
@@ -227,28 +179,4 @@ i.fa-meh-o {
 
 i.fa-frown-o {
   color: @brand-danger;
-}
-
-// Footer
-// --------------------------------------------------
-
-footer,
-.wrap:after {
-  height: 60px;
-}
-
-footer {
-  position: relative;
-  clear: both;
-  width: 100%;
-  color: #FFF;
-  background-color: #393939;
-
-  > div {
-    &:extend(.container-fluid all);
-
-    > p {
-      padding-top: 20px;
-    }
-  }
 }

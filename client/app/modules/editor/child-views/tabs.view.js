@@ -5,7 +5,8 @@ define(function (require) {
   var TabsView = Marionette.CollectionView.extend({
 
     childView: TabView,
-    tagName: 'ul'
+    tagName: 'ul',
+    className: 'nav nav-tabs'
   });
 
   return TabsView;

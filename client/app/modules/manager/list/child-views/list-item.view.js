@@ -5,7 +5,7 @@ define(function (require) {
 
   var ListItemView = Marionette.ItemView.extend({
     template: template,
-    className: 'list-item',
+    className: 'js-list-item',
     tagName: 'ul',
     childView: ServiceView,
     childViewContainer: '.services'
