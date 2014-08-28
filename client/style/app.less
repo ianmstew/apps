@@ -1,16 +1,15 @@
 @import "engine-ui-import.less";
 @import "document.less";
+@import "variables.less";
 @import "mixins.less";
 @import "navs.less";
 @import "bars.less";
 @import "dashboard.less";
 @import "user-login.less";
+@import "create-app.less";
 @import "app-overview.less";
 @import "app-list.less";
 @import "app-detail.less";
-
-@footer-height: 60px; // Move to variables
-@content-margin: 70px;
 
 // Manager Styles
 // --------------------------------------------------
@@ -88,20 +87,6 @@ a.nav-previous {
 
   margin: 2.5% 2% 0;
   text-decoration: none;
-}
-
-.js-main-content {
-  margin-bottom: @content-margin;
-}
-
-.terms-conditions {
-  padding: 5px;
-  height: 150px;
-  font-size: 12px;
-  overflow: scroll;
-  border-top: 1px solid darken(@gray-lighter, 8%);
-  border-bottom: 1px solid darken(@gray-lighter, 8%);
-  background-color: @gray-lighter;
 }
 // Footer
 // --------------------------------------------------
