@@ -1,14 +1,16 @@
 @import "engine-ui-import.less";
 @import "document.less";
 @import "mixins.less";
-@import "app-overview.less";
+@import "navs.less";
 @import "bars.less";
 @import "dashboard.less";
 @import "user-login.less";
+@import "app-overview.less";
 @import "app-list.less";
-@import "navs.less";
+@import "app-detail.less";
 
-@footer-height: 60px;
+@footer-height: 60px; // Move to variables
+@content-margin: 70px;
 
 // Manager Styles
 // --------------------------------------------------
@@ -25,7 +27,7 @@ body {
 .wrap {
     width: 100%;
     min-height: 100%;
-    margin-bottom: -(@footerheight); /* equal to footer height */
+    margin-bottom: -(@footer-height); /* equal to footer height */
 }
 
 .wrap {
@@ -88,6 +90,52 @@ a.nav-previous {
   text-decoration: none;
 }
 
+.js-main-content {
+  margin-bottom: @content-margin;
+}
+
+.terms-conditions {
+  padding: 5px;
+  height: 150px;
+  font-size: 12px;
+  overflow: scroll;
+  border-top: 1px solid darken(@gray-lighter, 8%);
+  border-bottom: 1px solid darken(@gray-lighter, 8%);
+  background-color: @gray-lighter;
+}
+// Footer
+// --------------------------------------------------
+
+footer,
+.wrap:after {
+  height: @footer-height;
+}
+
+footer {
+  // margin-top: 60px;
+  position: relative;
+  clear: both;
+  width: 100%;
+  color: #FFF;
+  background-color: #393939;
+
+  > div {
+    &:extend(.container-fluid all);
+
+    > p {
+      padding-top: 20px;
+
+      > a {
+        padding: 0 0.5%;
+
+        &:first-child {
+          padding-left: 1%;
+        }
+      }
+    }
+  }
+}
+
 // Social Network Styling
 // --------------------------------------------------
 
@@ -146,37 +194,4 @@ i.fa-meh-o {
 
 i.fa-frown-o {
   color: @brand-danger;
-}
-
-// Footer
-// --------------------------------------------------
-
-footer,
-.wrap:after {
-  height: @footer-height;
-}
-
-footer {
-  margin-top: @footer-height;
-  position: relative;
-  clear: both;
-  width: 100%;
-  color: #FF0000;
-  background-color: #393939;
-
-  > div {
-    &:extend(.container-fluid all);
-
-    > p {
-      padding-top: 20px;
-
-      > a {
-        padding: 0 0.5%;
-
-        &:first-child {
-          padding-left: 1%;
-        }
-      }
-    }
-  }
 }
