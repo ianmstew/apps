@@ -9,9 +9,6 @@ define(function (require) {
      */
     fetch: function (model, options) {
       return model.fetch(options)
-        .then(function (data) {
-          return model;
-        })
         .catch(function (error) {
           Radio.channel('error').trigger('fetch');
           throw error;

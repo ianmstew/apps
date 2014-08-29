@@ -1,24 +1,33 @@
 define(function (require) {
 
+  /*
+   * Manage a set of presenters, passing down the owner's region and channel.
+   */
   var HasPresenters = {
 
     presenters: null,
     _presenters: null,
 
     _initialize: function (options) {
+      _.bindAll(this, 'destructPresenters', '_constructPresenter');
+
       var skipInitialize = (options || {}).skipInitialize;
+
       if (this.presenters && !skipInitialize) this.constructPresenters();
-      if (this.presenters) this.on('destroy', _.bind(this.destructPresenters, this));
+      if (this.presenters) this.on('destroy', this.destructPresenters);
     },
 
     constructPresenters: function (presenters) {
+      this.destructPresenters();
       this._presenters = {};
-      _.each(this.presenters, function (Presenter, name) {
-        this._presenters[name] = new Presenter({
-          channelName: this.channelName,
-          region: this.region
-        });
-      }, this);
+      _.each(this.presenters, this._constructPresenter);
+    },
+
+    _constructPresenter: function (Presenter, name) {
+      this._presenters[name] = new Presenter({
+        region: this.region,
+        channelName: this.channelName
+      });
     },
 
     destructPresenters: function () {

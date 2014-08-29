@@ -20,7 +20,7 @@ define(function (require) {
       Module.__super__.constructor.apply(this, arguments);
       HasChannel.mixinto(this);
       HasRegion.mixinto(this);
-      HasPresenters.mixinto(this, { initialize: false });
+      HasPresenters.mixinto(this, { skipInitialize: true });
       this._constructRoutes(this.routes || {});
     },
 

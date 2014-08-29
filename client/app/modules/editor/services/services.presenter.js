@@ -2,19 +2,31 @@ define(function (require) {
   var Presenter = require('lib/classes/presenter');
   var Radio = require('backbone.radio');
   var ServicesView = require('modules/editor/services/services.view');
+  var ServicesCollection = require('modules/entities/service/services.collection');
 
   var ServicesPresenter = Presenter.extend({
 
+    services: null,
+
     initialize: function (options) {
-      _.bindAll(this, 'fetchServices', 'servicesReady');
+      _.bindAll(this, 'fetchServices', '_fetchServices', 'servicesReady');
+      this.services = new ServicesCollection();
     },
 
     onPresent: function () {
+      var appId = this.channel.request('appId');
+      var servicesView = this.viewSingleton(ServicesView, {
+        collection: this.services,
+        state: {
+          appId: appId
+        }
+      });
+      this.show(servicesView);
       this.fetchServices().then(this.servicesReady);
     },
 
     fetchServices: function () {
-      return new Promise(_.bind(this._fetchServices, this));
+      return new Promise(this._fetchServices);
     },
 
     _fetchServices: function (resolve, reject) {
@@ -29,14 +41,7 @@ define(function (require) {
     },
 
     servicesReady: function (services) {
-      var appId = this.channel.request('appId');
-      var servicesView = new ServicesView({
-        collection: services,
-        state: {
-          appId: appId
-        }
-      });
-      this.show(servicesView);
+      this.services.set(services);
     }
   });
 

@@ -17,19 +17,16 @@ define(function (require) {
     editorView: null,
 
     onPresent: function (options) {
-      this.tab = options.tab;
-      if (!this.editorView || this.editorView.isDestroyed) {
-        this.editorView = new EditorView({
-          collection: this.tabs
-        });
-      }
-      this.show(this.editorView);
+      this.tab = (options || {}).tab;
+      this.editorView = this.viewSingleton(EditorView);
+      this.show(this.editorView, options);
     },
 
-    onShow: function () {
-      var contentRegion = this.editorView.getRegion('content');
+    onShow: function (options) {
       this.channel.trigger('show:tab', this.tab);
-      this.getPresenter(this.tab).present({ region: contentRegion });
+      this.getPresenter(this.tab).present({
+        region: this.editorView.getRegion('content')
+      });
     }
   });
 

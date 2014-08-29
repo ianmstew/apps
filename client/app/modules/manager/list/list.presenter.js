@@ -2,6 +2,7 @@ define(function (require) {
   var Presenter = require('lib/classes/presenter');
   var Radio = require('backbone.radio');
   var ListView = require('modules/manager/list/list.view');
+  var AppsCollection = require('modules/entities/app/apps.collection');
 
   var ListPresenter = Presenter.extend({
 
@@ -17,7 +18,7 @@ define(function (require) {
 
     appsReady: function (apps) {
       var listView = new ListView({
-        collection: apps
+        collection: new AppsCollection(apps)
       });
       this.show(listView);
     }

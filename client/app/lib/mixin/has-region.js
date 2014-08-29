@@ -8,12 +8,6 @@ define(function (require) {
       this.region = (options || {}).region;
     },
 
-    present: function (options) {
-      this.region = (options || {}).region || this.region;
-      this.triggerMethod('before:present', options);
-      this.triggerMethod('present', options);
-    },
-
     show: function (view, options) {
       this.triggerMethod('before:show', options);
       this.region.show(view, options);
