@@ -17,8 +17,8 @@ define(function (require) {
 
     initialize: function () {
       _.bindAll(this, 'tabShown');
-      HasState.mixInto(this);
-      HasChannel.mixInto(this);
+      HasState.mixinto(this);
+      HasChannel.mixinto(this);
       this.listenTo(this.channel, 'show:tab', this.tabShown);
     },
 

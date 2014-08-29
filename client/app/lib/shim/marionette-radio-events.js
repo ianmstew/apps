@@ -1,8 +1,27 @@
 define(function (require) {
   var Backbone = require('backbone');
-  var _Util = require('lib/util/underscore-util');
+  var Marionette = require('marionette');
 
-  _.extend(Backbone.Events, {
+  var eventedClasses = [
+    Backbone.Model,
+    Backbone.Collection,
+    Marionette.Controller,
+    Marionette.Object,
+    Marionette.Region,
+    Marionette.Behavior,
+    Marionette.Application,
+    Marionette.Module,
+    Marionette.View
+  ];
+
+  function stopListeningWrapper (stopListening) {
+    var origArgs = Array.prototype.slice.call(arguments, 1);
+    this.stopComplying();
+    this.stopReplying();
+    return stopListening.apply(this, origArgs);
+  }
+
+  var RadioEvents = {
     _repliers: null,
     _compliers: null,
 
@@ -10,12 +29,14 @@ define(function (require) {
       channel.comply(command, complier);
       this._compliers = this._compliers || [];
       this._compliers.push([channel, command]);
+      return this;
     },
 
     replyWith: function (channel, request, replier) {
       channel.reply(request, replier);
       this._repliers = this._repliers || [];
       this._repliers.push([channel, request]);
+      return this;
     },
 
     stopComplying: function () {
@@ -24,6 +45,7 @@ define(function (require) {
         var command = complier[1];
         channel.stopComplying(command);
       });
+      return this;
     },
 
     stopReplying: function () {
@@ -32,14 +54,13 @@ define(function (require) {
         var request = replier[1];
         channel.stopReplying(request);
       });
-    }
+      return this;
+    },
+
+    stopListening: _.wrap(Backbone.Events.stopListening, stopListeningWrapper)
+  };
+
+  _.each(eventedClasses, function (eventedClass) {
+    _.extend(eventedClass.prototype, RadioEvents);
   });
-
-  function stopListeningWrapper (stopListening) {
-    this.stopComplying();
-    this.stopReplying();
-    return _Util.yieldToWrapFn(stopListening, arguments, this);
-  }
-
-  Backbone.Events.stopListening = _.wrap(Backbone.Events.stopListening, stopListeningWrapper);
 });

@@ -8,7 +8,7 @@ define(function (require) {
     template: template,
     emptyView: ListNoneView,
     childView: ListItemView,
-    childViewContainer: '.js-list'
+    childViewContainer: '.js-apps-list'
   });
 
   return ListView;

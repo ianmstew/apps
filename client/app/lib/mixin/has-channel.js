@@ -4,8 +4,8 @@ define(function (require) {
 
   var HasChannel = {
 
-    _initialize: function () {
-      this.channelName = this.channelName || (this.options || {}).channelName;
+    _initialize: function (options) {
+      this.channelName = this.channelName || (options || {}).channelName;
       this.channel = Radio.channel(this.channelName);
       if (this.channelEvents) this._registerChannelEvents();
     },
@@ -31,9 +31,9 @@ define(function (require) {
       }
     },
 
-    mixInto: function (target) {
-      _.extend(target, _.omit(this, '_initialize', 'mixInto'));
-      this._initialize.call(target);
+    mixinto: function (target) {
+      _.defaults(target, _.omit(this, '_initialize', 'mixinto'));
+      this._initialize.call(target, target.options);
     }
   };
 

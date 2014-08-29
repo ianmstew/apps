@@ -26,7 +26,6 @@
   "requireSpacesInsideObjectBrackets": "allButNested",
   "disallowSpacesInsideArrayBrackets": true,
   "disallowSpacesInsideParentheses": true,
-  "requireCurlyBraces": ["for", "while", "do", "try", "catch"],
 
   // Line breaking  
   "requireCommaBeforeLineBreak": true,
@@ -73,14 +72,18 @@
   "disallowMultipleVarDecl": true
 
   // TODOs (require new JSCS development)
-  // - disallow "}else", require "} else"
-  // - disallow "{ a:1 }", require "{ a: 1 }"
-  // - allow
-  //     if (true) doThis();
-  //     if (true) {
-  //       doThis();  
-  //     }
-  //   disallow
-  //     if (true)
-  //       doThis();
+  // - allow "} else", disallow "}else"
+  // - allow "{ a: 1 }", disallow "{ a:1 }"
+  // - requireCurlyBraces: option to except single statements
+  //     allow
+  //       if (true) doThis();
+  //       if (true) {
+  //         doThis();  
+  //       }
+  //     disallow
+  //       if (true)
+  //         doThis();
+  // - disallowMultipleVarDecl: option to except multiple vars without assignments
+  //     allow "var one, two, three;"
+  //     disallow "var one = 1, two = 2, three = 3;"
 }

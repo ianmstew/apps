@@ -1,13 +1,11 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var ListItem = require('modules/manager/list/child-views/list-item.view');
-  var template = require('hgn!modules/manager/child-views/list/list.view');
+  var template = require('hgn!modules/manager/list/child-views/service.view');
 
-  var ListView = Marionette.CompositeView.extend({
+  var ServiceView = Marionette.ItemView.extend({
     template: template,
-    childView: ListItem,
-    childViewContainer: '.js-list'
+    tagName: 'li'
   });
 
-  return ListView;
+  return ServiceView;
 });

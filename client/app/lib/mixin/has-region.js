@@ -2,8 +2,10 @@ define(function (require) {
 
   var HasRegion = {
 
+    region: null,
+
     _initialize: function (options) {
-      this.region = (this.options || {}).region;
+      this.region = (options || {}).region;
     },
 
     present: function (options) {
@@ -18,9 +20,9 @@ define(function (require) {
       this.triggerMethod('show', options);
     },
 
-    mixInto: function (target) {
-      _.extend(target, _.omit(this, '_initialize', 'mixInto'));
-      this._initialize.call(target);
+    mixinto: function (target) {
+      _.defaults(target, _.omit(this, '_initialize', 'mixinto'));
+      this._initialize.call(target, target.options);
     }
   };
 

@@ -12,11 +12,34 @@ define(function (require) {
     childViewContainer: '.js-service',
 
     defaultState: {
-      appId: '#'
+      appId: '#',
+      counter: 0
+    },
+
+    stateEvents: {
+      'change:appId': 'appIdChanged',
+      'change:count': 'countChanged'
+    },
+
+    ui: {
+      counter: 'js-counter'
+    },
+
+    events: {
+      'click:increment': 'incrementClicked'
     },
 
     initialize: function () {
-      HasState.mixInto(this);
+      HasState.mixinto(this);
+    },
+
+    countChanged: function (model, count) {
+      this.ui.counter.innerText(count);
+    },
+
+    incrementClicked: function () {
+      var count = this.state.get('count');
+      this.state.set('count', count + 1);
     }
   });
 

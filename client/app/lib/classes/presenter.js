@@ -2,7 +2,7 @@ define(function (require) {
   var Marionette = require('marionette');
   var HasChannel = require('lib/mixin/has-channel');
   var HasRegion = require('lib/mixin/has-region');
-  var HasPresenter = require('lib/mixin/has-presenters');
+  var HasPresenters = require('lib/mixin/has-presenters');
 
   /*
    * Presenter is a lightweight class that contains a Radio channel
@@ -11,9 +11,9 @@ define(function (require) {
 
     constructor: function (options) {
       Presenter.__super__.constructor.apply(this, arguments);
-      HasChannel.mixInto(this);
-      HasRegion.mixInto(this);
-      HasPresenter.mixInto(this);
+      HasChannel.mixinto(this);
+      HasRegion.mixinto(this);
+      HasPresenters.mixinto(this);
     }
   });
 

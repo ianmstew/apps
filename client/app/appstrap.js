@@ -1,22 +1,23 @@
 define(function (require) {
   // Browser polyfills
-  require('es6-promise');
+  require('lib/shim/es6-promise');
 
   // Initialize Twitter Bootstrap scripts
   require('bootstrap');
 
-  // Backbone
+  // Backbone shims and extensions
   require('backbone');
   require('backbone.computedfields');
   require('backbone.radio');
   require('backbone.stickit');
-  require('lib/shim/backbone-events-radio');
+  require('backbone.syphon');
   require('lib/shim/backbone-promise-ajax');
   require('lib/shim/backbone-set-parse');
 
-  // Marionette
+  // Marionette shims and config
   require('marionette');
   require('lib/shim/marionette-renderer');
   require('lib/shim/marionette-radio');
+  require('lib/shim/marionette-radio-events');
   require('lib/config/history-capture-hrefs');
 });

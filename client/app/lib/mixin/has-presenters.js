@@ -2,10 +2,12 @@ define(function (require) {
 
   var HasPresenters = {
 
+    presenters: null,
+    _presenters: null,
+
     _initialize: function (options) {
-      // { initialize: false } will defer intialization
-      var initialize = (this.options || {}).initialize !== false;
-      if (this.presenters && initialize) this.constructPresenters();
+      var skipInitialize = (options || {}).skipInitialize;
+      if (this.presenters && !skipInitialize) this.constructPresenters();
       if (this.presenters) this.on('destroy', _.bind(this.destructPresenters, this));
     },
 
@@ -31,9 +33,9 @@ define(function (require) {
       return this._presenters[presenter];
     },
 
-    mixInto: function (target, options) {
-      _.extend(target, _.omit(this, '_initialize', 'mixInto'));
-      this._initialize.call(target, options);
+    mixinto: function (target) {
+      _.defaults(target, _.omit(this, '_initialize', 'mixinto'));
+      this._initialize.call(target, target.options);
     }
   };
 
