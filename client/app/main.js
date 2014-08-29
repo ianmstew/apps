@@ -34,9 +34,6 @@
     },
 
     shim: {
-      'underscore': {
-        exports: '_'
-      },
       'bootstrap': {
         deps: ['jquery']
       },
