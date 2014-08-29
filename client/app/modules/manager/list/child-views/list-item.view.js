@@ -7,7 +7,7 @@ define(function (require) {
 
     template: template,
     className: 'list-item',
-    tagName: 'li',
+    tagName: 'ul',
     childView: ServiceView,
     childViewContainer: '.js-services',
 
