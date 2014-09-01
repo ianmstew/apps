@@ -17,12 +17,11 @@ define(function (require) {
     },
 
     stateEvents: {
-      'change:appId': 'appIdChanged',
-      'change:count': 'countChanged'
+      'change:appId': 'appIdChanged'
     },
 
     ui: {
-      counter: 'js-counter'
+      appId: '.js-services-appId'
     },
 
     events: {
@@ -30,16 +29,11 @@ define(function (require) {
     },
 
     initialize: function () {
-      HasState.mixinto(this);
+      HasState.augment(this);
     },
 
-    countChanged: function (model, count) {
-      this.ui.counter.innerText(count);
-    },
-
-    incrementClicked: function () {
-      var count = this.state.get('count');
-      this.state.set('count', count + 1);
+    appIdChanged: function (state, value) {
+      this.ui.appId.text(value);
     }
   });
 

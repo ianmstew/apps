@@ -1,14 +1,15 @@
 define(function (require) {
+  var Mixin = require('lib/classes/mixin');
 
   /*
    * Manage a set of presenters, passing down the owner's region and channel.
    */
-  var HasPresenters = {
+  var HasPresenters = Mixin.extend({
 
     presenters: null,
     _presenters: null,
 
-    _initialize: function (options) {
+    initialize: function (options) {
       _.bindAll(this, 'destructPresenters', '_constructPresenter');
 
       var skipInitialize = (options || {}).skipInitialize;
@@ -40,13 +41,8 @@ define(function (require) {
 
     getPresenter: function (presenter) {
       return this._presenters[presenter];
-    },
-
-    mixinto: function (target) {
-      _.defaults(target, _.omit(this, '_initialize', 'mixinto'));
-      this._initialize.call(target, target.options);
     }
-  };
+  });
 
   return HasPresenters;
 });

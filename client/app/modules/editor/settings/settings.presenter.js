@@ -5,8 +5,7 @@ define(function (require) {
   var SettingsPresenter = Presenter.extend({
 
     onPresent: function () {
-      var settingsView = new SettingsView();
-      this.show(settingsView);
+      this.show(this.viewFor(SettingsView));
     }
   });
 

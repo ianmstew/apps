@@ -1,5 +1,6 @@
 define(function (require) {
-  var AppModel = require('modules/entities/app/app.model');
+  require('test/util/fake-server');
+  var AppModel = require('entities/app/app.model');
   var apiData = require('test/data/api-data');
 
   var app1 = new AppModel(apiData.apps[0]);

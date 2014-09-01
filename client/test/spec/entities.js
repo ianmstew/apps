@@ -1,9 +1,9 @@
 define(function (require) {
   var Radio = require('backbone.radio');
-  var EntitiesModule = require('modules/entities/entities.module');
-  // var UserModel = require('modules/entities/user/user.model');
-  // var AppModel = require('modules/entities/app/app.model');
-  var AppCollection = require('modules/entities/app/apps.collection');
+  var EntitiesModule = require('entities/entities.module');
+  // var UserModel = require('entities/user/user.model');
+  // var AppModel = require('entities/app/app.model');
+  var AppCollection = require('entities/app/apps.collection');
 
   describe('Entities', function () {
     var entitiesChannel = Radio.channel('entities');

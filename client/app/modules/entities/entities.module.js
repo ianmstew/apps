@@ -1,8 +1,8 @@
 define(function (require) {
   var EntityModule = require('lib/classes/entity.module');
-  var User = require('modules/entities/user/user.model');
-  var AppModel = require('modules/entities/app/app.model');
-  var AppsCollection = require('modules/entities/app/apps.collection');
+  var User = require('entities/user/user.model');
+  var AppModel = require('entities/app/app.model');
+  var AppsCollection = require('entities/app/apps.collection');
 
   var EntitiesModule = EntityModule.extend({
 

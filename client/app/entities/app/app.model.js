@@ -1,6 +1,6 @@
 define(function (require) {
   var Backbone = require('backbone');
-  var ServicesCollection = require('modules/entities/service/services.collection');
+  var ServicesCollection = require('entities/service/services.collection');
 
   var AppModel = Backbone.Model.extend({
 

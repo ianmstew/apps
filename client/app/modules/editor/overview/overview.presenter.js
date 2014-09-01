@@ -5,8 +5,7 @@ define(function (require) {
   var OverviewPresenter = Presenter.extend({
 
     onPresent: function () {
-      var overviewView = this.viewSingleton(OverviewView);
-      this.show(overviewView);
+      this.show(this.viewFor(OverviewView));
     }
   });
 

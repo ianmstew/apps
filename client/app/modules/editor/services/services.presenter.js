@@ -2,7 +2,7 @@ define(function (require) {
   var Presenter = require('lib/classes/presenter');
   var Radio = require('backbone.radio');
   var ServicesView = require('modules/editor/services/services.view');
-  var ServicesCollection = require('modules/entities/service/services.collection');
+  var ServicesCollection = require('entities/service/services.collection');
 
   var ServicesPresenter = Presenter.extend({
 
@@ -15,7 +15,7 @@ define(function (require) {
 
     onPresent: function () {
       var appId = this.channel.request('appId');
-      var servicesView = this.viewSingleton(ServicesView, {
+      var servicesView = this.viewFor(ServicesView, {
         collection: this.services,
         state: {
           appId: appId
@@ -33,10 +33,10 @@ define(function (require) {
       var appId = this.channel.request('appId');
       Radio.channel('entities').request('fetch:app', appId)
         .then(function (app) {
-          resolve(app.get('services'));
+          resolve(app.services.toJSON());
         })
-        .catch(function () {
-          reject();
+        .catch(function (error) {
+          reject(error);
         });
     },
 

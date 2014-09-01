@@ -3,6 +3,7 @@ define(function (require) {
   var HasChannel = require('lib/mixin/has-channel');
   var HasRegion = require('lib/mixin/has-region');
   var HasPresenters = require('lib/mixin/has-presenters');
+  var HasViewSingletons = require('lib/mixin/has-view-singletons');
 
   /*
    * Presenter is a lightweight class that contains a Radio channel and manages a single region.
@@ -10,25 +11,12 @@ define(function (require) {
    */
   var Presenter = Marionette.Object.extend({
 
-    _singletons: null,
-
     constructor: function (options) {
       Presenter.__super__.constructor.apply(this, arguments);
-      HasChannel.mixinto(this);
-      HasRegion.mixinto(this);
-      HasPresenters.mixinto(this);
-      this._singletons = {};
-    },
-
-    viewSingleton: function (ViewType, options) {
-      var view = this._singletons[ViewType];
-
-      if (!view || view.isDestroyed) {
-        view = new ViewType(options);
-        this._singletons[ViewType] = view;
-      }
-
-      return view;
+      HasChannel.augment(this);
+      HasRegion.augment(this);
+      HasPresenters.augment(this);
+      HasViewSingletons.augment(this);
     },
 
     present: function (options) {

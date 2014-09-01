@@ -18,7 +18,7 @@ define(function (require) {
 
     onPresent: function (options) {
       this.tab = (options || {}).tab;
-      this.editorView = this.viewSingleton(EditorView);
+      this.editorView = this.viewFor(EditorView);
       this.show(this.editorView, options);
     },
 
