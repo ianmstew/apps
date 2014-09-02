@@ -13,8 +13,7 @@ define(function (require) {
     tagName: 'li',
 
     stateEvents: {
-      'change': 'render',
-      'change': 'selected'
+      'change': 'render'
     },
 
     initialize: function () {
@@ -31,13 +30,9 @@ define(function (require) {
 
     serializeData: function () {
       var data = TabView.__super__.serializeData.apply(this, arguments);
-      var appID = Radio.channel('editor').request('appID');
+      var appID = Radio.channel('editor').request('appId');
       data.appID = appID;
       return data;
-    },
-
-    changeSelected: function (model, selected) {
-      //
     }
   });
 
