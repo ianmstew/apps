@@ -11,7 +11,7 @@ define(function (require) {
     apps: null,
 
     initialize: function () {
-      this.apps = new AppsCollection();
+      this.apps = this.entityFor(AppsCollection);
     },
 
     getApps: function () {

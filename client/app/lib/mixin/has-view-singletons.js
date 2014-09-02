@@ -31,7 +31,7 @@ define(function (require) {
       _.each(this._views, function (view, name) {
         if (view && !view.isDestroyed) view.destroy();
         this._views[name] = null;
-      });
+      }, this);
       this._views = null;
     }
   });

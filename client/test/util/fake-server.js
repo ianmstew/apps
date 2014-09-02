@@ -7,10 +7,12 @@ define(function (require) {
   var lastAppId = 0;
 
   server.autoRespond = true;
-  server.autoRespondAfter = 100;
+  server.autoRespondAfter = 1000;
   server.xhr.useFilters = true;
   server.xhr.addFilter(function (method, url, async, user, pass) {
-    return !url.match('^/?api/');
+    var passThrough = !url.match('^/?api/');
+    if (!passThrough) console.log('Faking ' + method + ' on ' + url);
+    return passThrough;
   });
 
   server.respondWith('GET', '/api/apps', function (xhr) {

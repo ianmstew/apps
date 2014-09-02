@@ -2,22 +2,39 @@ define(function (require) {
   var Marionette = require('marionette');
   var Radio = require('backbone.radio');
   var history = require('lib/util/history');
+  var HasModules = require('lib/mixin/has-modules');
   var ManagerModule = require('modules/manager/manager.module');
   var EditorModule = require('modules/editor/editor.module');
+  var AppEntities = require('app.entities');
+  var NotificationModule = require('modules/notification/notification.module');
 
   var App = Marionette.Application.extend({
+
+    channelName: 'global',
 
     regions: {
       contentRegion: '#content-region'
     },
 
-    modules: null,
+    modules: {
+      'entities': AppEntities,
+      'manager': ManagerModule,
+      'editor': EditorModule,
+      'notification': NotificationModule
+    },
 
     constructor: function () {
       App.__super__.constructor.apply(this, arguments);
-      _.bindAll(this, 'createModules', 'startModules');
-      this.addInitializer(this.createModules);
-      this.addInitializer(this.startModules);
+      this.initializeMixins();
+      this.addInitializer(this._startModules);
+    },
+
+    _startModules: function () {
+      var contentRegion = this.getRegion('contentRegion');
+      this.getModule('notification').start();
+      this.getModule('entities').start();
+      this.getModule('manager').start({ region: contentRegion });
+      this.getModule('editor').start({ region: contentRegion });
     },
 
     onStart: function () {
@@ -26,24 +43,10 @@ define(function (require) {
       if (history.getCurrentRoute() === '') {
         Radio.channel('manager').command('list:apps');
       }
-    },
-
-    createModules: function () {
-      this.modules = {
-        manager: new ManagerModule({
-          region: this.getRegion('contentRegion')
-        }),
-        editor: new EditorModule({
-          region: this.getRegion('contentRegion')
-        })
-      };
-    },
-
-    startModules: function () {
-      this.modules.manager.start();
-      this.modules.editor.start();
     }
   });
+
+  HasModules.mixInto(App, { manualStart: true });
 
   return App;
 });

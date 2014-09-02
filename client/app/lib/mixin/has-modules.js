@@ -3,6 +3,8 @@ define(function (require) {
 
   /*
    * Manage a set of modules, passing down the owner's region and channel.
+   * Modules are constructed at initialize time unless { manualInitialize: true }, otherwise
+   * constructModules() must be called manually. start/stop/destroy on owner cascade.
    */
   var HasModules = Mixin.extend({
 
@@ -16,11 +18,13 @@ define(function (require) {
 
     initialize: function (options) {
       _.bindAll(this, 'destructModules', '_constructModule', 'startModules', 'stopModules');
+      var manualStart = (options || {}).manualStart;
+      var manualInitialize = (options || {}).manualInitialize;
 
       if (this.modules) {
-        this.constructModules();
+        if (!manualInitialize) this.constructModules();
+        if (!manualStart) this.on('start', this.startModules);
         this.on('destroy', this.destructModules);
-        this.on('start', this.startModules);
         this.on('stop', this.stopModules);
       }
     },
@@ -38,12 +42,12 @@ define(function (require) {
       });
     },
 
-    startModules: function () {
-      _.invoke(_.values(this._modules), 'start');
+    startModules: function (options) {
+      _.invoke(_.values(this._modules), 'start', options);
     },
 
-    stopModules: function () {
-      _.invoke(_.values(this._modules), 'stop');
+    stopModules: function (options) {
+      _.invoke(_.values(this._modules), 'stop', options);
     },
 
     destructModules: function () {

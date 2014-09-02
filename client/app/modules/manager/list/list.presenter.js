@@ -5,11 +5,18 @@ define(function (require) {
   var ListPresenter = Presenter.extend({
 
     onPresent: function () {
+      // Retrieve an apps model
       var apps = this.channel.request('apps');
+
+      // Create/retrieve a view and attach a model
       var listView = this.viewFor(ListView, {
         collection: apps
       });
+
+      // Show the view
       this.show(listView);
+
+      // Trigger a model update
       apps.fetch();
     }
   });

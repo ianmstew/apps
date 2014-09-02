@@ -4,15 +4,15 @@ define(function (require) {
 
   var EntityModule = Module.extend({
 
-    /*
-     * Wraps fetch with a new deferred whose result is the model
-     */
-    fetch: function (model, options) {
-      return model.fetch(options)
-        .catch(function (error) {
-          Radio.channel('error').trigger('fetch');
-          throw error;
-        });
+    // Creates a new instance that broadcasts errors on the error channel
+    entityFor: function (Entity, attributes, options) {
+      var entity = new Entity(attributes, options);
+      this.listenTo(entity, 'error', this._modelError);
+      return entity;
+    },
+
+    _modelError: function (model, resp, options) {
+      Radio.channel('notification').trigger('entity:error', model, resp.statusText);
     }
   });
 

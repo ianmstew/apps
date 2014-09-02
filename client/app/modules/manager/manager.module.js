@@ -1,6 +1,5 @@
 define(function (require) {
   var Module = require('lib/classes/module');
-  var history = require('lib/util/history');
   var ListPresenter = require('modules/manager/list/list.presenter');
   var CreatePresenter = require('modules/manager/create/create.presenter');
   var ManagerEntities = require('modules/manager/manager.entities');
@@ -23,19 +22,12 @@ define(function (require) {
       'create': CreatePresenter
     },
 
-    channelEvents: {
-      'list:apps': ['comply', 'listApps'],
-      'create:app': ['comply', 'createApp']
-    },
-
     listApps: function () {
       this.getPresenter('list').present();
-      history.navigate('apps');
     },
 
     createApp: function () {
       this.getPresenter('create').present();
-      history.navigate('apps/create');
     }
   });
 

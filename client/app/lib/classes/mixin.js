@@ -18,11 +18,16 @@ define(function (require) {
 
     // Call all mixin initializers
     initializeMixins: function (options) {
-      _.invoke(this._mixinInitializers, 'call', this, options);
+      _.each(this._mixinInitializers, function (mixinInitializer) {
+        var initializer = mixinInitializer[0];
+        var staticOptions = mixinInitializer[1];
+        initializer.call(this, _.defaults({}, options, staticOptions));
+      }, this);
     },
 
     // NOTE: Context "this" is the object of mixin methods, not a "new" instance.
-    mixInto: function (Type) {
+    // 'staticOptions' are treated as defaults for instance initialize options at runtime.
+    mixInto: function (Type, staticOptions) {
       // The destination prototype
       var prototype = Type.prototype;
       // Mix in all properties except for Mixin utilty methods
@@ -44,7 +49,7 @@ define(function (require) {
       // Prepare mixin initializers
       prototype.initializeMixins = this.initializeMixins;
       (prototype._mixinInitializers || (prototype._mixinInitializers = []))
-        .push(this.initialize);
+        .push([this.initialize, staticOptions]);
 
       _.extend(prototype, mixinProps);
     },

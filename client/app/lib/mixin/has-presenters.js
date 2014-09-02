@@ -3,6 +3,10 @@ define(function (require) {
 
   /*
    * Manage a set of presenters, passing down the owner's region and channel.
+   *
+   * Presenters are constructed at initialize time unless { manualInitialize: true }
+   * in passed, in which case constructPresenters() must be called manually.
+   * Presenters are always destructed on destroy.
    */
   var HasPresenters = Mixin.extend({
 
@@ -16,11 +20,12 @@ define(function (require) {
 
     initialize: function (options) {
       _.bindAll(this, 'destructPresenters', '_constructPresenter');
+      var manualInitialize = (options || {}).manualInitialize;
 
-      var skipInitialize = (options || {}).skipInitialize;
-
-      if (this.presenters && !skipInitialize) this.constructPresenters();
-      if (this.presenters) this.on('destroy', this.destructPresenters);
+      if (this.presenters) {
+        if (!manualInitialize) this.constructPresenters();
+        this.on('destroy', this.destructPresenters);
+      }
     },
 
     constructPresenters: function (presenters) {
