@@ -26,14 +26,14 @@ define(function (require) {
     _compliers: null,
 
     complyWith: function (channel, command, complier) {
-      channel.comply(command, complier);
+      channel.comply(command, _.bind(complier, this));
       this._compliers = this._compliers || [];
       this._compliers.push([channel, command]);
       return this;
     },
 
     replyWith: function (channel, request, replier) {
-      channel.reply(request, replier);
+      channel.reply(request, _.bind(replier, this));
       this._repliers = this._repliers || [];
       this._repliers.push([channel, request]);
       return this;

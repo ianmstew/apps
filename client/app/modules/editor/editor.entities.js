@@ -6,6 +6,7 @@ define(function (require) {
 
     channelEvents: {
       'app': ['reply', 'getApp'],
+      'appId': ['reply', 'getAppId'],
       'set:appId': ['comply', 'setAppId']
     },
 
@@ -20,7 +21,12 @@ define(function (require) {
       return this.app;
     },
 
+    getAppId: function () {
+      return this.appId;
+    },
+
     setAppId: function (appId) {
+      this.appId = appId;
       this.app.set('_id', appId);
     }
   });

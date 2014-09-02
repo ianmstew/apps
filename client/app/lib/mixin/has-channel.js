@@ -28,7 +28,7 @@ define(function (require) {
 
     _registerChannelEvent: function (channelHandler, event) {
       var eventType = channelHandler[0];
-      var eventHandler = _.bind(this[channelHandler[1]], this);
+      var eventHandler = this[channelHandler[1]];
 
       switch (eventType) {
         case 'on':

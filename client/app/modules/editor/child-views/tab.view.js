@@ -3,7 +3,6 @@ define(function (require) {
   var template = require('hgn!modules/editor/child-views/tab.view');
   var HasState = require('lib/mixin/has-state');
   var HasChannel = require('lib/mixin/has-channel');
-  var Radio = require('backbone.radio');
 
   var TabView = Marionette.ItemView.extend({
 
@@ -31,8 +30,7 @@ define(function (require) {
 
     serializeData: function () {
       var data = TabView.__super__.serializeData.apply(this, arguments);
-      var appID = Radio.channel('editor').request('appId');
-      data.appID = appID;
+      data.appID = this.channel.request('appId');
       return data;
     }
   });
