@@ -3,6 +3,7 @@ define(function (require) {
   var HasChannel = require('lib/mixin/has-channel');
   var HasRegion = require('lib/mixin/has-region');
   var HasPresenters = require('lib/mixin/has-presenters');
+  var HasModules = require('lib/mixin/has-modules');
 
   /*
    * Module is a lightweight class that implements:
@@ -18,9 +19,7 @@ define(function (require) {
 
     constructor: function (options) {
       Module.__super__.constructor.apply(this, arguments);
-      HasChannel.augment(this);
-      HasRegion.augment(this);
-      HasPresenters.augment(this, { skipInitialize: true });
+      this.initializeMixins(options);
       this._constructRoutes(this.routes || {});
     },
 
@@ -39,12 +38,25 @@ define(function (require) {
     },
 
     stop: function (options) {
-      this.triggerMethod('before:stop', options);
-      if (this.presenters) this.destructPresenters();
-      this.isRunning = false;
-      this.triggerMethod('stop', options);
+      if (this.isRunning) {
+        this.triggerMethod('before:stop', options);
+        if (this.presenters) this.destructPresenters();
+        this.isRunning = false;
+        this.triggerMethod('stop', options);
+      }
+    },
+
+    destroy: function (options) {
+      this.stop();
+      this.triggerMethod('before:destroy', options);
+      this.triggerMethod('destroy', options);
     }
   });
+
+  HasChannel.mixInto(Module);
+  HasRegion.mixInto(Module);
+  HasPresenters.mixInto(Module, { skipInitialize: true });
+  HasModules.mixInto(Module);
 
   return Module;
 });

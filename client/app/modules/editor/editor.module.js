@@ -1,7 +1,7 @@
 define(function (require) {
   var Module = require('lib/classes/module');
-  var history = require('lib/util/history');
   var EditorPresenter = require('modules/editor/editor.presenter');
+  var EditorEntities = require('modules/editor/editor.entities');
 
   var EditorModule = Module.extend({
 
@@ -13,39 +13,29 @@ define(function (require) {
       'apps/:id/services': 'showServicesTab'
     },
 
+    modules: {
+      'entities': EditorEntities
+    },
+
     presenters: {
       'editor': EditorPresenter
     },
 
-    channelEvents: {
-      'appId': ['reply', 'getAppId'],
-      'show:services:tab': ['comply', 'showServicesTab'],
-      'show:overview:tab': ['comply', 'showOverviewTab'],
-      'show:settings:tab': ['comply', 'showSettingsTab']
-    },
-
-    appId: null,
-
-    getAppId: function () {
-      return this.appId;
-    },
+    editorEntities: null,
 
     showOverviewTab: function (appId) {
-      this.appId = appId || this.appId;
+      this.channel.command('set:appId', (appId || this.appId));
       this.getPresenter('editor').present({ tab: 'overview' });
-      history.navigate('apps/' + this.appId + '/overview');
     },
 
     showServicesTab: function (appId) {
-      this.appId = appId || this.appId;
+      this.channel.command('set:appId', (appId || this.appId));
       this.getPresenter('editor').present({ tab: 'services' });
-      history.navigate('apps/' + this.appId + '/services');
     },
 
     showSettingsTab: function (appId) {
-      this.appId = appId || this.appId;
+      this.channel.command('set:appId', (appId || this.appId));
       this.getPresenter('editor').present({ tab: 'settings' });
-      history.navigate('apps/' + this.appId + '/settings');
     }
   });
 

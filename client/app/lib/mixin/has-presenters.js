@@ -6,7 +6,12 @@ define(function (require) {
    */
   var HasPresenters = Mixin.extend({
 
-    presenters: null,
+    // Declarative set of presenters
+    // presenters: {
+    //   'presenterName': PresenterClass
+    // },
+
+    // Local storage of presenter instances
     _presenters: null,
 
     initialize: function (options) {
@@ -21,7 +26,7 @@ define(function (require) {
     constructPresenters: function (presenters) {
       this.destructPresenters();
       this._presenters = {};
-      _.each(this.presenters, this._constructPresenter);
+      _.each(this.presenters, this._constructPresenter, this);
     },
 
     _constructPresenter: function (Presenter, name) {

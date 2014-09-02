@@ -11,15 +11,16 @@ define(function (require) {
     template: template,
     tagName: 'li',
 
+    channelEvents: {
+      'show:tab': ['on', 'tabShown']
+    },
+
     stateEvents: {
       'change': 'render'
     },
 
-    initialize: function () {
-      _.bindAll(this, 'tabShown');
-      HasState.augment(this);
-      HasChannel.augment(this);
-      this.listenTo(this.channel, 'show:tab', this.tabShown);
+    initialize: function (options) {
+      this.initializeMixins(options);
     },
 
     tabShown: function (tab) {
@@ -27,6 +28,9 @@ define(function (require) {
       this.state.set('selected', selected);
     }
   });
+
+  HasState.mixInto(TabView);
+  HasChannel.mixInto(TabView);
 
   return TabView;
 });

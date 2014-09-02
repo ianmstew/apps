@@ -3,6 +3,7 @@ define(function (require) {
 
   var HasRegion = Mixin.extend({
 
+    // Current region
     region: null,
 
     initialize: function (options) {

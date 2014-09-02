@@ -5,6 +5,17 @@ define(function (require) {
 
   var HasChannel = Mixin.extend({
 
+    // Declarative option for channel name
+    // channelName: nameOfChannel
+
+    // Declarative binding of channel events
+    // channelEvents: {
+    //   'event': ['on|reply|comply', eventHandler]
+    // }
+
+    // Current channel
+    channel: null,
+
     initialize: function (options) {
       this.channelName = this.channelName || (options || {}).channelName;
       this.channel = Radio.channel(this.channelName);
@@ -20,6 +31,9 @@ define(function (require) {
       var eventHandler = _.bind(this[channelHandler[1]], this);
 
       switch (eventType) {
+        case 'on':
+          this.listenTo(this.channel, event, eventHandler);
+          break;
         case 'reply':
           this.replyWith(this.channel, event, eventHandler);
           break;

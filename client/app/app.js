@@ -4,7 +4,6 @@ define(function (require) {
   var history = require('lib/util/history');
   var ManagerModule = require('modules/manager/manager.module');
   var EditorModule = require('modules/editor/editor.module');
-  var EntitiesModule = require('modules/entities/entities.module');
 
   var App = Marionette.Application.extend({
 
@@ -16,9 +15,8 @@ define(function (require) {
 
     constructor: function () {
       App.__super__.constructor.apply(this, arguments);
-      _.bindAll(this, 'createModules', 'startEntities', 'startModules');
+      _.bindAll(this, 'createModules', 'startModules');
       this.addInitializer(this.createModules);
-      this.addInitializer(this.startEntities);
       this.addInitializer(this.startModules);
     },
 
@@ -37,13 +35,8 @@ define(function (require) {
         }),
         editor: new EditorModule({
           region: this.getRegion('contentRegion')
-        }),
-        entities: new EntitiesModule()
+        })
       };
-    },
-
-    startEntities: function () {
-      this.modules.entities.start();
     },
 
     startModules: function () {

@@ -5,20 +5,30 @@ define(function (require) {
 
   var HasState = Mixin.extend({
 
+    // Default state overridable by constructor 'state' option
+    // defaultState: null,
+
+    // Backbone model maintaining state
     state: null,
-    defaultState: null,
+
+    // Initial state of model after defaults and constructor 'state' option
     initialState: null,
 
     initialize: function (options) {
+      _.bindAll(this, '_cleanupState');
       var state = (options || {}).state;
+
       if (state && state instanceof Backbone.Model) {
         this.state = state;
       } else {
         this.initialState = _.defaults({}, state, this.defaultState);
         this.state = new Backbone.Model(this.initialState);
       }
+
       if (this.stateEvents) this._attachStateEvents();
       if (this.serializeData) this._wrapSerializeData();
+
+      this.on('destroy', this._cleanupState);
     },
 
     setState: function () {
@@ -45,7 +55,12 @@ define(function (require) {
     },
 
     resetState: function () {
-      this.state.set(this.initialState);
+      this.state.set(this.initialState, { unset: true });
+    },
+
+    _cleanupState: function () {
+      this.state.destroy();
+      this.state = null;
     }
   });
 

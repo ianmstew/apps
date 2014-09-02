@@ -13,10 +13,7 @@ define(function (require) {
 
     constructor: function (options) {
       Presenter.__super__.constructor.apply(this, arguments);
-      HasChannel.augment(this);
-      HasRegion.augment(this);
-      HasPresenters.augment(this);
-      HasViewSingletons.augment(this);
+      this.initializeMixins(options);
     },
 
     present: function (options) {
@@ -26,6 +23,11 @@ define(function (require) {
       this.triggerMethod('present', options);
     }
   });
+
+  HasChannel.mixInto(Presenter);
+  HasRegion.mixInto(Presenter);
+  HasPresenters.mixInto(Presenter);
+  HasViewSingletons.mixInto(Presenter);
 
   return Presenter;
 });
