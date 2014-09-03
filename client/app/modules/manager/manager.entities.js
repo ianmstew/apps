@@ -8,14 +8,12 @@ define(function (require) {
       'apps': ['reply', 'getApps']
     },
 
-    apps: null,
-
-    initialize: function () {
-      this.apps = this.entityFor(AppsCollection);
+    entities: {
+      'apps': AppsCollection
     },
 
     getApps: function () {
-      return this.apps;
+      return this.getEntity('apps');
     }
   });
 

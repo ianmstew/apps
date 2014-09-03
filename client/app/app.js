@@ -1,6 +1,5 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var Radio = require('backbone.radio');
   var history = require('lib/util/history');
   var HasModules = require('lib/mixin/has-modules');
   var ManagerModule = require('modules/manager/manager.module');
@@ -41,7 +40,7 @@ define(function (require) {
       history.start();
 
       if (history.getCurrentRoute() === '') {
-        Radio.channel('manager').command('list:apps');
+        history.navigate('/apps', { trigger: true });
       }
     }
   });

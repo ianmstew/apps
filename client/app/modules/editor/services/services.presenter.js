@@ -11,7 +11,6 @@ define(function (require) {
         collection: app.get('services')
       });
       this.show(servicesView);
-      app.fetch();
     }
   });
 

@@ -10,24 +10,29 @@ define(function (require) {
       'set:appId': ['comply', 'setAppId']
     },
 
-    app: null,
-    appId: null,
+    entities: {
+      'app': [AppModel, 'appModelEvents']
+    },
 
-    initialize: function () {
-      this.app = this.entityFor(AppModel);
+    appModelEvents: {
+      'change:_id': 'appIdChanged'
     },
 
     getApp: function () {
-      return this.app;
+      return this.getEntity('app');
     },
 
     getAppId: function () {
-      return this.appId;
+      return this.getEntity('app').get('_id');
     },
 
     setAppId: function (appId) {
-      this.appId = appId;
-      this.app.set('_id', appId);
+      this.getEntity('app').set('_id', parseInt(appId));
+    },
+
+    appIdChanged: function () {
+      this.getEntity('app').get('services').reset();
+      this.getEntity('app').fetch();
     }
   });
 

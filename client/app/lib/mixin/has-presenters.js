@@ -30,23 +30,30 @@ define(function (require) {
 
     constructPresenters: function (presenters) {
       this.destructPresenters();
-      this._presenters = {};
-      _.each(this.presenters, this._constructPresenter, this);
+      this._presenters = _.chain(this.presenters)
+        .map(this._constructPresenter, this)
+        .object()
+        .value();
     },
 
     _constructPresenter: function (Presenter, name) {
-      this._presenters[name] = new Presenter({
+      return [name, new Presenter({
         region: this.region,
         channelName: this.channelName
-      });
+      })];
     },
 
     destructPresenters: function () {
-      _.each(this._presenters, function (presenter, name) {
-        presenter.destroy();
-        this._presenters[name] = null;
-      }, this);
+      this._presenters = _.chain(this._presenters)
+        .map(this._destructPresenter, this)
+        .object()
+        .value();
       this._presenters = null;
+    },
+
+    _destructPresenter: function (presenter, name) {
+      presenter.destroy();
+      return [name, null];
     },
 
     getPresenter: function (presenter) {

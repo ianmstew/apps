@@ -8,15 +8,16 @@ define(function (require) {
       'user': ['reply', 'getUser']
     },
 
-    user: null,
+    entities: {
+      'user': CurrentUserModel
+    },
 
     initialize: function () {
-      this.user = this.entityFor(CurrentUserModel);
-      this.user.fetch();
+      this.getEntity('user').fetch();
     },
 
     getUser: function () {
-      return this.user;
+      return this.getEntity('user');
     }
   });
 

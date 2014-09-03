@@ -43,6 +43,10 @@ define(function (require) {
       Marionette.bindEntityEvents(this, this.state, this.stateEvents);
     },
 
+    _detachStateEvents: function () {
+      Marionette.unbindEntityEvents(this, this.state, this.stateEvents);
+    },
+
     _wrapSerializeData: function () {
       this.serializeData = _.wrap(this.serializeData, this._serializeDataWrapper);
     },
@@ -59,6 +63,7 @@ define(function (require) {
     },
 
     _cleanupState: function () {
+      if (this.stateEvents) this._detachStateEvents();
       this.state.destroy();
       this.state = null;
     }

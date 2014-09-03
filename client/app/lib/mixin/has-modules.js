@@ -31,15 +31,17 @@ define(function (require) {
 
     constructModules: function (modules) {
       this.destructModules();
-      this._modules = {};
-      _.each(this.modules, this._constructModule, this);
+      this._modules = _.chain(this.modules)
+        .map(this._constructModule, this)
+        .object()
+        .value();
     },
 
     _constructModule: function (Module, name) {
-      this._modules[name] = new Module({
+      return [name, new Module({
         region: this.region,
         channelName: this.channelName
-      });
+      })];
     },
 
     startModules: function (options) {
@@ -51,11 +53,16 @@ define(function (require) {
     },
 
     destructModules: function () {
-      _.each(this._modules, function (module, name) {
-        module.destroy();
-        this._modules[name] = null;
-      }, this);
+      this._modules = _.chain(this._modules)
+        .map(this._destructModule, this)
+        .object()
+        .value();
       this._modules = null;
+    },
+
+    _destructModule: function (module, name) {
+      module.destroy();
+      return [name, null];
     },
 
     getModule: function (module) {
