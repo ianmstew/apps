@@ -11,22 +11,32 @@ define(function (require) {
     template: template,
     tagName: 'li',
 
+    channelEvents: {
+      'show:tab': ['on', 'tabShown']
+    },
+
     stateEvents: {
       'change': 'render'
     },
 
-    initialize: function () {
-      _.bindAll(this, 'tabShown');
-      HasState.mixinto(this);
-      HasChannel.mixinto(this);
-      this.listenTo(this.channel, 'show:tab', this.tabShown);
+    initialize: function (options) {
+      this.initializeMixins(options);
     },
 
     tabShown: function (tab) {
       var selected = this.model.get('name') === tab;
       this.state.set('selected', selected);
+    },
+
+    serializeData: function () {
+      var data = TabView.__super__.serializeData.apply(this, arguments);
+      data.appID = this.channel.request('appId');
+      return data;
     }
   });
+
+  HasState.mixInto(TabView);
+  HasChannel.mixInto(TabView);
 
   return TabView;
 });

@@ -1,10 +1,22 @@
 define(function (require) {
+  var Mixin = require('lib/classes/mixin');
   var Radio = require('backbone.radio');
   var logger = require('lib/util/logger');
 
-  var HasChannel = {
+  var HasChannel = Mixin.extend({
 
-    _initialize: function (options) {
+    // Declarative option for channel name
+    // channelName: nameOfChannel
+
+    // Declarative binding of channel events
+    // channelEvents: {
+    //   'event': ['on|reply|comply', eventHandler]
+    // }
+
+    // Current channel
+    channel: null,
+
+    initialize: function (options) {
       this.channelName = this.channelName || (options || {}).channelName;
       this.channel = Radio.channel(this.channelName);
       if (this.channelEvents) this._registerChannelEvents();
@@ -16,9 +28,12 @@ define(function (require) {
 
     _registerChannelEvent: function (channelHandler, event) {
       var eventType = channelHandler[0];
-      var eventHandler = _.bind(this[channelHandler[1]], this);
+      var eventHandler = this[channelHandler[1]];
 
       switch (eventType) {
+        case 'on':
+          this.listenTo(this.channel, event, eventHandler);
+          break;
         case 'reply':
           this.replyWith(this.channel, event, eventHandler);
           break;
@@ -29,13 +44,8 @@ define(function (require) {
           logger.warn(eventType + ' is not supported');
           break;
       }
-    },
-
-    mixinto: function (target) {
-      _.defaults(target, _.omit(this, '_initialize', 'mixinto'));
-      this._initialize.call(target, target.options);
     }
-  };
+  });
 
   return HasChannel;
 });

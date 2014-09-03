@@ -6,7 +6,6 @@ define(function (require) {
   _.each([
     'manager',
     'editor',
-    'entities',
     'error'
   ], function (channelName) {
     Radio.tuneIn(channelName);

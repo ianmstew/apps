@@ -30,7 +30,7 @@
       'sinon-chai':              '../vendor/sinon-chai/sinon-chai',
 
       // change -dev to -prod for production
-      'lib/util/logger':         'lib/util/logger-dev'
+      'lib/util/mode':           'lib/util/mode-dev'
     },
 
     shim: {

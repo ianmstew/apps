@@ -1,6 +1,6 @@
 define(function (require) {
   var Backbone = require('backbone');
-  var ServicesCollection = require('modules/entities/service/services.collection');
+  var ServicesCollection = require('entities/service/services.collection');
 
   var AppModel = Backbone.Model.extend({
 
@@ -17,7 +17,14 @@ define(function (require) {
 
     parse: function (data, options) {
       if (_.isArray(data.services)) {
-        data.services = new ServicesCollection(data.services);
+        if (this.get('services') instanceof Backbone.Collection) {
+          // Preserve references to already existing collection
+          this.get('services').set(data.services);
+          delete data.services;
+        } else {
+          // No collection yet exists, so create one
+          data.services = new ServicesCollection(data.services);
+        }
       }
       return data;
     },

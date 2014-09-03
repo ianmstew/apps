@@ -4,6 +4,7 @@ define(function (require) {
   var Service = Backbone.Model.extend({
 
     defaults: {
+      appId: null,
       name: null,
       icon: null,
       dateAdded: null,

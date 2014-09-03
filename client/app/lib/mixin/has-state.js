@@ -1,27 +1,50 @@
 define(function (require) {
+  var Mixin = require('lib/classes/mixin');
   var Backbone = require('backbone');
   var Marionette = require('marionette');
 
-  var HasState = {
+  var HasState = Mixin.extend({
 
+    // Default state overridable by constructor 'state' option
+    // defaultState: null,
+
+    // Backbone model maintaining state
     state: null,
-    defaultState: null,
+
+    // Initial state of model after defaults and constructor 'state' option
     initialState: null,
 
-    _initialize: function (options) {
+    initialize: function (options) {
+      _.bindAll(this, '_cleanupState');
       var state = (options || {}).state;
+
       if (state && state instanceof Backbone.Model) {
         this.state = state;
       } else {
         this.initialState = _.defaults({}, state, this.defaultState);
         this.state = new Backbone.Model(this.initialState);
       }
+
       if (this.stateEvents) this._attachStateEvents();
       if (this.serializeData) this._wrapSerializeData();
+
+      this.on('destroy', this._cleanupState);
+    },
+
+    setState: function () {
+      return this.state.set.apply(this.state, arguments);
+    },
+
+    getState: function () {
+      return this.state.get.apply(this.state, arguments);
     },
 
     _attachStateEvents: function () {
       Marionette.bindEntityEvents(this, this.state, this.stateEvents);
+    },
+
+    _detachStateEvents: function () {
+      Marionette.unbindEntityEvents(this, this.state, this.stateEvents);
     },
 
     _wrapSerializeData: function () {
@@ -36,14 +59,15 @@ define(function (require) {
     },
 
     resetState: function () {
-      this.state.set(this.initialState);
+      this.state.set(this.initialState, { unset: true });
     },
 
-    mixinto: function (target) {
-      _.defaults(target, _.omit(this, '_initialize', 'mixinto'));
-      this._initialize.call(target, target.options);
+    _cleanupState: function () {
+      if (this.stateEvents) this._detachStateEvents();
+      this.state.destroy();
+      this.state = null;
     }
-  };
+  });
 
   return HasState;
 });
