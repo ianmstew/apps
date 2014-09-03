@@ -11,9 +11,9 @@ define(function (require) {
     },
 
     show: function (view, options) {
-      this.triggerMethod('before:show', options);
+      this.triggerMethod('before:show', view);
       this.region.show(view, options);
-      this.triggerMethod('show', options);
+      this.triggerMethod('show', view);
     }
   });
 

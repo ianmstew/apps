@@ -11,12 +11,12 @@ define(function (require) {
     _router: null,
 
     constructor: function (options) {
-      Router.__super__.constructor.apply(this, arguments);
       _.extend(this, _.pick(options, 'routes', 'controller'));
       // We need a parsitic flag on the controller to support logic within route wrappers
       this.controller._routingDisabled = true;
       this._wrapRouting();
       this._constructRoutes();
+      Router.__super__.constructor.apply(this, arguments);
     },
 
     _constructRoutes: function () {

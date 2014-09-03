@@ -33,7 +33,7 @@ define(function (require) {
         Entity = Entity[0];
       }
 
-      entity = new Entity();
+      entity = this.entityFor(Entity);
       if (modelEventsKey) Marionette.bindEntityEvents(this, entity, this[modelEventsKey]);
 
       return [name, entity];
@@ -60,7 +60,7 @@ define(function (require) {
       return [name, null];
     },
 
-    _modelError: function (model, resp, options) {
+    _entityError: function (model, resp, options) {
       Radio.channel('notification').trigger('entity:error', model, resp.statusText);
     },
 
@@ -71,7 +71,7 @@ define(function (require) {
     // Creates a new instance that broadcasts errors on the error channel
     entityFor: function (Entity, attributes, options) {
       var entity = new Entity(attributes, options);
-      this.listenTo(entity, 'error', this._modelError);
+      this.listenTo(entity, 'error', this._entityError);
       return entity;
     }
   });

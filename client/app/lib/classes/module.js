@@ -20,9 +20,9 @@ define(function (require) {
     _router: null,
 
     constructor: function (options) {
-      Module.__super__.constructor.apply(this, arguments);
       this.initializeMixins(options);
       if (this.routes) this._constructRouter();
+      Module.__super__.constructor.apply(this, arguments);
     },
 
     _constructRouter: function () {
