@@ -12,8 +12,8 @@ define(function (require) {
   var Presenter = Marionette.Object.extend({
 
     constructor: function (options) {
-      Presenter.__super__.constructor.apply(this, arguments);
       this.initializeMixins(options);
+      Presenter.__super__.constructor.apply(this, arguments);
     },
 
     present: function (options) {

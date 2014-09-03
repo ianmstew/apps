@@ -18,11 +18,16 @@ define(function (require) {
 
     // Call all mixin initializers
     initializeMixins: function (options) {
+      if (this._mixinsInitialized) return;
+
       _.each(this._mixinInitializers, function (mixinInitializer) {
         var initializer = mixinInitializer[0];
         var staticOptions = mixinInitializer[1];
         initializer.call(this, _.defaults({}, options, staticOptions));
       }, this);
+
+      // Parasitic flag to ensure nested intitializations don't lead to duplicate calls
+      this._mixinsInitialized = true;
     },
 
     // NOTE: Context "this" is the object of mixin methods, not a "new" instance.
@@ -30,9 +35,11 @@ define(function (require) {
     mixInto: function (Type, staticOptions) {
       // The destination prototype
       var prototype = Type.prototype;
+
       // Mix in all properties except for Mixin utilty methods
       var mixinProps = _.omit(this,
           'initialize', '_mixinInitializers', 'initializeMixins', 'mixInto', 'extend');
+
       // Mixin properties that already exist on destination prototype
       var conflicts;
 
@@ -46,7 +53,7 @@ define(function (require) {
         }
       }
 
-      // Prepare mixin initializers
+      // Prepare mixin initializers, merging if an existing array
       prototype.initializeMixins = this.initializeMixins;
       (prototype._mixinInitializers || (prototype._mixinInitializers = []))
         .push([this.initialize, staticOptions]);

@@ -14,18 +14,16 @@ define(function (require) {
     },
 
     tab: null,
-    editorView: null,
 
     onPresent: function (options) {
       this.tab = (options || {}).tab;
-      this.editorView = this.viewFor(EditorView);
-      this.show(this.editorView, options);
+      this.show(this.viewFor(EditorView));
     },
 
-    onShow: function (options) {
+    onShow: function (editorView) {
       this.channel.trigger('show:tab', this.tab);
       this.getPresenter(this.tab).present({
-        region: this.editorView.getRegion('content')
+        region: editorView.getRegion('content')
       });
     }
   });
