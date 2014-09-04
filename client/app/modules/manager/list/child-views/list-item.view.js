@@ -4,10 +4,9 @@ define(function (require) {
   var template = require('hgn!modules/manager/list/child-views/list-item.view');
 
   var ListItemView = Marionette.CompositeView.extend({
-
     template: template,
     className: 'list-item',
-    tagName: 'ul',
+    tagName: 'li',
     childView: ServiceView,
     childViewContainer: '.js-services',
 
