@@ -1,6 +1,20 @@
 // App Item: Detail View (Overview, Services, Settings)
 // --------------------------------------------------
 
+.js-editor-tabs {
+  margin-bottom: 0.5%;
+}
+
 .js-editor-content {
   margin-bottom: @content-margin;
+}
+
+.table-services {
+  &:extend(.table all, .table-striped all, .table-hover all);
+
+  th {
+    &:first-child {
+      width: 5%;
+    }
+  }
 }

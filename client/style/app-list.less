@@ -23,61 +23,66 @@
     }
   }
 }
-.js-list {
-  ul {
-    margin: 0;
+
+.js-apps-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  > li {
+    margin: 0 0 15px 0;
     padding: 0;
-    list-style-type: none;
+    border: @border-gray;
+    .border-radius(3px);
 
-    li {
-      margin: 0 0 15px 0;
+    > ul {
+      margin: 0;
       padding: 0;
-      border: @border-gray;
-      .border-radius(3px);
+      list-style-type: none;
 
-      &:after {
-        content: "";
-        display: block;
-        clear: both;
-      }
-
-      div {
-        width: 50%;
-        display: inline-block;
+      /*
+      > li {
         margin: 0;
         padding: 0;
       }
+      */
+    }
 
-      i {
-        color: @gray;
-        // font-size: 2em;
-      }
+    i {
+      color: @gray;
+      // font-size: 2em;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
     }
   }
 }
 
-.app-create {
-  ul {
-    li {
-      padding: 0.75% 0;
-      color: @gray-darker;
-      text-align: center;
-      background-color: @gray-even-lighter;
+.apps-create {
+  padding: 0.75% 0;
+  color: @gray-darker;
+  text-align: center;
+  background-color: @gray-even-lighter;
 
-      &:hover {
-        background-color: @gray-lighter;
-      }
-    }
+  &:hover {
+    background-color: @gray-lighter;
   }
 }
 
-.app-info {
-  // width: 60%;
+.js-info,
+.js-services {
   float: left;
+  width: 50%;
+  margin: 0;
+  padding: 0;
 }
 
-.app-services {
-  // width: 40%;
-  float: right;
-  text-align: right;
+.js-services {
+  li {
+    float: right;
+    padding: 0 1%;
+  }
 }

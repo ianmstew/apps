@@ -49,8 +49,24 @@ main {
 
   overflow:auto;
   height: 100%;
+
+  > div {
+    &:after {
+      display: block;
+      content: "";
+      height: @content-margin;
+    }
+  }
 }
 
+// For Create Apps button styling
+.content-wrap {
+  > button {
+    margin-bottom: 1%;
+  }
+}
+
+// Standard Gray Containers
 .section-gray {
   margin-bottom: 1%;
   padding: 10px;

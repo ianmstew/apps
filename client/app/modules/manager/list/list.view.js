@@ -6,6 +6,7 @@ define(function (require) {
 
   var ListView = Marionette.CompositeView.extend({
     template: template,
+    className: 'content-wrap',
     emptyView: ListNoneView,
     childView: ListItemView,
     childViewContainer: '.js-apps-list'
