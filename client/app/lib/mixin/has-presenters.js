@@ -2,11 +2,7 @@ define(function (require) {
   var Mixin = require('lib/classes/mixin');
 
   /*
-   * Manage a set of presenters, passing down the owner's region and channel.
-   *
-   * Presenters are constructed at initialize time unless { manualInitialize: true }
-   * in passed, in which case constructPresenters() must be called manually.
-   * Presenters are always destructed on destroy.
+   * Manage a set of singleton presenters, passing down the owner's region and channel.
    */
   var HasPresenters = Mixin.extend({
 

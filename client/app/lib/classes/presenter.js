@@ -7,11 +7,13 @@ define(function (require) {
 
   /*
    * Presenter is a lightweight class that contains a Radio channel and manages a single region.
-   * If belonging to a class that HasPresenters, this will inherit the owner's region and channel.
-   *
-   * Presenters are not lifecycle managed, except when included using HasPresenters, in which
-   * case their lifecycle is tied to the owner. When using outside of HasPresenters, be sure to
-   * call destroy() appropriately.
+   * Features:
+   * - Tied to the lifecycle of its default view; i.e., when its view is destroyed, so is the
+   *   presenter.
+   * - If created through HasPresenter's getPresenter(), it will inherit the owner's region and
+   *   channel automatically.
+   * - If show() is called with loading, a loading view will be shown until the view's model or
+   *   collection data is ready.
    */
   var Presenter = Marionette.Object.extend({
 
@@ -34,16 +36,18 @@ define(function (require) {
     },
 
     show: function (view, options) {
+      var opts = options || {};
+      var nobind = opts.nobind;
       this.triggerMethod('before:show', view);
 
-      if (!this._firstView) this._bindToView(view);
+      if (!nobind) this._bindToView(view);
 
-      if ((options || {}).loading) {
-        // Delegate showing into my region to the loading presenter
+      if (opts.loading) {
+        // Loading presentation requested; delegate showing to the loading presenter
         options.region = this.region;
         Radio.channel('loading').command('show:loading', view, options);
       } else {
-        // Show into region
+        // Show into region directly
         this.region.show(view, options);
         this.triggerMethod('show', view);
       }
