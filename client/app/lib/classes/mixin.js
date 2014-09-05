@@ -23,7 +23,7 @@ define(function (require) {
       _.each(this._mixinInitializers, function (mixinInitializer) {
         var initializer = mixinInitializer[0];
         var staticOptions = mixinInitializer[1];
-        initializer.call(this, _.defaults({}, options, staticOptions));
+        if (initializer) initializer.call(this, _.defaults({}, options, staticOptions));
       }, this);
 
       // Parasitic flag to ensure nested intitializations don't lead to duplicate calls

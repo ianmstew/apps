@@ -13,6 +13,7 @@ define(function (require) {
   require('backbone.syphon');
   require('lib/shim/backbone-promise-ajax');
   require('lib/shim/backbone-set-parse');
+  require('lib/shim/backbone-syncing-state');
 
   // Marionette shims and config
   require('marionette');

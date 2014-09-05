@@ -15,7 +15,7 @@ define(function (require) {
   ];
 
   function stopListeningWrapper (stopListening) {
-    var origArgs = Array.prototype.slice.call(arguments, 1);
+    var origArgs = _.toArray(arguments).slice(1);
     this.stopComplying();
     this.stopReplying();
     return stopListening.apply(this, origArgs);

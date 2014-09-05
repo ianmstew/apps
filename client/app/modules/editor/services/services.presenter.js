@@ -6,11 +6,11 @@ define(function (require) {
 
     onPresent: function () {
       var app = this.channel.request('app');
-      var servicesView = this.viewFor(ServicesView, {
+      var servicesView = new ServicesView({
         model: app,
         collection: app.get('services')
       });
-      this.show(servicesView);
+      this.show(servicesView, { loading: true });
     }
   });
 
