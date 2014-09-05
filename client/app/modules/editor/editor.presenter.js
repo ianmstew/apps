@@ -16,8 +16,9 @@ define(function (require) {
     tab: null,
 
     onPresent: function (options) {
+      var editorView = this.viewFor(EditorView);
       this.tab = (options || {}).tab;
-      this.show(this.viewFor(EditorView));
+      this.show(editorView);
     },
 
     onShow: function (editorView) {

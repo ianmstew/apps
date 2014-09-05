@@ -31,6 +31,10 @@ define(function (require) {
         collection: this.tabs
       });
       this.getRegion('tabs').show(tabsView);
+    },
+
+    onDestroy: function () {
+      console.log('>>> DESTROYED');
     }
   });
 

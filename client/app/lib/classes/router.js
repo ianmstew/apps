@@ -37,7 +37,7 @@ define(function (require) {
     },
 
     _routeWrapper: function (routeHandler) {
-      var origArgs = Array.prototype.slice.call(arguments, 1);
+      var origArgs = _.toArray(arguments).slice(1);
       // 'this' context is the controller object
       if (!this._routingDisabled) {
         return routeHandler.apply(this, origArgs);

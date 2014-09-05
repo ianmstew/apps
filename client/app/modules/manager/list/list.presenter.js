@@ -4,16 +4,16 @@ define(function (require) {
 
   var ListPresenter = Presenter.extend({
 
+    listView: null,
+
     onPresent: function () {
       // Retrieve an apps model
       var apps = this.channel.request('apps');
 
-      // Create/retrieve a view and attach a model
-      var listView = this.viewFor(ListView, {
+      // Create and show the view
+      var listView = new ListView({
         collection: apps
       });
-
-      // Show the view
       this.show(listView);
 
       // Trigger a model update

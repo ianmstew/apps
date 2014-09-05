@@ -15,13 +15,13 @@ define(function (require) {
       },
 
       warn: function () {
-        var args = Array.prototype.slice.call(arguments);
+        var args = _.toArray(arguments);
         var stack = new Error().stack.replace(/^Error/, '');
         console.warn.apply(console, args.concat(stack));
       },
 
       error: function () {
-        var args = Array.prototype.slice.call(arguments);
+        var args = _.toArray(arguments);
         var stack = new Error().stack.replace(/^Error/, '');
         console.error.apply(console, args.concat(stack));
       }

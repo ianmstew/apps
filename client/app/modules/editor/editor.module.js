@@ -21,8 +21,6 @@ define(function (require) {
       'editor': EditorPresenter
     },
 
-    editorEntities: null,
-
     showOverviewTab: function (appId) {
       this.channel.command('set:appId', (appId || this.appId));
       this.getPresenter('editor').present({ tab: 'overview' });

@@ -5,7 +5,8 @@ define(function (require) {
   var CreatePresenter = Presenter.extend({
 
     onPresent: function () {
-      this.show(this.viewFor(CreateView));
+      var createView = new CreateView();
+      this.show(createView);
     }
   });
 

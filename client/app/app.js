@@ -2,14 +2,15 @@ define(function (require) {
   var Marionette = require('marionette');
   var history = require('lib/util/history');
   var HasModules = require('lib/mixin/has-modules');
+  var AppEntities = require('app.entities');
   var ManagerModule = require('modules/manager/manager.module');
   var EditorModule = require('modules/editor/editor.module');
-  var AppEntities = require('app.entities');
   var NotificationModule = require('modules/notification/notification.module');
+  var LoadingModule = require('modules/loading/loading.module');
 
   var App = Marionette.Application.extend({
 
-    channelName: 'global',
+    channelName: 'app',
 
     regions: {
       contentRegion: '#content-region'
@@ -19,7 +20,8 @@ define(function (require) {
       'entities': AppEntities,
       'manager': ManagerModule,
       'editor': EditorModule,
-      'notification': NotificationModule
+      'notification': NotificationModule,
+      'loading': LoadingModule
     },
 
     constructor: function () {
@@ -30,8 +32,9 @@ define(function (require) {
 
     _startModules: function () {
       var contentRegion = this.getRegion('contentRegion');
-      this.getModule('notification').start();
       this.getModule('entities').start();
+      this.getModule('notification').start();
+      this.getModule('loading').start();
       this.getModule('manager').start({ region: contentRegion });
       this.getModule('editor').start({ region: contentRegion });
     },

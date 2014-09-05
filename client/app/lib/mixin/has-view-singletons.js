@@ -7,9 +7,7 @@ define(function (require) {
     _views: null,
 
     initialize: function (options) {
-      _.bindAll(this, '_cleanupViews');
       this._views = {};
-      this.on('destroy', this._cleanupViews);
     },
 
     // Returns a view singleton so that a visible view isn't destructed only to be re-created
@@ -25,14 +23,6 @@ define(function (require) {
       }
 
       return view;
-    },
-
-    _cleanupViews: function () {
-      _.each(this._views, function (view, name) {
-        if (view && !view.isDestroyed) view.destroy();
-        this._views[name] = null;
-      }, this);
-      this._views = null;
     }
   });
 
