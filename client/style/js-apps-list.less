@@ -1,0 +1,82 @@
+// Apps List Styling
+// --------------------------------------------------
+
+.js-list-toggle {
+  float: right;
+
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  i {
+    padding: 5px;
+    border: @border-gray;
+    .border-radius(3px);
+
+    &:hover {
+      background-color: @gray-even-lighter;
+    }
+  }
+}
+
+.js-apps-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  > li {
+    // margin: 0 0 15px 0;
+    padding: 0;
+    border: @border-gray;
+    .border-radius(3px);
+
+    > ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      /*
+      > li {
+        margin: 0;
+        padding: 0;
+      } */
+    }
+
+    i {
+      color: @gray;
+      // font-size: 2em;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+}
+
+.apps-create {
+  &:extend(.btn-gray);
+
+  padding: 0.75% 0;
+  color: @gray-darker;
+  text-align: center;
+  background-color: @gray-even-lighter;
+
+  &:hover {
+    background-color: @gray-lighter;
+  }
+}
+
+.js-info,
+.js-services {
+  margin: 0;
+  padding: 0;
+}
+
+.js-services {
+  li {
+    padding: 0 1%;
+  }
+}

@@ -8,7 +8,9 @@
 @import "user-login.less";
 @import "create-app.less";
 @import "app-overview.less";
-@import "app-list.less";
+@import "js-apps-list.less";
+// @import "app-list.less"; - not in use
+@import "app-grid.less";
 @import "app-detail.less";
 
 // Manager Styles
@@ -50,12 +52,20 @@ main {
   overflow:auto;
   height: 100%;
 
+  /*
   > div {
     &:after {
       display: block;
       content: "";
       height: @content-margin;
     }
+  }
+  */
+
+  &:after {
+    display: block;
+    content: "";
+    height: @content-margin;
   }
 }
 
