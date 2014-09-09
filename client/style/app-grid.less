@@ -1,0 +1,61 @@
+// App List: Grid Style
+// --------------------------------------------------
+
+// **Add to variables / mixin as applicable
+@app-logo-width: 55px;
+@grid-item-margin: 0.25%;
+@num-cols: 4;
+
+.apps-create,
+.grid-item {
+  // &:extend(.col-xs-12, .col-sm-6, .col-md-4, .col-lg-4);
+  float: left;
+  width: calc((100 - ((@num-cols * 2) * @grid-item-margin)) / @num-cols);
+  margin: 0 @grid-item-margin;
+  box-sizing: border-box;
+  min-height: 300px;
+
+  // Clears last element in row for four column layout
+  &:nth-child(4n+4) {
+    clear: both;
+  }
+
+  @media screen (max-width: @screen-tablet) {
+  }
+}
+
+.apps-grid {
+  .grid-item {
+    position: relative;
+
+    .app-logo,
+    .app-name {
+      float: left;
+    }
+
+    .app-logo {
+      margin-right: calc(@app-logo-width * 0.3);
+      width: @app-logo-width;
+      height: @app-logo-width;
+      overflow: hidden;
+    }
+
+    .app-name {
+      font-size: @font-size-h4;
+      line-height: @app-logo-width;
+    }
+
+    .app-description {
+      clear: both;
+    }
+  }
+}
+
+.js-services {
+  position: absolute;
+  bottom: 0;
+
+  li {
+    float: left;
+  }
+}
