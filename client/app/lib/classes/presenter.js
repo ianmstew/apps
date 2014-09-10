@@ -6,14 +6,28 @@ define(function (require) {
   var Radio = require('backbone.radio');
 
   /*
-   * Presenter is a lightweight class that contains a Radio channel and manages a single region.
+   * A Presenter's purpose is to provide nestable presentation and data arbitration logic for views.
+   * Not unlike this pattern: http://victorsavkin.com/post/49767352960/supervising-presenters.
+   *
    * Features:
-   * - Tied to the lifecycle of its default view; i.e., when its view is destroyed, so is the
-   *   presenter.
-   * - If created through HasPresenter's getPresenter(), it will inherit the owner's region and
-   *   channel automatically.
-   * - If show() is called with loading, a loading view will be shown until the view's model or
-   *   collection data is ready.
+   *   - Required to own a region, which it will pass by default to child presenters
+   *   - Required to own a channel, which it will pass by default to child presenters
+   *   - Once a view is shown its lifecycle is tied to the view (destroyed when view is destroyed).
+   *   - If show() is called with { loading: true }, a loading view will be automatically shown
+   *     until the view's model and/or collection data is ready.
+   *   - Convenience method viewFor() provides singleton access to view instances to helps avoid
+   *     re-rendering views that are already visible.
+   *
+   * Defining a subclass:
+   *   1. Implement onPresent() to handle display logic, data, and view instantiation.
+   *        - Call this.show(view) to display view.
+   *        - Call this.show(view, { loading: true }) to automatically manage a loading view.
+   *   2. Implement onShow() to handle any logic that depends on the view's regions being
+   *      available.
+   *
+   * Usage:
+   *   1. Create a new Presenter or use an existing Presenter instance.
+   *   2. Call presenter.present() with optional { region: <region> } override.
    */
   var Presenter = Marionette.Object.extend({
 
@@ -49,8 +63,13 @@ define(function (require) {
       } else {
         // Show into region directly
         this.region.show(view, options);
-        this.triggerMethod('show', view);
       }
+
+      // View and its regions are instantiated and available even if loading view is shown first.
+      // The loading presenter is responsible for ultimately showing into a region or destroying
+      // the view, so children can reliably depend on view's regions to either be added to the DOM
+      // or destroyed.  I.e., chaining onShow() to handle nested views is safe even while loading.
+      this.triggerMethod('show', view);
     },
 
     _bindToView: function (view) {

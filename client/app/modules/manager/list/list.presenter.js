@@ -1,23 +1,23 @@
 define(function (require) {
   var Presenter = require('lib/classes/presenter');
-  var ListView = require('modules/manager/list/list.view');
+  var ListView = require('modules/manager/list/child-views/list.view');
+  var GridItemLoadingView = require('modules/manager/list/child-views/grid-item-loading.view');
 
   var ListPresenter = Presenter.extend({
 
-    listView: null,
+    channelName: 'manager',
 
     onPresent: function () {
-      // Retrieve an apps model
       var apps = this.channel.request('apps');
 
-      // Create and show the view
-      var listView = new ListView({
+      var listView = this.viewFor(ListView, {
         collection: apps
       });
-      this.show(listView);
 
-      // Trigger a model update
-      apps.fetch();
+      this.show(listView, {
+        loading: true,
+        loadingView: GridItemLoadingView
+      });
     }
   });
 

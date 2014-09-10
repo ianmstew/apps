@@ -2,9 +2,9 @@ define(function (require) {
   var Mixin = require('lib/classes/mixin');
 
   /*
-   * Manage a set of modules, passing down the owner's region and channel.
-   * Modules are constructed at initialize time unless { manualInitialize: true }, otherwise
-   * constructModules() must be called manually. start/stop/destroy on owner cascade.
+   * Manage a set of modules, passing down the owner's region and channel. All modules are created
+   * only once, at initialization time.
+   * Child modules are started with parent unless { manualStart: true }.
    */
   var HasModules = Mixin.extend({
 
@@ -19,10 +19,9 @@ define(function (require) {
     initialize: function (options) {
       _.bindAll(this, 'destructModules', '_constructModule', 'startModules', 'stopModules');
       var manualStart = (options || {}).manualStart;
-      var manualInitialize = (options || {}).manualInitialize;
 
       if (this.modules) {
-        if (!manualInitialize) this.constructModules();
+        this.constructModules();
         if (!manualStart) this.on('start', this.startModules);
         this.on('destroy', this.destructModules);
         this.on('stop', this.stopModules);
