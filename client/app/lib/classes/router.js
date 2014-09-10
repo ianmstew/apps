@@ -32,7 +32,7 @@ define(function (require) {
 
     _wrapRoute: function (handlerName) {
       var handler = this.controller[handlerName];
-      var wrappedHandler = _.wrap(handler, _.bind(this._routeWrapper, this.controller));
+      var wrappedHandler = _.wrap(handler, this._routeWrapper);
       this.controller[handlerName] = wrappedHandler;
     },
 

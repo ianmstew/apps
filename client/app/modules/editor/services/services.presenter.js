@@ -4,6 +4,8 @@ define(function (require) {
 
   var ServicesPresenter = Presenter.extend({
 
+    channelName: 'editor',
+
     onPresent: function () {
       var app = this.channel.request('app');
       var servicesView = new ServicesView({

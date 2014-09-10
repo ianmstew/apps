@@ -17,8 +17,10 @@ define(function (require) {
     channel: null,
 
     initialize: function (options) {
-      this.channelName = this.channelName || (options || {}).channelName;
-      this.channel = Radio.channel(this.channelName);
+      if (this.channelName) {
+        this.channelName = this.channelName || (options || {}).channelName;
+        this.channel = Radio.channel(this.channelName);
+      }
       if (this.channelEvents) this._registerChannelEvents();
     },
 

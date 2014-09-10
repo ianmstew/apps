@@ -25,8 +25,7 @@ define(function (require) {
       if (!presenter || presenter.isDestroyed) {
         PresenterType = this.presenters[name];
         presenter = new PresenterType({
-          region: this.region,
-          channelName: this.channelName
+          region: this.region
         });
         this._presenters[name] = presenter;
       }

@@ -4,20 +4,21 @@ define(function (require) {
 
   var AppEntities = EntityModule.extend({
 
+    channelName: 'app',
+
     channelEvents: {
       'user': ['reply', 'getUser']
     },
 
-    entities: {
-      'user': CurrentUserModel
-    },
+    user: null,
 
     initialize: function () {
-      this.getEntity('user').fetch();
+      this.user = this.entityFor(CurrentUserModel);
+      this.user.fetch();
     },
 
     getUser: function () {
-      return this.getEntity('user');
+      return this.user;
     }
   });
 

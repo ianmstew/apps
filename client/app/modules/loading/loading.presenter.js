@@ -23,7 +23,7 @@ define(function (require) {
       var syncings = this._getSyncings(view);
 
       // Show loading view
-      this.show(loadingView, { nobind: true });
+      this.show(loadingView, { nodestroy: true });
 
       // When entities are ready, show original view
       Promise.all(syncings)
@@ -47,7 +47,9 @@ define(function (require) {
         view.destroy();
       } else {
         // Loading view still showing and data is back--swap it out for the original!
-        if (!options.debug) this.show(view);
+        options.silent = true;
+        options.loading = false;
+        if (!options.debug) this.show(view, options);
       }
     }
   });

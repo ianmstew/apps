@@ -49,30 +49,35 @@ define(function (require) {
       this.triggerMethod('present', opts);
     },
 
+    // options: {
+    //   loading:   {boolean} Whether to delegate to loading presenter
+    //   silent:    {boolean} Whether to trigger 'show'
+    //   nodestroy: {boolean} Whether to avoid destroying this Presenter on view destroy
+    // }
     show: function (view, options) {
       var opts = options || {};
-      var nobind = opts.nobind;
-      this.triggerMethod('before:show', view);
+      var nodestroy = opts.nodestroy;
+      if (!opts.silent) this.triggerMethod('before:show', view);
 
-      if (!nobind) this._bindToView(view);
+      if (!nodestroy) this._bindDestroy(view);
 
       if (opts.loading) {
         // Loading presentation requested; delegate showing to the loading presenter
-        options.region = this.region;
-        Radio.channel('loading').command('show:loading', view, options);
+        opts.region = this.region;
+        Radio.channel('loading').command('show:loading', view, opts);
       } else {
         // Show into region directly
-        this.region.show(view, options);
+        this.region.show(view, opts);
       }
 
       // View and its regions are instantiated and available even if loading view is shown first.
       // The loading presenter is responsible for ultimately showing into a region or destroying
       // the view, so children can reliably depend on view's regions to either be added to the DOM
       // or destroyed.  I.e., chaining onShow() to handle nested views is safe even while loading.
-      this.triggerMethod('show', view);
+      if (!opts.silent) this.triggerMethod('show', view, opts);
     },
 
-    _bindToView: function (view) {
+    _bindDestroy: function (view) {
       // Bind my lifetime to the first view shown
       this.listenTo(view, 'destroy', this.destroy);
       this._firstView = view;

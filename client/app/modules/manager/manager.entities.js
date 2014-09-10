@@ -4,18 +4,21 @@ define(function (require) {
 
   var EditorEntities = EntityModule.extend({
 
+    channelName: 'manager',
+
     channelEvents: {
       'apps': ['reply', 'getApps']
     },
 
-    entities: {
-      'apps': AppsCollection
+    apps: null,
+
+    initialize: function () {
+      this.apps = this.entityFor(AppsCollection);
     },
 
     getApps: function () {
-      var apps = this.getEntity('apps');
-      apps.fetch();
-      return apps;
+      this.apps.fetch();
+      return this.apps;
     }
   });
 

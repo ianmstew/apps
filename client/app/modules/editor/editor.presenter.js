@@ -7,6 +7,8 @@ define(function (require) {
 
   var EditorPresenter = Presenter.extend({
 
+    channelName: 'editor',
+
     presenters: {
       'overview': OverviewPresenter,
       'services': ServicesPresenter,
