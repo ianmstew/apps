@@ -22,17 +22,17 @@ define(function (require) {
     },
 
     showOverviewTab: function (appId) {
-      this.channel.command('set:appId', (appId || this.appId));
+      this.channel.command('set:appId', appId);
       this.getPresenter('editor').present({ tab: 'overview' });
     },
 
     showServicesTab: function (appId) {
-      this.channel.command('set:appId', (appId || this.appId));
+      this.channel.command('set:appId', appId);
       this.getPresenter('editor').present({ tab: 'services' });
     },
 
     showSettingsTab: function (appId) {
-      this.channel.command('set:appId', (appId || this.appId));
+      this.channel.command('set:appId', appId);
       this.getPresenter('editor').present({ tab: 'settings' });
     }
   });

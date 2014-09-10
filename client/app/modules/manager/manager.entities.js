@@ -13,7 +13,9 @@ define(function (require) {
     },
 
     getApps: function () {
-      return this.getEntity('apps');
+      var apps = this.getEntity('apps');
+      apps.fetch();
+      return apps;
     }
   });
 

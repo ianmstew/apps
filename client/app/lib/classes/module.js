@@ -4,13 +4,20 @@ define(function (require) {
   var HasChannel = require('lib/mixin/has-channel');
   var HasModules = require('lib/mixin/has-modules');
   var HasPresenters = require('lib/mixin/has-presenters');
+  var HasViewSingletons = require('lib/mixin/has-view-singletons');
 
   /*
-   * Module is a lightweight class that implements:
-   *   - start/stop methods
-   *   - a routes hash
-   *   - ownership of a region passed via start() or new()
-   * TODO: unregister routes for module that is stopped?
+   * A Module is a top-level arbiter for application routing and channel events. Its purpose is to
+   * take module-level events and delegate (usually) to child presenters.
+   *
+   * Features:
+   *   - Start/stop methods which provides onStart()/onStop() hooks
+   *   - Integrated router which is enabled/disabled on start/stop
+   *   - Requires a channel
+   *   - May own a region
+   *   - May manage child modules using HasModules
+   *   - May manage child presenters using HasPresenters
+   *   - TODO: disable channel event handlers on stop()?
    */
   var Module = Marionette.Object.extend({
 
@@ -60,6 +67,7 @@ define(function (require) {
   HasChannel.mixInto(Module);
   HasModules.mixInto(Module);
   HasPresenters.mixInto(Module);
+  HasViewSingletons.mixInto(Module);
 
   return Module;
 });

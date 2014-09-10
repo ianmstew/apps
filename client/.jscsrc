@@ -87,4 +87,11 @@
   //     allow "var one, two, three;"
   //     disallow "var one = 1, two = 2, three = 3;"
   // - disallow "test() ;", require "test();"
+  // - Require chaining on new lines to have single indent
+  //     allow
+  //       that.doSomething()
+  //         .doSomethingElse();
+  //     disallow
+  //       that.doSomething()
+  //       .doSomethingElse();
 }

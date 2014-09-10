@@ -1,6 +1,6 @@
 define(function (require) {
   var Module = require('lib/classes/module');
-  var ListPresenter = require('modules/manager/list/list.presenter');
+  var ListLayout = require('modules/manager/list/list.layout');
   var CreatePresenter = require('modules/manager/create/create.presenter');
   var ManagerEntities = require('modules/manager/manager.entities');
 
@@ -18,12 +18,11 @@ define(function (require) {
     },
 
     presenters: {
-      'list': ListPresenter,
       'create': CreatePresenter
     },
 
     listApps: function () {
-      this.getPresenter('list').present();
+      this.region.show(this.viewFor(ListLayout));
     },
 
     createApp: function () {

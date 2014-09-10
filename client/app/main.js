@@ -6,8 +6,6 @@
       'backbone.babysitter':     '../vendor/backbone.babysitter/backbone.babysitter',
       'backbone.radio':          '../vendor/backbone.radio/backbone.radio',
       'backbone.wreqr':          '../vendor/backbone.wreqr/backbone.wreqr',
-      'backbone.stickit':        '../vendor/backbone.stickit/backbone.stickit',
-      'backbone.computedfields': '../vendor/backbone.computedfields/backbone.computedfields',
       'backbone.syphon':         '../vendor/backbone.syphon/backbone.syphon',
       'bootstrap':               '../vendor/bootstrap/bootstrap',
       'hogan':                   '../vendor/requirejs-hogan-plugin/hogan',
@@ -17,7 +15,6 @@
       'spinner':                 '../vendor/spin.js/spin',
       'text':                    '../vendor/requirejs-hogan-plugin/text',
       'underscore':              '../vendor/underscore/underscore',
-      'es6-promise':             '../vendor/es6-promise/promise',
       'rsvp':                    '../vendor/rsvp/rsvp',
 
       // test
