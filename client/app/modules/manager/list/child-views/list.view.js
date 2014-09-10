@@ -1,12 +1,16 @@
-define(function () {
+define(function (require) {
   var Marionette = require('marionette');
-  var ListItemView = require('modules/manager/list/child-views/list-item.view');
-  var ListNoneView = require('modules/manager/list/child-views/list-item-none.view');
+  var GridItemView = require('modules/manager/list/child-views/grid-item.view');
+  var GridNoneView = require('modules/manager/list/child-views/grid-item-none.view');
+  var template = require('hgn!modules/manager/list/list.view');
 
-  var ListView = Marionette.CollectionView.extend({
-    emptyView: ListNoneView,
-    childView: ListItemView
+  var GridView = Marionette.CompositeView.extend({
+    template: template,
+    className: 'content-wrap',
+    emptyView: GridNoneView,
+    childView: GridItemView,
+    childViewContainer: '.js-apps-list'
   });
 
-  return ListView;
+  return GridView;
 });
