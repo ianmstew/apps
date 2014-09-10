@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var template = require('hgn!modules/manager/list/list.view');
+  var template = require('hgn!modules/manager/list/list.layout');
   var ListPresenter = require('modules/manager/list/list.presenter');
 
   var ListView = Marionette.LayoutView.extend({
@@ -13,10 +13,10 @@ define(function (require) {
     },
 
     onShow: function () {
-      var appsPresenter = new ListPresenter({
+      var listPresenter = new ListPresenter({
         region: this.getRegion('list')
       });
-      appsPresenter.present();
+      listPresenter.present();
     }
   });
 

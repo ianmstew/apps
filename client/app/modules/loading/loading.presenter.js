@@ -16,7 +16,8 @@ define(function (require) {
 
     onPresent: function (options) {
       var view = options.view;
-      var loadingView = new LoadingView();
+      var LoadingViewType = options.loadingView || LoadingView;
+      var loadingView = new LoadingViewType();
 
       // Gather entity promises
       var syncings = this._getSyncings(view);
@@ -26,7 +27,7 @@ define(function (require) {
 
       // When entities are ready, show original view
       Promise.all(syncings)
-        .finally(_.partial(this._loaded, view, loadingView));
+        .finally(_.partial(this._loaded, view, loadingView, options));
     },
 
     // Gather the 'syncing' promise from a view's model, collection, or both.
@@ -39,14 +40,14 @@ define(function (require) {
         .value();
     },
 
-    _loaded: function (view, loadingView) {
+    _loaded: function (view, loadingView, options) {
       if (this.region.currentView !== loadingView) {
         // Another view besides the original has superseded the user. This means the user has
         // moved on before data returned, so the original view is outdated and should be discarded.
         view.destroy();
       } else {
         // Loading view still showing and data is back--swap it out for the original!
-        this.show(view);
+        if (!options.debug) this.show(view);
       }
     }
   });

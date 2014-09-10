@@ -24,8 +24,9 @@
   }
 }
 
-.apps-grid {
+.apps-grid {  
   .grid-item {
+    display: table;  // For .grid-item-info
     position: relative;
 
     .app-logo,
@@ -48,6 +49,12 @@
     .app-description {
       clear: both;
     }
+  }
+
+  .grid-item-info {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
   }
 }
 
