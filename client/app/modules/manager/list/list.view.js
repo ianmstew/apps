@@ -12,14 +12,14 @@ define(function (require) {
     childViewContainer: '.js-apps-list',
 
     ui: {
-      'createBtn': '.apps-create'
+      'appCreate': '.apps-create'
     },
 
     events: {
-      'click @ui.createBtn': 'navigateCreate'
+      'click @ui.appCreate': 'createApp'
     },
 
-    navigateCreate: function () {
+    createApp: function () {
       console.log('navigate to create app');
     }
   });

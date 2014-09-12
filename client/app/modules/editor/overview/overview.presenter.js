@@ -5,8 +5,14 @@ define(function (require) {
   var OverviewPresenter = Presenter.extend({
 
     onPresent: function () {
-      var overviewView = new OverviewView();
-      this.show(overviewView);
+      // var app = this.channel.request('app');
+      var overviewView = new OverviewView({
+        /*
+        model: app,
+        collection: app.get('services')
+        */
+      });
+      this.show(overviewView, { loading: true });
     }
   });
 

@@ -4,7 +4,20 @@ define(function (require) {
 
   var ServiceView = Marionette.ItemView.extend ({
     template: template,
-    tagName: 'ul'
+    tagName: 'li',
+    className: 'grid-item',
+
+    ui: {
+      'editService': '.service-edit'
+    },
+
+    events: {
+      'click @ui.editService': 'showServiceEdit'
+    },
+
+    showServiceEdit: function () {
+      console.log('I will show the service overlay');
+    }
   });
 
   return ServiceView;

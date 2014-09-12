@@ -19,15 +19,6 @@ define(function (require) {
       var editorView = this.viewFor(EditorView);
       this.tab = (options || {}).tab;
       this.show(editorView);
-      /*
-      // Retrieve an apps model
-      var apps = this.channel.request('apps');
-
-      // Create and show the view
-      var listView = new ListView({
-        collection: apps
-      });
-      */
     },
 
     onShow: function (editorView) {
