@@ -14,7 +14,7 @@ define(function (require) {
       var listView = new ListView({
         collection: apps
       });
-      this.show(listView);
+      this.show(listView, { loading: true });
 
       // Trigger a model update
       apps.fetch();

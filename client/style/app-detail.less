@@ -1,7 +1,14 @@
 // App Item: Detail View (Overview, Services, Settings)
 // --------------------------------------------------
 
+.back-to-apps {
+  button {
+    &:extend(.btn-sm, .btn-gray, .pull-right);
+  }
+}
+
 .js-editor-tabs {
+  clear: both;
   margin-bottom: 0.5%;
 }
 
@@ -18,3 +25,36 @@
     }
   }
 }
+
+// Services
+/*
+.js-service {
+  ul {
+    // &:extend(.section-gray);
+
+    list-style-type: none;
+
+    li[class*="service-"] {
+    }
+
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+    }
+
+    .service-icon,
+    .service-name {
+      float: left;
+    }
+
+    .service-name: {
+      &:extend(.font-size-h3);
+    }
+
+    .service-dateAdded {
+      clear: both;
+    }
+  }
+}
+*/

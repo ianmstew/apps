@@ -9,7 +9,19 @@ define(function (require) {
     className: 'content-wrap',
     emptyView: GridNoneView,
     childView: GridItemView,
-    childViewContainer: '.js-apps-list'
+    childViewContainer: '.js-apps-list',
+
+    ui: {
+      'createBtn': '.apps-create'
+    },
+
+    events: {
+      'click @ui.createBtn': 'navigateCreate'
+    },
+
+    navigateCreate: function () {
+      console.log('navigate to create app');
+    }
   });
 
   return GridView;
