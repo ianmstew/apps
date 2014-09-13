@@ -8,14 +8,13 @@ define(function (require) {
     className: 'grid-item',
 
     ui: {
-      'editService': '.service-edit'
     },
 
     events: {
-      'click @ui.editService': 'showServiceEdit'
+      'click button.service-edit': 'showServiceDetail'
     },
 
-    showServiceEdit: function () {
+    showServiceDetail: function () {
       console.log('I will show the service overlay');
     }
   });
