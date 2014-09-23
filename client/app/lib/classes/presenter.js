@@ -1,8 +1,8 @@
 define(function (require) {
   var Marionette = require('marionette');
+  var Cocktail = require('cocktail');
   var HasChannel = require('lib/mixin/has-channel');
-  var HasPresenters = require('lib/mixin/has-presenters');
-  var HasViewSingletons = require('lib/mixin/has-view-singletons');
+  var HasSingletons = require('lib/mixin/has-singletons');
   var Radio = require('backbone.radio');
 
   /*
@@ -37,7 +37,6 @@ define(function (require) {
 
     constructor: function (options) {
       this._options = options;
-      this.initializeMixins(options);
       Presenter.__super__.constructor.apply(this, arguments);
     },
 
@@ -84,9 +83,7 @@ define(function (require) {
     }
   });
 
-  HasChannel.mixInto(Presenter);
-  HasPresenters.mixInto(Presenter);
-  HasViewSingletons.mixInto(Presenter);
+  Cocktail.mixin(Presenter, HasChannel, HasSingletons);
 
   return Presenter;
 });

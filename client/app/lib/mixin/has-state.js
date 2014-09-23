@@ -1,12 +1,11 @@
 define(function (require) {
-  var Mixin = require('lib/classes/mixin');
   var Backbone = require('backbone');
   var Marionette = require('marionette');
 
-  var HasState = Mixin.extend({
+  var HasState = {
 
     // Default state overridable by constructor 'state' option
-    // defaultState: null,
+    defaultState: null,
 
     // Backbone model maintaining state
     state: null,
@@ -67,7 +66,7 @@ define(function (require) {
       this.state.destroy();
       this.state = null;
     }
-  });
+  };
 
   return HasState;
 });

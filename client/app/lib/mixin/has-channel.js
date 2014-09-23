@@ -1,17 +1,15 @@
 define(function (require) {
-  var Mixin = require('lib/classes/mixin');
   var Radio = require('backbone.radio');
   var logger = require('lib/util/logger');
 
-  var HasChannel = Mixin.extend({
+  var HasChannel = {
 
     // Declarative option for channel name
-    // channelName: nameOfChannel
+    channelName: null,
 
     // Declarative binding of channel events
-    // channelEvents: {
-    //   'event': ['on|reply|comply', eventHandler]
-    // }
+    // { 'event': ['on|reply|comply', eventHandler] }
+    channelEvents: null,
 
     // Current channel
     channel: null,
@@ -47,7 +45,7 @@ define(function (require) {
           break;
       }
     }
-  });
+  };
 
   return HasChannel;
 });

@@ -1,23 +1,20 @@
 define(function (require) {
-  var Mixin = require('lib/classes/mixin');
 
   /*
    * Manage a set of modules, passing down the owner's region and channel. All modules are created
    * only once, at initialization time.
-   * Child modules are started with parent unless { manualStart: true }.
    */
-  var HasModules = Mixin.extend({
+  var HasModules = {
 
     // Declarative set of modules
-    // modules: {
-    //   'moduleName': ModuleClass
-    // },
+    // { 'moduleName': ModuleClass }
+    modules: null,
 
     // Local storage of module instances
     _modules: null,
 
     initialize: function (options) {
-      _.bindAll(this, 'destructModules', '_constructModule', 'startModules', 'stopModules');
+      _.bindAll(this, 'destructModules', 'startModules', 'stopModules');
       var manualStart = (options || {}).manualStart;
 
       if (this.modules) {
@@ -31,16 +28,11 @@ define(function (require) {
     constructModules: function (modules) {
       this.destructModules();
       this._modules = _.chain(this.modules)
-        .map(this._constructModule, this)
+        .map(function (Module, name) {
+          return [name, new Module()];
+        }, this)
         .object()
         .value();
-    },
-
-    _constructModule: function (Module, name) {
-      return [name, new Module({
-        region: this.region,
-        channelName: this.channelName
-      })];
     },
 
     startModules: function (options) {
@@ -52,22 +44,17 @@ define(function (require) {
     },
 
     destructModules: function () {
-      this._modules = _.chain(this._modules)
-        .map(this._destructModule, this)
-        .object()
-        .value();
+      _.each(this._modules, function (module, name, modules) {
+        module.destroy();
+        modules[name] = null;
+      });
       this._modules = null;
-    },
-
-    _destructModule: function (module, name) {
-      module.destroy();
-      return [name, null];
     },
 
     getModule: function (module) {
       return this._modules[module];
     }
-  });
+  };
 
   return HasModules;
 });

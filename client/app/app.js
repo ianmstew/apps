@@ -1,5 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
+  var Cocktail = require('cocktail');
   var history = require('lib/util/history');
   var HasModules = require('lib/mixin/has-modules');
   var AppEntities = require('app.entities');
@@ -26,7 +27,6 @@ define(function (require) {
 
     constructor: function () {
       App.__super__.constructor.apply(this, arguments);
-      this.initializeMixins();
       this.addInitializer(this._startModules);
     },
 
@@ -48,7 +48,7 @@ define(function (require) {
     }
   });
 
-  HasModules.mixInto(App, { manualStart: true });
+  Cocktail.mixin(App, HasModules);
 
   return App;
 });
