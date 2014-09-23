@@ -9,25 +9,46 @@ define(function (require) {
 
     channelName: 'editor',
 
-    presenters: {
-      'overview': OverviewPresenter,
-      'services': ServicesPresenter,
-      'settings': SettingsPresenter
-    },
-
     tab: null,
 
+    _editorView: null,
+
     onPresent: function (options) {
-      var editorView = this.viewFor(EditorView);
       this.tab = (options || {}).tab;
-      this.show(editorView);
+      this.show(this.getEditorView());
     },
 
     onShow: function (editorView) {
+      var contentRegion = editorView.getRegion('content');
+      var presenter;
+
+      switch (this.tab) {
+        case 'overview':
+          presenter = new OverviewPresenter({
+            region: contentRegion
+          });
+          break;
+        case 'services':
+          presenter = new ServicesPresenter({
+            region: contentRegion
+          });
+          break;
+        case 'settings':
+          presenter = new SettingsPresenter({
+            region: contentRegion
+          });
+          break;
+      }
+
+      presenter.present();
       this.channel.trigger('show:tab', this.tab);
-      this.getPresenter(this.tab).present({
-        region: editorView.getRegion('content')
-      });
+    },
+
+    getEditorView: function () {
+      if (!this._editorView || this._editorView.isDestroyed) {
+        this._editorView = new EditorView();
+      }
+      return this._editorView;
     }
   });
 

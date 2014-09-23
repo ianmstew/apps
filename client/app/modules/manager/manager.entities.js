@@ -1,8 +1,9 @@
 define(function (require) {
-  var EntityModule = require('lib/classes/entity.module');
+  var Module = require('lib/classes/module');
   var AppsCollection = require('entities/app/apps.collection');
+  var notifyUtil = require('modules/notify/notify.util');
 
-  var EditorEntities = EntityModule.extend({
+  var EditorEntities = Module.extend({
 
     channelName: 'manager',
 
@@ -13,7 +14,8 @@ define(function (require) {
     apps: null,
 
     initialize: function () {
-      this.apps = this.entityFor(AppsCollection);
+      this.apps = new AppsCollection();
+      notifyUtil.handleModelErrors(this, this.apps);
     },
 
     getApps: function () {

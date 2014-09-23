@@ -3,8 +3,8 @@ define(function (require) {
   var AppModel = require('entities/app/app.model');
   var apiData = require('test/data/api-data');
 
-  var app1 = new AppModel(apiData.apps[0]);
-  var app2 = new AppModel(apiData.apps[1]);
+  var app1 = new AppModel(apiData.apps[0], { parse: true });
+  var app2 = new AppModel(apiData.apps[1], { parse: true });
 
   app1.save();
   app2.save();

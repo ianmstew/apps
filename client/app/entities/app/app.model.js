@@ -12,19 +12,15 @@ define(function (require) {
       name: null,
       logo: null,
       description: null,
-      services: []
+      services: new ServicesCollection()
     },
 
     parse: function (data, options) {
-      if (_.isArray(data.services)) {
-        if (this.get('services') instanceof Backbone.Collection) {
-          // Preserve references to already existing collection
-          this.get('services').set(data.services);
-          delete data.services;
-        } else {
-          // No collection yet exists, so create one
-          data.services = new ServicesCollection(data.services);
-        }
+      if (!this.get('services')) {
+        data.services = new ServicesCollection(data.services);
+      } else {
+        this.get('services').reset(data.services);
+        delete data.services;
       }
       return data;
     },

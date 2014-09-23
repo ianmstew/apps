@@ -1,8 +1,9 @@
 define(function (require) {
-  var EntityModule = require('lib/classes/entity.module');
+  var Module = require('lib/classes/module');
   var CurrentUserModel = require('entities/user/current-user.model');
+  var notifyUtil = require('modules/notify/notify.util');
 
-  var AppEntities = EntityModule.extend({
+  var AppEntities = Module.extend({
 
     channelName: 'app',
 
@@ -13,7 +14,8 @@ define(function (require) {
     user: null,
 
     initialize: function () {
-      this.user = this.entityFor(CurrentUserModel);
+      this.user = new CurrentUserModel();
+      notifyUtil.handleModelErrors(this, this.user);
       this.user.fetch();
     },
 

@@ -1,42 +1,24 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var Cocktail = require('cocktail');
   var history = require('lib/util/history');
-  var HasModules = require('lib/mixin/has-modules');
-  var AppEntities = require('app.entities');
-  var ManagerModule = require('modules/manager/manager.module');
-  var EditorModule = require('modules/editor/editor.module');
-  var NotificationModule = require('modules/notification/notification.module');
-  var LoadingModule = require('modules/loading/loading.module');
+  var AppModule = require('app.module');
 
   var App = Marionette.Application.extend({
-
-    channelName: 'app',
 
     regions: {
       contentRegion: '#content-region'
     },
 
-    modules: {
-      'entities': AppEntities,
-      'manager': ManagerModule,
-      'editor': EditorModule,
-      'notification': NotificationModule,
-      'loading': LoadingModule
-    },
-
     constructor: function () {
       App.__super__.constructor.apply(this, arguments);
-      this.addInitializer(this._startModules);
+      this.initialize();
     },
 
-    _startModules: function () {
-      var contentRegion = this.getRegion('contentRegion');
-      this.getModule('entities').start();
-      this.getModule('notification').start();
-      this.getModule('loading').start();
-      this.getModule('manager').start({ region: contentRegion });
-      this.getModule('editor').start({ region: contentRegion });
+    initialize: function () {
+      this.appModule = new AppModule({
+        app: this
+      });
+      this.addInitializer(this.appModule.start.bind(this.appModule));
     },
 
     onStart: function () {
@@ -47,8 +29,6 @@ define(function (require) {
       }
     }
   });
-
-  Cocktail.mixin(App, HasModules);
 
   return App;
 });

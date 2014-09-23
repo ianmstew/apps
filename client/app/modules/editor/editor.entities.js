@@ -1,9 +1,10 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var EntityModule = require('lib/classes/entity.module');
+  var Module = require('lib/classes/module');
   var AppModel = require('entities/app/app.model');
+  var notifyUtil = require('modules/notify/notify.util');
 
-  var EditorEntities = EntityModule.extend({
+  var EditorEntities = Module.extend({
 
     channelName: 'editor',
 
@@ -18,7 +19,8 @@ define(function (require) {
     },
 
     initialize: function () {
-      this.app = this.entityFor(AppModel);
+      this.app = new AppModel();
+      notifyUtil.handleModelErrors(this, this.app);
       Marionette.bindEntityEvents(this, this.app, this.appModelEvents);
     },
 

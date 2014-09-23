@@ -9,14 +9,13 @@ define(function (require) {
 
     onPresent: function () {
       var apps = this.channel.request('apps');
-
-      var listView = this.viewFor(ListView, {
+      var listView = new ListView({
         collection: apps
       });
 
       this.show(listView, {
         loading: true,
-        loadingView: GridItemLoadingView
+        LoadingView: GridItemLoadingView
       });
     }
   });

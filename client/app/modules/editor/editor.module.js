@@ -17,23 +17,30 @@ define(function (require) {
       'entities': EditorEntities
     },
 
-    presenters: {
-      'editor': EditorPresenter
-    },
+    _editor: null,
 
     showOverviewTab: function (appId) {
       this.channel.command('set:appId', appId);
-      this.getPresenter('editor').present({ tab: 'overview' });
+      this.getEditor().present({ tab: 'overview' });
     },
 
     showServicesTab: function (appId) {
       this.channel.command('set:appId', appId);
-      this.getPresenter('editor').present({ tab: 'services' });
+      this.getEditor().present({ tab: 'services' });
     },
 
     showSettingsTab: function (appId) {
       this.channel.command('set:appId', appId);
-      this.getPresenter('editor').present({ tab: 'settings' });
+      this.getEditor().present({ tab: 'settings' });
+    },
+
+    getEditor: function () {
+      if (!this._editor || this._editor.isDestroyed) {
+        this._editor = new EditorPresenter({
+          region: this.getRegion()
+        });
+      }
+      return this._editor;
     }
   });
 

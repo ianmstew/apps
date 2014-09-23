@@ -10,8 +10,8 @@ define(function (require) {
   require('backbone.radio');
   require('backbone.syphon');
   require('lib/shim/backbone-promise-ajax');
-  require('lib/shim/backbone-set-parse');
   require('lib/shim/backbone-syncing-state');
+  require('lib/shim/backbone-cocktail');
 
   // Marionette shims and config
   require('marionette');

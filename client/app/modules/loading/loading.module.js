@@ -6,17 +6,17 @@ define(function (require) {
 
     channelName: 'loading',
 
-    presenters: {
-      'loading': LoadingPresenter
-    },
-
     channelEvents: {
       'show:loading': ['comply', 'showLoading']
     },
 
-    showLoading: function (view, options) {
-      var opts = _.extend({}, options, { view: view });
-      this.getPresenter('loading').present(opts);
+    showLoading: function (view, region, options) {
+      new LoadingPresenter({
+        region: region,
+        view: view,
+        LoadingView: (options || {}).LoadingView,
+        present: true
+      });
     }
   });
 
