@@ -1,87 +1,91 @@
 define(function (require) {
   var Marionette = require('marionette');
   var HasChannel = require('lib/mixin/has-channel');
-  var HasPresenters = require('lib/mixin/has-presenters');
-  var HasViewSingletons = require('lib/mixin/has-view-singletons');
   var Radio = require('backbone.radio');
 
   /*
-   * A Presenter's purpose is to provide nestable presentation and data arbitration logic for views.
+   * A Presenter's purpose is to provide nestable presentation and data logic for views.
    * Not unlike this pattern: http://victorsavkin.com/post/49767352960/supervising-presenters.
    *
    * Features:
-   *   - Required to own a region, which it will pass by default to child presenters
-   *   - Required to own a channel, which it will pass by default to child presenters
+   *   - Has a region, accessible by getRegion() and used by show()
+   *   - Has a channel
    *   - Once a view is shown its lifecycle is tied to the view (destroyed when view is destroyed).
    *   - If show() is called with { loading: true }, a loading view will be automatically shown
    *     until the view's model and/or collection data is ready.
-   *   - Convenience method viewFor() provides singleton access to view instances to helps avoid
-   *     re-rendering views that are already visible.
-   *
-   * Defining a subclass:
-   *   1. Implement onPresent() to handle display logic, data, and view instantiation.
-   *        - Call this.show(view) to display view.
-   *        - Call this.show(view, { loading: true }) to automatically manage a loading view.
-   *   2. Implement onShow() to handle any logic that depends on the view's regions being
-   *      available.
-   *
-   * Usage:
-   *   1. Create a new Presenter or use an existing Presenter instance.
-   *   2. Call presenter.present() with optional { region: <region> } override.
    */
   var Presenter = Marionette.Object.extend({
 
-    region: null,
-    _firstView: null,
-    _options: null,
+    mixins: [HasChannel],
 
-    constructor: function (options) {
-      this._options = options;
-      this.initializeMixins(options);
+    // My region
+    region: null,
+
+    // View whose destruction results in this Presenter destructing
+    _boundView: null,
+
+    constructor: function () {
+      // Prevent class initialize from clobbering this initialize (including mixins)
+      if (this.initialize !== Presenter.prototype.initialize) {
+        this.initialize = _.wrap(this.initialize, function (initialize, options) {
+          // Call child initialize
+          initialize.call(this, options);
+          // Call parent initialize first
+          Presenter.prototype.initialize.call(this, options);
+        });
+      }
       Presenter.__super__.constructor.apply(this, arguments);
     },
 
-    present: function (options) {
-      var opts = _.defaults({}, options, this._options);
+    initialize: function (options) {
+      var opts = options || {};
       this.region = opts.region;
-      if (!this.region) throw new Error('Must supply a region');
-      this.triggerMethod('before:present', opts);
-      this.triggerMethod('present', opts);
+      if (opts.present) this.present(options);
     },
 
+    present: function (options) {
+      this.triggerMethod('before:present', options);
+      this.triggerMethod('present', options);
+    },
+
+    getRegion: function () {
+      return this.region;
+    },
+
+    // options: {
+    //   loading:   {boolean} Whether to delegate to loading presenter
+    //   silent:    {boolean} Whether to trigger 'show'
+    //   noDestroy: {boolean} Whether to avoid destroying this Presenter on view destroy
+    // }
     show: function (view, options) {
       var opts = options || {};
-      var nobind = opts.nobind;
-      this.triggerMethod('before:show', view);
 
-      if (!nobind) this._bindToView(view);
+      if (!opts.silent) this.triggerMethod('before:show', view);
+      if (!opts.noDestroy) this._bindToView(view);
 
       if (opts.loading) {
         // Loading presentation requested; delegate showing to the loading presenter
-        options.region = this.region;
-        Radio.channel('loading').command('show:loading', view, options);
+        Radio.channel('loading').command('show:loading', view, this.region, opts);
       } else {
         // Show into region directly
-        this.region.show(view, options);
+        this.region.show(view, opts);
       }
 
       // View and its regions are instantiated and available even if loading view is shown first.
       // The loading presenter is responsible for ultimately showing into a region or destroying
       // the view, so children can reliably depend on view's regions to either be added to the DOM
       // or destroyed.  I.e., chaining onShow() to handle nested views is safe even while loading.
-      this.triggerMethod('show', view);
+      if (!opts.silent) this.triggerMethod('show', view, opts);
     },
 
     _bindToView: function (view) {
-      // Bind my lifetime to the first view shown
-      this.listenTo(view, 'destroy', this.destroy);
-      this._firstView = view;
+      if (!this._boundView) {
+        // Bind my lifetime to the first view shown
+        this.listenTo(view, 'destroy', this.destroy);
+        this._boundView = view;
+      }
     }
   });
-
-  HasChannel.mixInto(Presenter);
-  HasPresenters.mixInto(Presenter);
-  HasViewSingletons.mixInto(Presenter);
 
   return Presenter;
 });

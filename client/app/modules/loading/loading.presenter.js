@@ -8,26 +8,41 @@ define(function (require) {
    */
   var LoadingPresenter = Presenter.extend({
 
-    _options: null,
+    view: null,
+    LoadingView: null,
 
     initialize: function (options) {
-      _.bindAll(this, '_loaded');
+      var opts = options || {};
+      this.view = opts.view;
+      this.LoadingView = opts.LoadingView || LoadingView;
     },
 
     onPresent: function (options) {
-      var view = options.view;
-      var LoadingViewType = options.loadingView || LoadingView;
-      var loadingView = new LoadingViewType();
+      var opts = options || {};
+      var loadingView = new this.LoadingView();
 
       // Gather entity promises
-      var syncings = this._getSyncings(view);
+      var syncings = this._getSyncings(this.view);
 
       // Show loading view
-      this.show(loadingView, { nobind: true });
+      this.show(loadingView, { noDestroy: true });
 
       // When entities are ready, show original view
-      Promise.all(syncings)
-        .finally(_.partial(this._loaded, view, loadingView, options));
+      Promise.all(syncings).finally(this._loaded.bind(this, loadingView, opts));
+    },
+
+    _loaded: function (loadingView, options) {
+      if (this.getRegion().currentView !== loadingView) {
+        // Another view besides the original has superseded the user. This means the user has
+        // moved on before data returned, so the original view is outdated and should be
+        // discarded.
+        this.view.destroy();
+      } else {
+        // Loading view still showing and data is back--swap it out for the original!
+        options.silent = true;
+        options.loading = false;
+        if (!options.debug) this.show(this.view, options);
+      }
     },
 
     // Gather the 'syncing' promise from a view's model, collection, or both.
@@ -38,17 +53,6 @@ define(function (require) {
         .pluck('syncing')
         .compact()
         .value();
-    },
-
-    _loaded: function (view, loadingView, options) {
-      if (this.region.currentView !== loadingView) {
-        // Another view besides the original has superseded the user. This means the user has
-        // moved on before data returned, so the original view is outdated and should be discarded.
-        view.destroy();
-      } else {
-        // Loading view still showing and data is back--swap it out for the original!
-        if (!options.debug) this.show(view);
-      }
     }
   });
 

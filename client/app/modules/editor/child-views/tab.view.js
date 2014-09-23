@@ -6,6 +6,8 @@ define(function (require) {
 
   var TabView = Marionette.ItemView.extend({
 
+    mixins: [HasState, HasChannel],
+
     channelName: 'editor',
 
     template: template,
@@ -19,10 +21,6 @@ define(function (require) {
       'change': 'render'
     },
 
-    initialize: function (options) {
-      this.initializeMixins(options);
-    },
-
     tabShown: function (tab) {
       var selected = this.model.get('name') === tab;
       this.state.set('selected', selected);
@@ -34,9 +32,6 @@ define(function (require) {
       return data;
     }
   });
-
-  HasState.mixInto(TabView);
-  HasChannel.mixInto(TabView);
 
   return TabView;
 });

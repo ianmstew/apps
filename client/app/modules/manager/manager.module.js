@@ -17,16 +17,16 @@ define(function (require) {
       'entities': ManagerEntities
     },
 
-    presenters: {
-      'create': CreatePresenter
-    },
-
     listApps: function () {
-      this.region.show(this.viewFor(ListLayout));
+      var listLayout = new ListLayout();
+      this.show(listLayout);
     },
 
     createApp: function () {
-      this.getPresenter('create').present();
+      new CreatePresenter({
+        region: this.getRegion(),
+        present: true
+      });
     }
   });
 

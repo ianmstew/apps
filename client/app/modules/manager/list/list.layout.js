@@ -13,10 +13,10 @@ define(function (require) {
     },
 
     onShow: function () {
-      var listPresenter = new ListPresenter({
-        region: this.getRegion('list')
+      new ListPresenter({
+        region: this.getRegion('list'),
+        present: true
       });
-      listPresenter.present();
     }
   });
 

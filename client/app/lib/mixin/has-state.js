@@ -1,12 +1,11 @@
 define(function (require) {
-  var Mixin = require('lib/classes/mixin');
   var Backbone = require('backbone');
   var Marionette = require('marionette');
 
-  var HasState = Mixin.extend({
+  var HasState = {
 
     // Default state overridable by constructor 'state' option
-    // defaultState: null,
+    defaultState: null,
 
     // Backbone model maintaining state
     state: null,
@@ -15,7 +14,6 @@ define(function (require) {
     initialState: null,
 
     initialize: function (options) {
-      _.bindAll(this, '_cleanupState');
       var state = (options || {}).state;
 
       if (state && state instanceof Backbone.Model) {
@@ -28,7 +26,7 @@ define(function (require) {
       if (this.stateEvents) this._attachStateEvents();
       if (this.serializeData) this._wrapSerializeData();
 
-      this.on('destroy', this._cleanupState);
+      this.on('destroy', this._cleanupState.bind(this));
     },
 
     setState: function () {
@@ -67,7 +65,7 @@ define(function (require) {
       this.state.destroy();
       this.state = null;
     }
-  });
+  };
 
   return HasState;
 });

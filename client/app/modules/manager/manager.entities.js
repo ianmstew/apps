@@ -1,21 +1,26 @@
 define(function (require) {
-  var EntityModule = require('lib/classes/entity.module');
+  var Module = require('lib/classes/module');
   var AppsCollection = require('entities/app/apps.collection');
+  var notifyUtil = require('modules/notify/notify.util');
 
-  var EditorEntities = EntityModule.extend({
+  var EditorEntities = Module.extend({
+
+    channelName: 'manager',
 
     channelEvents: {
       'apps': ['reply', 'getApps']
     },
 
-    entities: {
-      'apps': AppsCollection
+    apps: null,
+
+    initialize: function () {
+      this.apps = new AppsCollection();
+      notifyUtil.handleModelErrors(this, this.apps);
     },
 
     getApps: function () {
-      var apps = this.getEntity('apps');
-      apps.fetch();
-      return apps;
+      this.apps.fetch();
+      return this.apps;
     }
   });
 

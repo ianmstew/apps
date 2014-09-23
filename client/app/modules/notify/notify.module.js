@@ -4,14 +4,13 @@ define(function (require) {
 
   var NotificationModule = Module.extend({
 
-    channelName: 'notification',
+    channelName: 'notify',
 
     channelEvents: {
       'entity:error': ['on', 'entityError']
     },
 
     entityError: function (entity, message) {
-      console.log('here');
       logger.error(entity, message);
     }
   });
