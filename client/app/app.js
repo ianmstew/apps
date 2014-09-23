@@ -7,13 +7,15 @@ define(function (require) {
   var EditorModule = require('modules/editor/editor.module');
   var NotificationModule = require('modules/notification/notification.module');
   var LoadingModule = require('modules/loading/loading.module');
+  var OverlayModule = require('modules/overlay/overlay.module');
 
   var App = Marionette.Application.extend({
 
     channelName: 'app',
 
     regions: {
-      contentRegion: '#content-region'
+      contentRegion: '#content-region',
+      overlayRegion: '#overlay-region'
     },
 
     modules: {
@@ -21,7 +23,8 @@ define(function (require) {
       'manager': ManagerModule,
       'editor': EditorModule,
       'notification': NotificationModule,
-      'loading': LoadingModule
+      'loading': LoadingModule,
+      'overlay': OverlayModule
     },
 
     constructor: function () {
@@ -32,11 +35,13 @@ define(function (require) {
 
     _startModules: function () {
       var contentRegion = this.getRegion('contentRegion');
+      var overlayRegion = this.getRegion('overlayRegion');
       this.getModule('entities').start();
       this.getModule('notification').start();
       this.getModule('loading').start();
       this.getModule('manager').start({ region: contentRegion });
       this.getModule('editor').start({ region: contentRegion });
+      this.getModule('overlay').start({ region: overlayRegion });
     },
 
     onStart: function () {

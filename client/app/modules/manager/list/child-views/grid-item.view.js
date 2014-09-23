@@ -29,7 +29,7 @@ define(function (require) {
     },
 
     navigateServices: function () {
-      console.log('navigate to app services')
+      console.log('navigate to app services');
     }
   });
 
