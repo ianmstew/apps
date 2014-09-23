@@ -24,23 +24,26 @@ define(function (require) {
     // View whose destruction results in this Presenter destructing
     _boundView: null,
 
-    constructor: function () {
-      // Prevent class initialize from clobbering this initialize (including mixins)
-      if (this.initialize !== Presenter.prototype.initialize) {
-        this.initialize = _.wrap(this.initialize, function (initialize, options) {
-          // Call child initialize
-          initialize.call(this, options);
-          // Call parent initialize first
+    constructor: function (options) {
+      this.initialize = _.wrap(this.initialize, function (initialize, options) {
+
+        // Call parent initialize first
+        if (this.initialize !== Presenter.prototype.initialize) {
           Presenter.prototype.initialize.call(this, options);
-        });
-      }
+        }
+
+        // Call child initialize
+        initialize.call(this, options);
+
+        // Optionally call present() after all initialization
+        if ((options || {}).present) this.present();
+      });
+
       Presenter.__super__.constructor.apply(this, arguments);
     },
 
     initialize: function (options) {
-      var opts = options || {};
-      this.region = opts.region;
-      if (opts.present) this.present(options);
+      this.region = (options || {}).region;
     },
 
     present: function (options) {

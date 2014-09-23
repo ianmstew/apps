@@ -39,13 +39,16 @@ define(function (require) {
     _router: null,
 
     constructor: function () {
-      // Prevent class initialize from clobbering this initialize (including mixins)
+      // If child defines initialize, ensure call to my own initialize
+      // (Child will not have to call superclass initialize)
       if (this.initialize !== Module.prototype.initialize) {
         this.initialize = _.wrap(this.initialize, function (initialize, options) {
-          // Call child initialize
-          initialize.call(this, options);
+
           // Call parent initialize first
           Module.prototype.initialize.call(this, options);
+
+          // Call child initialize
+          initialize.call(this, options);
         });
       }
       Module.__super__.constructor.apply(this, arguments);
