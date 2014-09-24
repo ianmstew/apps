@@ -12,6 +12,8 @@ define(function (require) {
       list: '.js-apps-list'
     },
 
+    // The list layout contains some basic wrapper HTML.
+    // Once it's shown, then pass control of the 'list' region to the List presenter.
     onShow: function () {
       new ListPresenter({
         region: this.getRegion('list'),
