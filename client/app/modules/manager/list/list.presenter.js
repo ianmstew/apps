@@ -1,23 +1,26 @@
 define(function (require) {
   var Presenter = require('lib/classes/presenter');
-  var ListView = require('modules/manager/list/list.view');
+  var ListView = require('modules/manager/list/child-views/list.view');
+  var GridItemLoadingView = require('modules/manager/list/child-views/grid-item-loading.view');
 
   var ListPresenter = Presenter.extend({
 
-    listView: null,
+    // This allows 'this.channel' to be available, and "tuned in" to 'manager'
+    channelName: 'manager',
 
+    // Get the shared Apps collection, create a CollectionView with it, then show the view
     onPresent: function () {
-      // Retrieve an apps model
       var apps = this.channel.request('apps');
-
-      // Create and show the view
       var listView = new ListView({
         collection: apps
       });
-      this.show(listView, { loading: true });
 
-      // Trigger a model update
-      apps.fetch();
+      // I'm showing the list view immediately, but data could still be fetching.
+      // If data is fetching, automatically show the GridItemLoadingView until it's ready.
+      this.show(listView, {
+        loading: true,
+        LoadingView: GridItemLoadingView
+      });
     }
   });
 

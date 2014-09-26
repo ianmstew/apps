@@ -1,65 +1,143 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var Router = require('lib/classes/router');
   var HasChannel = require('lib/mixin/has-channel');
-  var HasModules = require('lib/mixin/has-modules');
-  var HasPresenters = require('lib/mixin/has-presenters');
 
   /*
-   * Module is a lightweight class that implements:
-   *   - start/stop methods
-   *   - a routes hash
-   *   - ownership of a region passed via start() or new()
-   * TODO: unregister routes for module that is stopped?
+   * A Module is a top-level arbiter for application routing and channel events. Its purpose is to
+   * take module-level events and delegate to child views or presenters.
+   *
+   * Features:
+   *   - Start/stop events which provide onStart()/onStop() hooks
+   *   - Has a channel
+   *   - May have a region, accessible using getRegion() and used by show()
+   *   - May have child modules, which are started automatically unless startModules is false
    */
   var Module = Marionette.Object.extend({
 
-    region: null,
+    mixins: [HasChannel],
+
+    // Declarative set of child modules
+    // { 'moduleName': ModuleClass }
+    modules: null,
+
+    // Backbone Router routes object
     routes: null,
-    isRunning: null,
+
+    // Whether to start child modules when I start
+    startModules: true,
+
+    // My region
+    region: null,
+
+    // Local storage of child module instances
+    _modules: null,
+
+    // Whether I am running
+    _isRunning: null,
+
+    // Router instance
     _router: null,
 
-    constructor: function (options) {
-      this.region = (options || {}).region;
-      this.initializeMixins(options);
-      if (this.routes) this._constructRouter();
+    constructor: function () {
+      // If child defines initialize, ensure call to my own initialize
+      // (Child will not have to call superclass initialize)
+      if (this.initialize !== Module.prototype.initialize) {
+        this.initialize = _.wrap(this.initialize, function (initialize, options) {
+
+          // Call parent initialize first
+          Module.prototype.initialize.call(this, options);
+
+          // Call child initialize
+          initialize.call(this, options);
+        });
+      }
       Module.__super__.constructor.apply(this, arguments);
     },
 
-    _constructRouter: function () {
-      this._router = new Router({
-        routes: this.routes,
-        controller: this
-      });
+    initialize: function (options) {
+      this.region = (options || {}).region;
+      if (this.routes) this._constructRouter();
+      if (this.modules) {
+        this._constructModules();
+        if (this.startModules) this.on('start', this._startModules.bind(this));
+        this.on('stop', this._stopModules.bind(this));
+      }
     },
 
     start: function (options) {
       this.triggerMethod('before:start', options);
       this.region = (options || {}).region || this.region;
-      if (this._router) this._router.enable();
-      this.isRunning = true;
+      this._isRunning = true;
       this.triggerMethod('start', options);
     },
 
     stop: function (options) {
-      if (this.isRunning) {
+      if (this._isRunning) {
         this.triggerMethod('before:stop', options);
-        if (this._router) this._router.disable();
-        this.isRunning = false;
+        this._isRunning = false;
         this.triggerMethod('stop', options);
       }
+    },
+
+    getModule: function (module) {
+      return this._modules[module];
+    },
+
+    isRunning: function () {
+      return this._isRunning;
+    },
+
+    getRegion: function () {
+      return this.region;
+    },
+
+    show: function (view, options) {
+      this.getRegion().show(view, options);
     },
 
     destroy: function (options) {
       this.stop();
       this.triggerMethod('before:destroy', options);
+      this._destructModules();
       this.triggerMethod('destroy', options);
+    },
+
+    _startModules: function (options) {
+      _.chain(this._modules)
+        .values()
+        .invoke('stop', options);
+    },
+
+    _stopModules: function (options) {
+      _.chain(this._modules)
+        .values()
+        .invoke('stop', options);
+    },
+
+    _constructRouter: function () {
+      this._router = new (Marionette.AppRouter.extend({
+        appRoutes: this.routes,
+        controller: this
+      }))();
+    },
+
+    _constructModules: function () {
+      var modules = {};
+      this._destructModules();
+      _.each(this.modules, function (Module, name) {
+        modules[name] = new Module();
+      });
+      this._modules = modules;
+    },
+
+    _destructModules: function () {
+      _.each(this._modules, function (module, name) {
+        module.destroy();
+        this._modules[name] = null;
+      }, this);
+      this._modules = null;
     }
   });
-
-  HasChannel.mixInto(Module);
-  HasModules.mixInto(Module);
-  HasPresenters.mixInto(Module);
 
   return Module;
 });

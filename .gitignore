@@ -4,3 +4,4 @@ client-build
 dist
 temp
 .DS_Store
+npm-debug.log

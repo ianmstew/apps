@@ -1,23 +1,26 @@
 define(function (require) {
-  var EntityModule = require('lib/classes/entity.module');
+  var Module = require('lib/classes/module');
   var CurrentUserModel = require('entities/user/current-user.model');
+  var notifyUtil = require('modules/notify/notify.util');
 
-  var AppEntities = EntityModule.extend({
+  var AppEntities = Module.extend({
+
+    channelName: 'app',
 
     channelEvents: {
       'user': ['reply', 'getUser']
     },
 
-    entities: {
-      'user': CurrentUserModel
-    },
+    user: null,
 
     initialize: function () {
-      this.getEntity('user').fetch();
+      this.user = new CurrentUserModel();
+      notifyUtil.handleModelErrors(this, this.user);
+      this.user.fetch();
     },
 
     getUser: function () {
-      return this.getEntity('user');
+      return this.user;
     }
   });
 

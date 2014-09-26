@@ -7,13 +7,11 @@ define(function (require) {
 
   // Backbone shims and extensions
   require('backbone');
-  require('backbone.computedfields');
   require('backbone.radio');
-  require('backbone.stickit');
   require('backbone.syphon');
   require('lib/shim/backbone-promise-ajax');
-  require('lib/shim/backbone-set-parse');
   require('lib/shim/backbone-syncing-state');
+  require('lib/shim/backbone-cocktail');
 
   // Marionette shims and config
   require('marionette');
