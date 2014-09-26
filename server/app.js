@@ -44,7 +44,8 @@ app.use(require('morgan')('dev'));
 app.use(require('compression')());
 app.use(require('serve-static')(path.join(__dirname, 'public')));
 app.use('/client', require('serve-static')(path.join(__dirname, '../client/build')));
-app.use(require('body-parser')());
+app.use(require('body-parser').json());
+app.use(require('body-parser').urlencoded({ extended: false }));
 app.use(require('method-override')());
 app.use(require('cookie-parser')());
 app.use(session({
