@@ -7,14 +7,11 @@ define(function (require) {
     tagName: 'li',
     className: 'grid-item',
 
-    ui: {
-    },
-
     events: {
-      'click button.service-edit': 'showServiceDetail'
+      'click a.modal-edit': 'modalClicked'
     },
 
-    showServiceDetail: function () {
+    modalClicked: function () {
       console.log('I will show the service overlay');
     }
   });
