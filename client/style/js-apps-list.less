@@ -21,13 +21,13 @@
   }
 }
 
-.js-apps-list {
+[class*='-grid'] {
   margin: 0;
   padding: 0;
   list-style-type: none;
 
-  > li {
-    // margin: 0 0 15px 0;
+  li.grid-item {
+    position: relative;
     padding: 0;
     border: @border-gray;
     .border-radius(3px);
@@ -56,19 +56,6 @@
   }
 }
 
-.apps-create {
-  &:extend(.btn-gray);
-
-  padding: 0.75% 0;
-  color: @gray-darker;
-  text-align: center;
-  background-color: @gray-even-lighter;
-
-  &:hover {
-    background-color: @gray-lighter;
-  }
-}
-
 .js-info,
 .js-services {
   margin: 0;
@@ -76,6 +63,9 @@
 }
 
 .js-services {
+  width: 100%;
+  list-style-type: none;
+
   li {
     padding: 0 1%;
   }

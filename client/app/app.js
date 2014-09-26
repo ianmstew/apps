@@ -2,11 +2,11 @@ define(function (require) {
   var Marionette = require('marionette');
   var history = require('lib/util/history');
   var AppModule = require('app.module');
-
   var App = Marionette.Application.extend({
 
     regions: {
-      contentRegion: '#content-region'
+      contentRegion: '#content-region',
+      overlayRegion: '#overlay-region'
     },
 
     constructor: function () {
