@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var ServiceView = require('modules/manager/list/child-views/service.view');
+  var ServiceView = require('modules/manager/list/child-views/child-views/service.view');
   var template = require('hgn!modules/manager/list/child-views/grid-item.view');
 
   var GridItemView = Marionette.CompositeView.extend({
@@ -11,13 +11,11 @@ define(function (require) {
     childViewContainer: '.js-services',
 
     ui: {
-      'appInfo': '.js-info',
-      'appServices': '.js-services'
+      'appInfo': '.js-info'
     },
 
     events: {
-      'click @ui.appInfo': 'navigateApp',
-      'click @ui.appServices': 'navigateServices'
+      'click @ui.appInfo': 'navigateApp'
     },
 
     initialize: function (options) {
@@ -26,10 +24,6 @@ define(function (require) {
 
     navigateApp: function () {
       console.log('navigate to app overview');
-    },
-
-    navigateServices: function () {
-      console.log('navigate to app services');
     }
   });
 
