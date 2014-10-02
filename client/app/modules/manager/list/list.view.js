@@ -3,12 +3,12 @@ define(function (require) {
   var GridItemView = require('modules/manager/list/child-views/grid-item.view');
   var GridItemNoneView = require('modules/manager/list/child-views/grid-item-none.view');
 
-  var GridView = Marionette.CollectionView.extend({
+  var ListView = Marionette.CollectionView.extend({
     emptyView: GridItemNoneView,
     childView: GridItemView,
-    tagName: 'ul',
-    className: 'clearfix'
+    tagName: 'div',
+    className: 'this-is-a-class'
   });
 
-  return GridView;
+  return ListView;
 });

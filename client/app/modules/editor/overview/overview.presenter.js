@@ -4,9 +4,16 @@ define(function (require) {
 
   var OverviewPresenter = Presenter.extend({
 
+    channelName: 'editor',
+
     onPresent: function () {
-      var overviewView = new OverviewView();
-      this.show(overviewView);
+      var app = this.channel.request('app');
+      var services = app.get('services');
+
+      var overviewView = new OverviewView({
+      });
+
+      this.show(overviewView, { loading: true });
     }
   });
 

@@ -1,7 +1,7 @@
 define(function (require) {
   var Marionette = require('marionette');
   var ServiceView = require('modules/editor/services/child-views/service.view');
-  var ServicesNoneView = require('modules/editor/services/child-views/services-none.view');
+  var ServicesNoneView = require('modules/editor/services/services-none.view');
   var template = require('hgn!modules/editor/services/services.view');
 
   var ServicesView = Marionette.CompositeView.extend({
@@ -16,15 +16,21 @@ define(function (require) {
     },
 
     ui: {
-      appId: '.js-services-appId'
+      appId: '.js-services-appId',
+      'serviceCreate': '.service-create'
     },
 
     events: {
-      'click:increment': 'incrementClicked'
+      'click:increment': 'incrementClicked',
+      'click @ui.serviceCreate': 'addService'
     },
 
     appIdChanged: function (state, value) {
       this.ui.appId.text(value);
+    },
+
+    addService: function () {
+      console.log('Add Service Overlay triggered');
     }
   });
 

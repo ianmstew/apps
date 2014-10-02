@@ -1,0 +1,66 @@
+// Grid Styling - in use by apps-grid, services-grid
+// --------------------------------------------------
+
+// **Add to variables / mixin as applicable
+@app-logo-width: 55px;
+@grid-item-margin: 0.25%;
+@num-cols: 4;
+
+[class$='-create'], // For apps-create and service-create buttons
+.grid-item {
+  // &:extend(.col-xs-12, .col-sm-6, .col-md-4, .col-lg-4);
+  float: left;
+  width: calc((100 - ((@num-cols * 2) * @grid-item-margin)) / @num-cols);
+  margin: 0 @grid-item-margin;
+  box-sizing: border-box;
+  min-height: 300px;
+
+  // Clears last element in row for four column layout
+  &:nth-child(4n+4) {
+    clear: both;
+  }
+
+  @media screen (max-width: @screen-tablet) {
+  }
+}
+
+// Styling for apps-create, service-create buttons
+[class$='-create'] {
+  &:extend(.btn-gray);
+
+  padding: 0.75% 0;
+  color: @gray-darker;
+  text-align: center;
+  background-color: @gray-even-lighter;
+
+  &:hover {
+    background-color: @gray-lighter;
+  }
+}
+
+/*
+.app-logo,
+.app-name,
+.service-logo,
+.service-name
+*/
+
+// For *-logo and *-name elements (apps, service)
+[class$='-logo'],
+[class$='-name'] {
+  float: left;
+}
+
+// For apps-logo and services-logo
+[class$='-logo'] {
+  margin-right: calc(@app-logo-width * 0.3);
+  width: @app-logo-width;
+  height: @app-logo-width;
+  overflow: hidden;
+}
+
+// For apps-name and services-name
+[class$='-name'] {
+  font-size: @font-size-h4;
+  line-height: @app-logo-width;
+}
