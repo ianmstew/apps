@@ -25,7 +25,7 @@
   "unused": "vars",
 
   // Avoid long function definitions
-  "maxparams": 4,
+  "maxparams": 5,
 
   // Prevent deep nesting
   "maxdepth": 2,

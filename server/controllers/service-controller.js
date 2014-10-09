@@ -1,15 +1,28 @@
+var _ = require('lodash');
 var validator = require('../util/validator');
 
 var serviceController = {
 
+  list: function (req, res) {
+    if (validator.failOnMissing(req.body, ['app'], res)) return;
+
+    req.app.db.models.Service
+    .find({
+      app: req.body.app
+    })
+    .exec()
+    .then(function (connections) {
+      res.json(connections);
+    })
+    .then(null, validator.failServer.bind(null, res));
+  },
+
   connect: function (req, res) {
-    if (validator.failMissing(req.body, ['app', 'type'], res)) return;
+    if (validator.failOnMissing(req.body, ['app', 'type'], res)) return;
 
     var body = req.body;
-    var user = req.user;
     var data = {
       app: body.app,
-      owner: user._id,
       type: body.type
     };
 
@@ -17,91 +30,52 @@ var serviceController = {
       data.connectionData = body.connectionData;
     }
 
-    req.app.db.models.ApiConnection
-      .create(data)
-      .then(function (newApiConnection) {
-        return res.json(newApiConnection);
-      })
-      .then(null, function (error) {
-        res.send(500, error.toString());
-      });
+    req.app.db.models.Service
+    .create(data)
+    .then(function (newApiConnection) {
+      return res.json(newApiConnection);
+    })
+    .then(null, validator.failServer.bind(null, res));
   },
 
   update: function (req, res) {
-    if (validator.failMissing(req.body, ['app', 'type', '_id'], res)) return;
+    if (validator.failOnMissing(req.body, ['app', 'type', '_id'], res)) return;
 
-    var body = req.body;
-    var user = req.user;
-    var data = {
-      _id: body._id,
-      app: body.app,
-      owner: user._id,
-      type: body.type
-    };
+    var _id = req.body._id;
+    var data = _.extend({}, _.pick(req.body, ['app', 'type', 'connectionData']));
 
-    if (body.connectionData) {
-      data.connectionData = body.connectionData;
-    }
-
-    req.app.db.models.ApiConnection
-      .update({
-        _id: data._id,
-        owner: data.owner
-      }, data)
-      .exec()
-      .then(function (numberAffected) {
-        if (numberAffected === 1) {
-          res.json(data);
-        }
-        else {
-          res.json(404);
-        }
-      })
-      .then(null, function (error) {
-        res.send(500, error.toString());
-      });
-  },
-
-  list: function (req, res) {
-    if (validator.failMissing(req.query, ['id'], res)) return;
-
-    var user = req.user;
-    var query = req.quer;
-
-    req.app.db.models.ApiConnection
-      .find({
-        owner: user._id,
-        app: query.id
-      })
-      .exec()
-      .then(function (connections) {
-        res.json(connections);
-      })
-      .then(null, function (error) {
-        res.send(500, error.toString());
-      });
+    req.app.db.models.Service
+    .update({ _id: _id }, data)
+    .exec()
+    .then(function (count) {
+      if (count === 0) {
+        validator.failNotFound(res);
+      } else {
+        if (count > 1) console.warn('Removed ' + count + ', expected 1');
+        res.json(data);
+      }
+    })
+    .then(null, validator.failServer.bind(null, res));
   },
 
   disconnect: function (req, res) {
-    if (validator.failMissing(req.query, ['id'], res)) return;
+    if (validator.failOnMissing(req.body, ['_id'], res)) return;
 
-    req.app.db.models.ApiConnection
-      .remove({
-        owner: req.user._id,
-        _id: req.query.id
-      })
-      .exec()
-      .then(function (product) {
-        if (product > 0) {
-          res.send(200);
-        }
-        else {
-          res.send(404);
-        }
-      })
-      .then(null, function (error) {
-        res.send(500, error.toString());
-      });
+    req.app.db.models.Service
+    .remove({
+      owner: req.user._id,
+      _id: req.body._id
+    })
+    .exec()
+    .then(function (count) {
+      if (count === 0) {
+        validator.failNotFound(res);
+      } else {
+        if (count > 1) console.warn('Removed ' + count + ', expected 1');
+        res.json(200);
+      }
+    })
+    .then(null, validator.failServer.bind(null, res));
   }
 };
 
