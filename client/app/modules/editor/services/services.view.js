@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var ServiceView = require('modules/editor/services/child-views/service.view');
+  var ServiceView = require('modules/editor/services/service-view/service.view');
   var ServicesNoneView = require('modules/editor/services/services-none.view');
   var template = require('hgn!modules/editor/services/services.view');
 
@@ -17,11 +17,10 @@ define(function (require) {
 
     ui: {
       appId: '.js-services-appId',
-      'serviceCreate': '.service-create'
+      'serviceCreate': '.js-service-create'
     },
 
     events: {
-      'click:increment': 'incrementClicked',
       'click @ui.serviceCreate': 'addService'
     },
 

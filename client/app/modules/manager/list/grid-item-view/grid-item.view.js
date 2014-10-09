@@ -1,7 +1,7 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var ServiceView = require('modules/manager/list/child-views/child-views/service.view');
-  var template = require('hgn!modules/manager/list/child-views/grid-item.view');
+  var ServiceView = require('modules/manager/list/grid-item-view/service-view/service.view');
+  var template = require('hgn!modules/manager/list/grid-item-view/grid-item.view');
 
   var GridItemView = Marionette.CompositeView.extend({
     template: template,

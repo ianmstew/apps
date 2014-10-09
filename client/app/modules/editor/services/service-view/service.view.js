@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var template = require('hgn!modules/editor/services/child-views/service.view');
+  var template = require('hgn!modules/editor/services/service-view/service.view');
 
   var ServiceView = Marionette.ItemView.extend ({
     template: template,
@@ -8,7 +8,7 @@ define(function (require) {
     className: 'grid-item',
 
     events: {
-      'click a.modal-edit': 'modalClicked'
+      'click .modal-edit': 'modalClicked'
     },
 
     modalClicked: function () {

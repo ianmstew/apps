@@ -29,7 +29,7 @@ define(function (require) {
 
     onStart: function () {
       var contentRegion = this.app.getRegion('contentRegion');
-      var overlayRegion = this.getRegion('overlayRegion');
+      var overlayRegion = this.app.getRegion('overlayRegion');
       this.getModule('entities').start();
       this.getModule('notify').start();
       this.getModule('loading').start();

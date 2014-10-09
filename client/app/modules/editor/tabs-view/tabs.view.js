@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var TabView = require('modules/editor/child-views/tab.view');
+  var TabView = require('modules/editor/tabs-view/tab-view/tab.view');
 
   var TabsView = Marionette.CollectionView.extend({
 

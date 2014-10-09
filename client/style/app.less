@@ -1,22 +1,20 @@
 @import "engine-ui-import.less";
-@import "document.less";
 @import "variables.less";
 @import "mixins.less";
 @import "navs.less";
 @import "bars.less";
-@import "dashboard.less";
-@import "user-login.less";
-@import "create-app.less";
-@import "app-overview.less";
-@import "js-apps-list.less";
-@import "*-grid.less";
-@import "app-grid.less";
-@import "app-detail.less";
-// @import "app-list.less"; - not in use
+@import "login.less"; // previously user-login.less
+@import "list-view.less"; // previously dashboard.less
+@import "create-view.less"; // previously create-app.less
+@import "editor-view.less"; // previously app-detail.less
+@import "overview-view.less"; // previously app-overview.less
+@import "services-view.less";
 
 // Manager Styles
 // --------------------------------------------------
 body {
+  &:extend(.container);
+
   width: 100%;
   padding: 0;
 
@@ -148,6 +146,155 @@ footer {
   }
 }
 
+// Grid Styling - in use by list.view and services.view
+// Styling for both apps-grid, services-grid
+// --------------------------------------------------
+
+// Used in list.view and services.view
+// Sets up our grid layout
+[class*='-grid'] {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li.grid-item {
+    position: relative;
+    padding: 0;
+    border: @border-gray;
+    .border-radius(3px);
+
+    > ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      /*
+      > li {
+        margin: 0;
+        padding: 0;
+      } */
+    }
+
+    i {
+      color: @gray;
+      // font-size: 2em;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+}
+
+.js-info,
+.js-services {
+  margin: 0;
+  padding: 0;
+}
+
+.js-services {
+  width: 100%;
+  list-style-type: none;
+
+  li {
+    padding: 0 1%;
+  }
+}
+
+// Used in list.view and services.view
+// For apps-create and service-create buttons
+[class$='-create'],
+.grid-item {
+  // &:extend(.col-xs-12, .col-sm-6, .col-md-4, .col-lg-4);
+  float: left;
+  width: calc((100 - ((@num-cols * 2) * @grid-item-margin)) / @num-cols);
+  margin: 0 @grid-item-margin;
+  box-sizing: border-box;
+  min-height: 300px;
+
+  // Clears last element in row for four column layout
+  &:nth-child(4n+4) {
+    clear: both;
+  }
+
+  @media screen (max-width: @screen-tablet) {
+  }
+}
+
+// Styling for apps-create, service-create buttons
+[class$='-create'] {
+  &:extend(.btn-gray);
+
+  position: relative;
+  padding: 0.75% 0;
+  color: @gray-darker;
+  text-align: center;
+  background-color: @gray-even-lighter;
+
+  &:hover {
+    background-color: @gray-lighter;
+  }
+}
+
+[class$='-create'] > a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+[class$='-create'] > a {
+  &:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+}
+/*
+.app-logo,
+.app-name,
+.service-logo,
+.service-name
+*/
+
+// For *-logo and *-name elements (apps, service)
+[class$='-logo'],
+[class$='-name'] {
+  float: left;
+}
+
+// For apps-logo and services-logo
+[class$='-logo'] {
+  margin-right: calc(@app-logo-width * 0.3);
+  width: @app-logo-width;
+  height: @app-logo-width;
+  overflow: hidden;
+}
+
+// For apps-name and services-name
+[class$='-name'] {
+  font-size: @font-size-h4;
+  line-height: @app-logo-width;
+}
+
+// App List: Grid Style
+// --------------------------------------------------
+.app-description {
+  clear: both;
+}
+
+.js-services {
+  position: absolute;
+  bottom: 0;
+
+  li {
+    float: left;
+  }
+}
+
 // Social Network Styling
 // --------------------------------------------------
 
@@ -193,7 +340,6 @@ footer {
   margin-top: -7px;
 }
 
-
 // Status Icon
 // --------------------------------------------------
 i.fa-smile-o {
@@ -206,4 +352,65 @@ i.fa-meh-o {
 
 i.fa-frown-o {
   color: @brand-danger;
+}
+
+
+// The following are styles that are either not being used
+// or being used for particular views
+// --------------------------------------------------
+
+// jQuery Sortable
+// --------------------------------------------------
+
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ol.app-list li.placeholder {
+  position: relative;
+  /*
+  margin: 0;
+  padding: 0;
+  border: none;
+  width:50px;
+  height:60px;
+  */
+}
+ol.app-list li.placeholder:before {
+  position: absolute;
+  /*
+  content: "";
+  width: 0;
+  height: 0;
+  margin-top: -5px;
+  left: -5px;
+  top: -4px;
+  border: 5px solid transparent;
+  border-left-color: red;
+  border-right: none;
+  */
+}
+
+// App List: List Styling
+// --------------------------------------------------
+// *This is currently not being used. Styling for
+// list.view vertical list; we are instead employing a grid-style
+// layout until vertical list layout is desired.
+
+.js-info,
+.js-services {
+  float: left;
+  width: 50%;
+}
+
+.js-services {
+  li {
+    float: right;
+  }
 }

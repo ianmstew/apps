@@ -4,6 +4,8 @@ define(function (require) {
 
   var CreatePresenter = Presenter.extend({
 
+    channelName: 'manager',
+
     onPresent: function () {
       var createView = new CreateView();
       this.show(createView);

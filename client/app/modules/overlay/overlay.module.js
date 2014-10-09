@@ -14,16 +14,14 @@ define(function (require) {
       'show:overlay': ['comply', 'showOverlay']
     },
 
-    initialize: function () {
-    },
-
     onStart: function () {
       console.log('Overlay starts!');
     },
 
     showOverlay: function (view, options) {
-      var opts = _.extend({}, options, { view: view });
-      this.getPresenter('overlay').present(opts);
+      new OverlayPresenter({
+        region: this.getRegion()
+      });
     }
   });
 
