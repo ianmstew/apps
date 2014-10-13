@@ -1,14 +1,13 @@
-@import "engine-ui-import.less";
-@import "variables.less";
-@import "mixins.less";
-@import "navs.less";
-@import "bars.less";
-@import "login.less"; // previously user-login.less
-@import "list-view.less"; // previously dashboard.less
-@import "create-view.less"; // previously create-app.less
-@import "editor-view.less"; // previously app-detail.less
-@import "overview-view.less"; // previously app-overview.less
-@import "services-view.less";
+@import "../style/engine-ui-import.less";
+@import "../style/variables.less";
+@import "../style/mixins.less";
+@import "../style/login.less"; // previously user-login.less
+@import "/modules/manager/list/list-view.less"; // previously dashboard.less
+@import "/modules/manager/create/create-view.less"; // previously create-app.less
+@import "/modules/editor/editor-view.less"; // previously app-detail.less
+@import "/modules/editor/overview/overview-view.less"; // previously app-overview.less
+@import "/modules/editor/services/services-view.less";
+@import "/modules/editor/settings/settings-view.less";
 
 // Manager Styles
 // --------------------------------------------------
@@ -25,12 +24,10 @@ body {
 }
 
 .wrap {
-    width: 100%;
-    min-height: 100%;
-    margin-bottom: -(@footer-height); /* equal to footer height */
-}
+  width: 100%;
+  min-height: 100%;
+  margin-bottom: -(@footer-height); /* equal to footer height */
 
-.wrap {
   &:after {
     content: "";
     display: block;
@@ -113,9 +110,10 @@ a.nav-previous {
   margin: 2.5% 2% 0;
   text-decoration: none;
 }
+
 // Footer
 // --------------------------------------------------
-
+// For proper sticky footer placement
 footer,
 .wrap:after {
   height: @footer-height;
@@ -149,7 +147,6 @@ footer {
 // Grid Styling - in use by list.view and services.view
 // Styling for both apps-grid, services-grid
 // --------------------------------------------------
-
 // Used in list.view and services.view
 // Sets up our grid layout
 [class*='-grid'] {
@@ -159,7 +156,7 @@ footer {
 
   li.grid-item {
     position: relative;
-    padding: 0;
+    padding: 0.5%;
     border: @border-gray;
     .border-radius(3px);
 
@@ -185,6 +182,14 @@ footer {
       clear: both;
     }
   }
+
+  a {
+    color: @gray-darker;
+    &:hover {
+      color: @gray-darker;
+      text-decoration: none;
+    }
+  }
 }
 
 .js-info,
@@ -194,10 +199,13 @@ footer {
 }
 
 .js-services {
+  position: absolute;
+  bottom: 0.5%;
   width: 100%;
   list-style-type: none;
 
   li {
+    float: left;
     padding: 0 1%;
   }
 }
@@ -212,6 +220,7 @@ footer {
   margin: 0 @grid-item-margin;
   box-sizing: border-box;
   min-height: 300px;
+  .transition(background-color 0.5s ease);
 
   // Clears last element in row for four column layout
   &:nth-child(4n+4) {
@@ -219,6 +228,11 @@ footer {
   }
 
   @media screen (max-width: @screen-tablet) {
+  }
+
+  &:hover {
+    background-color: @gray-even-lighter;
+    text-decoration: none;
   }
 }
 
@@ -237,7 +251,7 @@ footer {
   }
 }
 
-[class$='-create'] > a {
+[class$='-create'] > div {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -245,7 +259,7 @@ footer {
   right: 0;
 }
 
-[class$='-create'] > a {
+[class$='-create'] > div {
   &:before {
     content: '';
     display: inline-block;
@@ -253,12 +267,6 @@ footer {
     height: 100%;
   }
 }
-/*
-.app-logo,
-.app-name,
-.service-logo,
-.service-name
-*/
 
 // For *-logo and *-name elements (apps, service)
 [class$='-logo'],
@@ -284,15 +292,6 @@ footer {
 // --------------------------------------------------
 .app-description {
   clear: both;
-}
-
-.js-services {
-  position: absolute;
-  bottom: 0;
-
-  li {
-    float: left;
-  }
 }
 
 // Social Network Styling
@@ -354,6 +353,18 @@ i.fa-frown-o {
   color: @brand-danger;
 }
 
+// Bars
+// --------------------------------------------------
+/*
+.bar {
+  &:hover {
+    background-color: @green-accent;
+    border-color: darken(@green-accent, 3%);
+  }
+}
+*/
+
+
 
 // The following are styles that are either not being used
 // or being used for particular views
@@ -403,6 +414,7 @@ ol.app-list li.placeholder:before {
 // list.view vertical list; we are instead employing a grid-style
 // layout until vertical list layout is desired.
 
+/*
 .js-info,
 .js-services {
   float: left;
@@ -414,3 +426,4 @@ ol.app-list li.placeholder:before {
     float: right;
   }
 }
+*/

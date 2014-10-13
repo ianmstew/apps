@@ -16,12 +16,12 @@ define(function (require) {
     },
 
     ui: {
-      appId: '.js-services-appId',
-      'serviceCreate': '.js-service-create'
+      appId: '.js-services-appId'
     },
 
     events: {
-      'click @ui.serviceCreate': 'addService'
+      'click .js-service-create': 'addService',
+      'click .service-info': 'editService'
     },
 
     appIdChanged: function (state, value) {
@@ -30,6 +30,10 @@ define(function (require) {
 
     addService: function () {
       console.log('Add Service Overlay triggered');
+    },
+
+    editService: function () {
+      console.log('I will trigger service edit overlay');
     }
   });
 

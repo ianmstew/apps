@@ -47,6 +47,15 @@
   }
 }
 
+a.header-link {
+  font-size: @font-size-h3;
+  color: @gray-dark;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 h3 {
   > a {
     &:extend(.pull-right);
@@ -73,6 +82,8 @@ h3 {
 }
 
 table {
+  width: 100%;
+
   tr {
     td {
       width: 200px;
@@ -80,6 +91,33 @@ table {
       &:first-child {
         font-weight: bold;
       }
+    }
+  }
+}
+
+.table-app-details,
+.table-app-services {
+  &:extend(.table all);
+}
+
+.table-app-details {
+  td {
+    &:first-child {
+      width: 10%;
+    }
+  }
+
+  > tbody > tr > td {
+    border-top: 0;
+  }
+}
+
+.table-app-services {
+  &:extend(.table-striped all, .table-hover all);
+
+  th {
+    &:first-child {
+      width: 5%;
     }
   }
 }

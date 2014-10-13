@@ -3,7 +3,7 @@ define(function (require) {
   var template = require('hgn!modules/manager/list/list.layout');
   var ListPresenter = require('modules/manager/list/list.presenter');
 
-  var ListView = Marionette.LayoutView.extend({
+  var ListLayoutView = Marionette.LayoutView.extend({
 
     template: template,
     className: 'content-wrap',
@@ -22,5 +22,5 @@ define(function (require) {
     }
   });
 
-  return ListView;
+  return ListLayoutView;
 });

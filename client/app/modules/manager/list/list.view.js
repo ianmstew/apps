@@ -5,9 +5,7 @@ define(function (require) {
 
   var ListView = Marionette.CollectionView.extend({
     emptyView: GridItemNoneView,
-    childView: GridItemView,
-    tagName: 'div',
-    className: 'this-is-a-class'
+    childView: GridItemView
   });
 
   return ListView;

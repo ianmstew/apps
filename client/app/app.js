@@ -6,7 +6,7 @@ define(function (require) {
 
     regions: {
       contentRegion: '#content-region',
-      overlayRegion: '#overlay-region'
+      modalRegion: '#modal-region'
     },
 
     constructor: function () {

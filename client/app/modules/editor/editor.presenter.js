@@ -45,8 +45,11 @@ define(function (require) {
     },
 
     getEditorView: function () {
+      var app = this.channel.request('app');
       if (!this._editorView || this._editorView.isDestroyed) {
-        this._editorView = new EditorView();
+        this._editorView = new EditorView({
+          model: app
+        });
       }
       return this._editorView;
     }

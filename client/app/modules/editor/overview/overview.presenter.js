@@ -8,11 +8,10 @@ define(function (require) {
 
     onPresent: function () {
       var app = this.channel.request('app');
-      var services = app.get('services');
-
       var overviewView = new OverviewView({
+        model: app,
+        collection: app.get('services')
       });
-
       this.show(overviewView, { loading: true });
     }
   });

@@ -3,7 +3,6 @@ define(function (require) {
   var template = require('hgn!modules/editor/overview/overview.view');
 
   var OverviewView = Marionette.ItemView.extend({
-
     template: template
   });
 

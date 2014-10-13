@@ -10,20 +10,8 @@ define(function (require) {
     childView: ServiceView,
     childViewContainer: '.js-services',
 
-    ui: {
-      'appInfo': '.js-info'
-    },
-
-    events: {
-      'click @ui.appInfo': 'navigateApp'
-    },
-
     initialize: function (options) {
       this.collection = this.model.get('services');
-    },
-
-    navigateApp: function () {
-      console.log('navigate to app overview');
     }
   });
 
