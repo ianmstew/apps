@@ -7,10 +7,10 @@ var serviceController = {
     if (validator.failOnMissing(req.body, ['app'], res)) return;
 
     req.app.db.models.Service
-    .find({
-      app: req.body.app
-    })
-    .exec()
+      .find({
+        app: req.body.app
+      })
+      .exec()
     .then(function (connections) {
       res.json(connections);
     })
@@ -31,7 +31,7 @@ var serviceController = {
     }
 
     req.app.db.models.Service
-    .create(data)
+      .create(data)
     .then(function (newApiConnection) {
       return res.json(newApiConnection);
     })
@@ -45,8 +45,8 @@ var serviceController = {
     var data = _.extend({}, _.pick(req.body, ['app', 'type', 'connectionData']));
 
     req.app.db.models.Service
-    .update({ _id: _id }, data)
-    .exec()
+      .update({ _id: _id }, data)
+      .exec()
     .then(function (count) {
       if (count === 0) {
         validator.failNotFound(res);
@@ -62,11 +62,11 @@ var serviceController = {
     if (validator.failOnMissing(req.body, ['_id'], res)) return;
 
     req.app.db.models.Service
-    .remove({
-      owner: req.user._id,
-      _id: req.body._id
-    })
-    .exec()
+      .remove({
+        owner: req.user._id,
+        _id: req.body._id
+      })
+      .exec()
     .then(function (count) {
       if (count === 0) {
         validator.failNotFound(res);
