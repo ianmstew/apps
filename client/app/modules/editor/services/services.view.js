@@ -2,6 +2,8 @@ define(function (require) {
   var Marionette = require('marionette');
   var ServiceView = require('modules/editor/services/service-view/service.view');
   var ServicesNoneView = require('modules/editor/services/services-none.view');
+  // var ModalRegion = require('modules/modal/modal.view');
+  var ModalView = require('modules/modal/modal.view');
   var template = require('hgn!modules/editor/services/services.view');
 
   var ServicesView = Marionette.CompositeView.extend({
@@ -16,12 +18,14 @@ define(function (require) {
     },
 
     ui: {
-      appId: '.js-services-appId'
+      appId: '.js-services-appId',
+      serviceCreate: '.js-service-create',
+      serviceInfo: '.service-info'
     },
 
     events: {
-      'click .js-service-create': 'addService',
-      'click .service-info': 'editService'
+      'click @ui.serviceCreate': 'addService',
+      'click @ui.serviceInfo': 'editService'
     },
 
     appIdChanged: function (state, value) {
@@ -33,7 +37,14 @@ define(function (require) {
     },
 
     editService: function () {
-      console.log('I will trigger service edit overlay');
+      // console.log('I trigger service overlay!');
+
+      var modal = new ModalRegion({
+        el:'#modal-region'
+      });
+
+      var modalView = new ModalView();
+      modal.show(modalView);
     }
   });
 

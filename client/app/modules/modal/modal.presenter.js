@@ -8,8 +8,7 @@ define(function (require) {
     channelName: 'modal',
 
     onPresent: function () {
-      var modalView = new ModalView({
-      });
+      var modalView = new ModalView();
 
       this.show(modalView, {
         loading: true,

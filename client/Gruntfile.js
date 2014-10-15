@@ -162,7 +162,7 @@ module.exports = function (grunt) {
       style: {
         files: [
           '<%- path.style %>/**/*',
-          '<%- path.app %>/**/*',
+          '<%- path.app %>/**/*.less',
           '<%- path.vendor %>/engine-ui/less/**/*'
         ],
         tasks: ['less:app']

@@ -5,8 +5,12 @@ define(function (require) {
   var SettingsView = Marionette.ItemView.extend({
     template: template,
 
+    ui: {
+      jsDeleteApp: '.js-delete-app'
+    },
+
     events: {
-      'click .js-delete-app': 'deleteApplication'
+      'click @ui.jsDeleteApp': 'deleteApplication'
     },
 
     deleteApplication: function () {

@@ -5,15 +5,21 @@ define(function (require) {
   var ServiceView = Marionette.ItemView.extend ({
     template: template,
     tagName: 'li',
-    className: 'grid-item',
+    className: 'grid-item'
+
+    /*
+    ui: {
+      jsServiceInfo: '.service-info'
+    },
 
     events: {
-      'click .modal-edit': 'modalClicked'
+      'click @ui.jsServiceInfo': 'modalClicked'
     },
 
     modalClicked: function () {
       console.log('I will show the service overlay');
     }
+    */
   });
 
   return ServiceView;

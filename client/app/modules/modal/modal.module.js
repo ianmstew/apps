@@ -6,10 +6,6 @@ define(function (require) {
 
     channelName: 'modal',
 
-    presenters: {
-      'modal': ModalPresenter
-    },
-
     channelEvents: {
       'show:modal': ['comply', 'showModal']
     },
@@ -20,7 +16,8 @@ define(function (require) {
 
     showModal: function (view, options) {
       new ModalPresenter({
-        region: this.getRegion()
+        region: this.getRegion(),
+        present: true
       });
     }
   });
