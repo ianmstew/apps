@@ -13,27 +13,6 @@ define(function (require) {
     onClose: function () {
       this.$el.modal('hide');
     }
-
-    /*
-    onShow: function (view) {
-      this.listenTo(view, 'dialog:close', this.closeDialog);
-
-      this.$el.modal({
-        modal: true,
-        show: true,
-        width: 'auto',
-        close: function (e, ui) {
-          self.closeDialog();
-        }
-      });
-    },
-
-    closeDialog: function () {
-      this.stopListening();
-      this.close();
-      this.$el.modal('hide');
-    }
-    */
   });
 
   return ModalRegion;
