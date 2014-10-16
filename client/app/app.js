@@ -7,7 +7,9 @@ define(function (require) {
 
     regions: {
       contentRegion: '#content-region',
-      modalRegion: ModalRegion
+      modalRegion: ModalRegion.extend({
+        el: '#modal-region'
+      })
     },
 
     constructor: function () {

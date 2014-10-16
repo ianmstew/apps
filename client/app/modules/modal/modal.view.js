@@ -2,12 +2,21 @@ define(function (require) {
   var Marionette = require('marionette');
   var template = require('hgn!modules/modal/modal.view');
 
-  var ModalView = Marionette.Region.extend({
-
-    el: '#modal-region',
+  var ModalView = Marionette.ItemView.extend({
 
     channelName: 'modal',
+
     template: template,
+    className: 'modal',
+
+    // ajaxray Solution (2014) via github
+    // Resource: https://gist.github.com/ajaxray/b245509903f107d8a47f
+    events: {
+      'click .close': function (e) {
+        e.preventDefault();
+        this.trigger('dialog:close');
+      }
+    }
 
     /*
     // Derek Bailey dialog solution (2012)
@@ -36,6 +45,7 @@ define(function (require) {
 
     // Joe Zim modal solution (2013)
     // Article: http://www.joezimjs.com/javascript/using-marionette-to-display-modal-views/
+    /*
     constructor: function () {
       Marionette.Region.prototype.constructor.apply(this, arguments);
 
@@ -56,6 +66,7 @@ define(function (require) {
     onClose: function () {
       this.$el.modal('hide');
     }
+    */
 
     /*
     // v3 Modal Solution

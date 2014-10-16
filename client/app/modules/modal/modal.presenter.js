@@ -5,8 +5,9 @@ define(function (require) {
 
   var ModalPresenter = Presenter.extend({
 
-    channelName: 'modal',
+    channelName: 'modal'
 
+    /*
     onPresent: function () {
       var modalView = new ModalView();
 
@@ -15,6 +16,7 @@ define(function (require) {
         LoadingView: ModalLoadingView
       });
     }
+    */
   });
 
   return ModalPresenter;

@@ -2,7 +2,7 @@ define(function (require) {
   var Marionette = require('marionette');
   var ServiceView = require('modules/editor/services/service-view/service.view');
   var ServicesNoneView = require('modules/editor/services/services-none.view');
-  // var ModalRegion = require('modules/modal/modal.view');
+  var ModalRegion = require('modules/modal/modal.region');
   var ModalView = require('modules/modal/modal.view');
   var template = require('hgn!modules/editor/services/services.view');
 
@@ -37,11 +37,7 @@ define(function (require) {
     },
 
     editService: function () {
-      // console.log('I trigger service overlay!');
-
-      var modal = new ModalRegion({
-        el:'#modal-region'
-      });
+      var modal = new ModalRegion();
 
       var modalView = new ModalView();
       modal.show(modalView);
