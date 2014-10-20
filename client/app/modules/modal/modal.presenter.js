@@ -1,22 +1,17 @@
 define(function (require) {
   var Presenter = require('lib/classes/presenter');
-  var ModalView = require('modules/modal/modal.view');
-  var ModalLoadingView = require('modules/modal/modal-loading.view');
+  var ModalLoadingView = require('modules/modal/modal-loading-view/modal-loading.view');
 
   var ModalPresenter = Presenter.extend({
 
-    channelName: 'modal'
+    channelName: 'modal',
 
-    /*
-    onPresent: function () {
-      var modalView = new ModalView();
-
-      this.show(modalView, {
+    onPresent: function (options) {
+      this.show((options || {}).view, {
         loading: true,
         LoadingView: ModalLoadingView
       });
     }
-    */
   });
 
   return ModalPresenter;

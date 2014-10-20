@@ -1,17 +1,32 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var template = require('hgn!modules/modal/modal.view');
 
+  // Modal region designed to be subclassed to provide 'el' in context.
+  // E.g., var modalRegion = ModalRegion.extend({ el: '<modal-region-el>' });
   var ModalRegion = Marionette.Region.extend({
 
-    el: '#modal-region',
+    onShow: function (view) {
+      // Attach handler to Bootstrap "modal hidden" event
+      // http://getbootstrap.com/javascript/#modals-usage
+      view.$el.on('hidden.bs.modal', this.modalHidden.bind(this));
 
-    onShow: function () {
-      this.$el.modal('show');
+      view.once('dialog:close', this.closeModal.bind(this));
+
+      // Bootstrap-show modal
+      view.$el.modal({
+        show: true,
+        keyboard: true
+      });
     },
 
-    onClose: function () {
-      this.$el.modal('hide');
+    // Close modal using Bootstrap's hide method
+    closeModal: function () {
+      this.currentView.$el.modal('hide');
+    },
+
+    // Once modal is hidden, throw out the view
+    modalHidden: function () {
+      this.empty();
     }
   });
 

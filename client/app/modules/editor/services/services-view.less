@@ -3,11 +3,26 @@
 // --------------------------------------------------
 
 .service-info {
+  display: block;
+  height: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus, &:active {
+    outline: 0;
+  }
+
   table {
     th {
       background-color: transparent;
     }
   }
+}
+
+.services-grid {
+  .clearfix;
 }
 
 .service-edit {

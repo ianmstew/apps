@@ -1,6 +1,6 @@
 define(function (require) {
   var Module = require('lib/classes/module');
-  var ModalPresenter = require('modules/modal/modal.presenter');
+  var ModalLayout = require('modules/modal/modal.layout');
 
   var ModalModule = Module.extend({
 
@@ -10,15 +10,11 @@ define(function (require) {
       'show:modal': ['comply', 'showModal']
     },
 
-    onStart: function () {
-      // console.log('Modal overlay starts!');
-    },
-
     showModal: function (view, options) {
-      new ModalPresenter({
-        region: this.getRegion(),
-        present: true
+      var modalLayout = new ModalLayout({
+        bodyView: view
       });
+      this.show(modalLayout);
     }
   });
 

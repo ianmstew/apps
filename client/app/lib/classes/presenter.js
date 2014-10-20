@@ -36,7 +36,7 @@ define(function (require) {
         initialize.call(this, options);
 
         // Optionally call present() after all initialization
-        if ((options || {}).present) this.present();
+        if ((options || {}).present) this.present(options);
       });
 
       Presenter.__super__.constructor.apply(this, arguments);

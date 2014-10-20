@@ -1,10 +1,10 @@
-<a tabindex="0" class="service-info">
+<form class="service-info">
   <div class="service-logo">Icon {{icon}}</div>
   <div class="service-name">{{name}}</div>
   <table>
     <tr class="service-date-added">
       <th>Added:</th>
-      <td>{{dateAdded}}</td>
+      <td><input name="date-added" value="{{dateAdded}}" /></td>
     </tr>
     <tr class="service-callback-url">
       <th>Callback URL:</th>
@@ -19,4 +19,4 @@
       <td>{{clientSecret}}</td>
     </tr>
   </table>
-</a>
+</form>
