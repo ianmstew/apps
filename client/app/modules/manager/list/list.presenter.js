@@ -1,7 +1,7 @@
 define(function (require) {
   var Presenter = require('lib/classes/presenter');
   var ListView = require('modules/manager/list/list.view');
-  var GridItemLoadingView = require('modules/manager/list/grid-item-view/grid-item-loading.view');
+  var GridItemLoadingView = require('modules/manager/list/grid-item-view/grid-item-loading-view/grid-item-loading.view');
 
   var ListPresenter = Presenter.extend({
 

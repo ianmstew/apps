@@ -2,7 +2,7 @@ define(function (require) {
   var Marionette = require('marionette');
   var template = require('hgn!modules/editor/services/service-edit-view/service-edit.view');
 
-  var ServiceView = Marionette.ItemView.extend ({
+  var ServiceEditView = Marionette.ItemView.extend ({
     template: template
 
     /*
@@ -20,5 +20,5 @@ define(function (require) {
     */
   });
 
-  return ServiceView;
+  return ServiceEditView;
 });

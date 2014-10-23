@@ -23,20 +23,6 @@ define(function (require) {
       });
       Radio.channel('modal').command('show:modal', modalView);
     }
-
-    /*
-    ui: {
-      jsServiceInfo: '.service-info'
-    },
-
-    events: {
-      'click @ui.jsServiceInfo': 'modalClicked'
-    },
-
-    modalClicked: function () {
-      console.log('I will show the service overlay');
-    }
-    */
   });
 
   return ServiceView;

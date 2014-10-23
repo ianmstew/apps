@@ -1,22 +1,28 @@
-<form class="service-info">
+<form class="service-info" role="form">
   <div class="service-logo">Icon {{icon}}</div>
   <div class="service-name">{{name}}</div>
-  <table>
-    <tr class="service-date-added">
-      <th>Added:</th>
-      <td><input name="date-added" value="{{dateAdded}}" /></td>
-    </tr>
-    <tr class="service-callback-url">
-      <th>Callback URL:</th>
-      <td>{{callbackUrl}}</td>
-    </tr>
-    <tr class="service-client-id">
-      <th>Client ID:</th>
-      <td>{{clientId}}</td>
-    </tr>
-    <tr class="service-client-secret">
-      <th>Client Secret:</th>
-      <td>{{clientSecret}}</td>
-    </tr>
-  </table>
+  <div class="service-date-added">
+    <label for="serviceDateAdded">Added:</label>
+    <div>
+      <input name="service-date-added" value="{{dateAdded}}">
+    </div>
+  </div>
+  <div class="service-callback-url">
+    <label for="serviceCallbackUrl">Callback URL:</label>
+    <div>
+      <input name="service-callback-url" value="{{callbackUrl}}">
+    </div>
+  </div>
+  <div class="service-client-id">
+    <label for="serviceClientId">Client ID:</label>
+    <div>
+      <input name="service-client-id" value="{{clientId}}">
+    </div>
+  </div>
+  <div class="service-client-secret">
+    <label for="serviceClientSecret">Client Secret:</label>
+    <div>
+      <input name="service-client-secret" value="{{clientSecret}}">
+    </div>
+  </div>
 </form>

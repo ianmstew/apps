@@ -7,6 +7,7 @@
 @import "/modules/editor/editor-view.less"; // previously app-detail.less
 @import "/modules/editor/overview/overview-view.less"; // previously app-overview.less
 @import "/modules/editor/services/services-view.less";
+@import "/modules/editor/services/service-edit-view/service-edit-view.less";
 @import "/modules/editor/settings/settings-view.less";
 @import "/modules/modal/modal.less";
 
@@ -110,6 +111,11 @@ a.nav-previous {
 
   margin: 2.5% 2% 0;
   text-decoration: none;
+}
+
+a:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 // Footer
@@ -251,7 +257,22 @@ footer {
   &:hover {
     background-color: @gray-lighter;
   }
+
+  &:link,
+  &:active,
+  &:hover,
+  &:visited,
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
 }
+
+// Remove unwanted Engine green outline
+[class$='-create']:active:focus {
+  outline: none;
+}
+
 
 [class$='-create'] > div {
   position: absolute;
@@ -259,9 +280,7 @@ footer {
   bottom: 0;
   left: 0;
   right: 0;
-}
 
-[class$='-create'] > div {
   &:before {
     content: '';
     display: inline-block;
@@ -296,6 +315,17 @@ footer {
   clear: both;
 }
 
+// Dropdown menus
+// --------------------------------------------------
+.avatar {
+  margin-top: -7px;
+}
+
+// The following are styles that are either not being used
+// or being used for particular views
+// --------------------------------------------------
+
+/*
 // Social Network Styling
 // --------------------------------------------------
 
@@ -335,12 +365,6 @@ footer {
   background-color: @brand-linkedin;
 }
 
-// Dropdown menus
-// --------------------------------------------------
-.avatar {
-  margin-top: -7px;
-}
-
 // Status Icon
 // --------------------------------------------------
 i.fa-smile-o {
@@ -357,20 +381,15 @@ i.fa-frown-o {
 
 // Bars
 // --------------------------------------------------
-/*
+
 .bar {
   &:hover {
     background-color: @green-accent;
     border-color: darken(@green-accent, 3%);
   }
 }
+
 */
-
-
-
-// The following are styles that are either not being used
-// or being used for particular views
-// --------------------------------------------------
 
 // jQuery Sortable
 // --------------------------------------------------
