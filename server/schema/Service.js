@@ -8,7 +8,6 @@ module.exports = function (app, mongoose) {
   });
 
   serviceSchema.index({ app: 1 });
-  serviceSchema.index({ owner: 1 });
 
   serviceSchema.set('autoIndex', (app.get('env') === 'development'));
   app.db.model('Service', serviceSchema);

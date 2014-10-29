@@ -5,11 +5,11 @@ module.exports = function (app, mongoose) {
     name: String,
     clientId: { type: String, unique: true },
     clientSecret: { type: String },
-    owner: String
+    user: String
   });
 
   appSchema.index({ clientId: 1 }, { unique: true });
-  appSchema.index({ owner: 1 });
+  appSchema.index({ user: 1 });
 
   appSchema.set('autoIndex', (app.get('env') === 'development'));
   app.db.model('App', appSchema);

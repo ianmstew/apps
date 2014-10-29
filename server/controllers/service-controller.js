@@ -11,10 +11,10 @@ var serviceController = {
         app: req.body.app
       })
       .exec()
-    .then(function (connections) {
-      res.json(connections);
-    })
-    .then(null, validator.failServer.bind(null, res));
+      .then(function (connections) {
+        res.json(connections);
+      })
+      .then(null, validator.failServer.bind(null, res));
   },
 
   connect: function (req, res) {
@@ -32,10 +32,10 @@ var serviceController = {
 
     req.app.db.models.Service
       .create(data)
-    .then(function (newApiConnection) {
-      return res.json(newApiConnection);
-    })
-    .then(null, validator.failServer.bind(null, res));
+      .then(function (newApiConnection) {
+        return res.json(newApiConnection);
+      })
+      .then(null, validator.failServer.bind(null, res));
   },
 
   update: function (req, res) {
@@ -47,15 +47,15 @@ var serviceController = {
     req.app.db.models.Service
       .update({ _id: _id }, data)
       .exec()
-    .then(function (count) {
-      if (count === 0) {
-        validator.failNotFound(res);
-      } else {
-        if (count > 1) console.warn('Removed ' + count + ', expected 1');
-        res.json(data);
-      }
-    })
-    .then(null, validator.failServer.bind(null, res));
+      .then(function (count) {
+        if (count === 0) {
+          validator.failNotFound(res);
+        } else {
+          if (count > 1) console.warn('Removed ' + count + ', expected 1');
+          res.json(data);
+        }
+      })
+      .then(null, validator.failServer.bind(null, res));
   },
 
   disconnect: function (req, res) {
@@ -67,15 +67,15 @@ var serviceController = {
         _id: req.body._id
       })
       .exec()
-    .then(function (count) {
-      if (count === 0) {
-        validator.failNotFound(res);
-      } else {
-        if (count > 1) console.warn('Removed ' + count + ', expected 1');
-        res.json(200);
-      }
-    })
-    .then(null, validator.failServer.bind(null, res));
+      .then(function (count) {
+        if (count === 0) {
+          validator.failNotFound(res);
+        } else {
+          if (count > 1) console.warn('Removed ' + count + ', expected 1');
+          res.json(200);
+        }
+      })
+      .then(null, validator.failServer.bind(null, res));
   }
 };
 

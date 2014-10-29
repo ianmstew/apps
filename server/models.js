@@ -16,7 +16,7 @@ exports = module.exports = function(app, mongoose) {
 
   // Things we added to Drywall
   require( './schema/App' )( app, mongoose );
-  require( './schema/OAuthToken' )( app, mongoose );
+  require( './schema/AppToken' )( app, mongoose );
   require( './schema/Service' )( app, mongoose );
-  require( './schema/ApiTokens')( app, mongoose );
+  require( './schema/ServiceToken')( app, mongoose );
 };

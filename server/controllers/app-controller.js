@@ -2,39 +2,44 @@ var validator = require('../util/validator');
 var uuid = require('node-uuid');
 var async = require('async');
 var Q = require('q');
-var _ = require('lodash');
 
 var appController = {
 
+  find: function (req, res, id) {
+    res.send('TODO: find app');
+  },
+
   create: function (req, res) {
     req.app.db.models.App
-      .create({
+      .createQ({
         name: req.body.name,
         clientId: uuid.v4(),
         clientSecret: uuid.v4(),
-        owner: req.user._id
+        user: req.user._id
       })
-    .then(function (newApp) {
-      res.json(newApp);
-    })
-    .then(null, validator.failServer.bind(null, res));
+      .then(function (newApp) {
+        res.json(newApp);
+      })
+      .catch(validator.failServer.bind(null, res))
+      .done();
   },
 
   update: function (req, res) {
     if (validator.failOnMissing(req.body, ['_id'], res)) return;
-    console.log('Updating app');
+    res.send('TODO: app update method');
   },
 
   list: function (req, res) {
     req.app.db.models.App
       .find({
-        owner: req.user._id
+        user: req.user._id
       })
-      .exec()
-    .then(function (apps) {
-      res.json(apps);
-    })
-    .then(null, validator.failServer.bind(null, res));
+      .execQ()
+      .then(function (apps) {
+        res.json(apps);
+      })
+      .catch(validator.failServer.bind(null, res))
+      .done();
   },
 
   destroy: function (req, res) {
@@ -42,218 +47,248 @@ var appController = {
 
     req.app.db.models.App
       .remove({
-        owner: req.user._id,
+        user: req.user._id,
         _id: req.body._id
       })
-      .exec()
-    .then(function (count) {
-      if (!count) {
-        res.json(200);
-      } else {
-        if (count > 1) console.warn('Removed ' + count + ', expected 1');
-        res.json(404);
-      }
-    })
-    .then(null, validator.failServer.bind(null, res));
+      .execQ()
+      .then(function (count) {
+        if (count > 0) {
+          if (count > 1) console.warn('Removed ' + count + ', expected 1');
+          res.send(200);
+        } else {
+          validator.failNotFound(res);
+        }
+      })
+      .catch(validator.failServer.bind(null, res))
+      .done();
   },
 
   auth: function (req, res) {
-    if (validator.failOnMissing(req.query, ['client_id'], res)) return;
+    if (validator.failOnMissing(req.body, ['clientId'], res)) return;
 
     req.app.db.models.App
+      // Confirm App model exists by looking up its clientId
       .findOne({
-        clientId: req.query.client_id
+        clientId: req.body.clientId
       })
-      .exec()
-    .then(function (clientApp) {
-      if (!clientApp) {
-        validator.failNotFound('Invalid client_id');
-      } else {
-        return req.app.db.models.OAuthToken
-          .findOne({
-            clientId: req.query.client_id, user: req.user._id
-          })
-          .exec();
-      }
-    })
-    .then(function (token) {
-      var save;
-      if (token) {
-        req.session.apiNetworkToken = token.token;
-        save = Q.nbind(req.session.save, req.session);
-
-        save()
-        .then(function () {
-          res.redirect('/oauth/app/subauth');
-        })
-        .then(null, function (error) {
+      .execQ()
+      // Get AppToken for App model
+      .then(function (clientApp) {
+        if (!clientApp) {
+          var error = new Error('Invalid clientId');
+          error.type = 404;
           throw error;
-        });
-      } else {
-        return req.app.db.models.OAuthToken
-          .create({
-            token: uuid.v4(),
-            clientId: req.query.client_id,
-            user: req.user._id
-          })
-          .exec();
-      }
-    })
-    .then(function (newToken) {
-      var save;
-      // Put the apiNetworkToken in the session.
-      req.session.apiNetworkToken = newToken.token;
-      save = Q.nbind(req.session.save, req.session);
+        } else {
+          return req.app.db.models.AppToken
+            .findOne({
+              clientId: req.body.clientId,
+              user: req.user._id
+            })
+            .execQ();
+        }
+      })
+      // Store AppToken to session and redirect to subauth, creating one if necessary
+      .then(function (token) {
+        if (token) {
+          // Token found; redirect to subauth (passing token in session)
+          req.session.apiNetworkToken = token.token;
 
-      return save();
-    })
-    .then(function () {
-      res.redirect('/oauth/app/subauth');
-    })
-    .then(null, validator.failServer.bind(null, res));
+          Q.nbind(req.session.save, req.session)()
+            .then(function () {
+              res.redirect('/api/apps/subauth');
+            })
+            .catch(validator.failServer.bind(null, res))
+            .done();
+        } else {
+          // No token; create one
+          req.app.db.models.AppToken
+            .createQ({
+              token: uuid.v4(),
+              clientId: req.query.clientId,
+              user: req.user._id
+            })
+            .then(function (newToken) {
+              req.session.apiNetworkToken = newToken.token;
+              return Q.nbind(req.session.save, req.session)();
+            })
+            .then(function () {
+              res.redirect('/api/apps/subauth');
+            })
+            .catch(validator.failServer.bind(null, res))
+            .done();
+        }
+      })
+      .catch(null, function (error) {
+        if (error.type === 404) {
+          validator.failNotFound(res, error);
+        } else {
+          validator.failServer(res, error);
+        }
+      })
+      .done();
   },
 
-  subAuth: function (req, res) {
-    req.app.db.models.OAuthToken
+  subauth: function (req, res) {
+    req.app.db.models.AppToken
+      // Using session OAuth token, get AppToken model
       .findOne({
         token: req.session.apiNetworkToken
       })
-      .exec()
-    .then(function (token) {
-      if (!token) {
-        validator.failParam(res, 'Invalid Token');
-      } else {
-        return req.app.db.models.OAuthreq.App
-          .findOne({
-            clientId: token.clientId
-          })
-          .exec();
-      }
-    })
-    .then(function (clientApp) {
-      return req.app.db.models.Service
-      .find({
-        app: clientApp._id
+      .execQ()
+      // Get App model corresponding to AppToken
+      .then(function (token) {
+        if (!token) {
+          var error = new Error('Invalid Token');
+          error.type = 400;
+          throw error;
+        } else {
+          return req.app.db.models.App
+            .findOne({
+              clientId: token.clientId
+            })
+            .execQ();
+        }
       })
-      .exec();
-    })
-    .then(function (connections) {
-      if (!connections) {
-        res.json('TODO: No connected APIs, go back to app callback, with token: ' +
-          req.session.apiNetworkToken);
-        return;
-      }
-
-      // TODO
-      // connections.reduce(function (soFar, f) {
-      //   return soFar.then(f);
-      // }, Q(_.noop));
-
-      // Search through all the connections until we find one for which we have tokens.
-      async.forEachSeries(connections,
-        function (connection, done) {
-          req.app.db.models.ApiTokens.findOne({
-            user: req.user._id,
-            apiConnection: connection._id
-          }).exec()
-          .then(function (tokens) {
-            if (!tokens || (new Date().getTime() - tokens.timestamp) > 30000) {
-              done(connection);
-            } else {
-              done();
-            }
+      // Get Services corresponding to App
+      .then(function (app) {
+        var services = req.app.db.models.Service
+          .find({
+            app: app._id
           })
-          .then(null, function (error) {
-            done();
-          });
-        }, function (unauthenticated) {
-          if (!unauthenticated) {
-            // If we don't find any, send us to the calling application.
-            res.json('TODO: All APIs authenticated, go back to app callback, with token: ' +
-              req.session.apiNetworkToken);
-            return;
-          }
-
-          // Authenticate that one, its callback should send us to oauth/app/subauth/callback.
-          req.session.apiNetworkCurrentRemote = unauthenticated._id;
-          req.session.save(function (error) {
-            if (error) {
-              console.warn(error);
-            }
-            req.app.passport.authenticate('remote', {
-              type: unauthenticated.type,
-              clientApp: clientreq.App._id,
-              connectionData: unauthenticated.connectionData,
-              callback: '/api/app/subauth/callback'
-            })(req, res);
-          });
-        });
-    })
-    .then(null, validator.failServer.bind(null, res));
+          .execQ();
+        return [app, services];
+      })
+      // Attempt authentication with services
+      .spread(function (app, services) {
+        if (!services) {
+          res.send('TODO: No connected APIs, go back to app callback, with token: ' +
+            req.session.apiNetworkToken);
+          return;
+        }
+        this._ensureServicesAuth(req, res, services, app);
+      })
+      .catch(function (error) {
+        if (error.type === 400) {
+          validator.failParam(res, error);
+        } else {
+          validator.failServer(res, error);
+        }
+      })
+      .done();
   },
 
-  subAuthCallback: function (req, res) {
+  _ensureServicesAuth: function (req, res, services, app) {
+    var NOT_AUTHENTICATED = 'Not authenticated';
 
-    // Check for existence of an API connection to help prevent abuse.
-    req.app.db.models.Service.findOne(
-      { _id: req.session.apiNetworkCurrentRemote },
-      function (error, connection) {
-        if (error)
-          res.json(500, error.toString());
-        else {
-          if (connection) {
-            // See if we already have a token set for this connection.
-            req.app.db.models.ApiTokens.findOne(
-              {
-                apiConnection: connection._id,
-                user: req.user._id
-              },
-              function (error, tokens) {
-                if (error)
-                  res.json(500, error.toString());
-                else {
-                  if (tokens) {
-                    tokens.timestamp = new Date().getTime(),
-                    tokens.tokenSet = req.session.apiNetworkCurrentRemoteTokens;
-                    tokens.save(function (error) {
-                      if (error)
-                        res.json(500, error.toString());
-                      else
-                        res.redirect('/oauth/app/subauth');
-                    });
-                  }
-                  else {
-                    var tokenData = {
-                      apiConnection: connection._id,
-                      user: req.user._id,
-                      timestamp: new Date().getTime(),
-                      tokenSet: req.session.apiNetworkCurrentRemoteTokens
-                    };
-
-                    req.app.db.models.ApiTokens.create(
-                      tokenData,
-                      function (error, tokens) {
-                        if (error)
-                          res.json(500, error.toString());
-                        else
-                          tokens.save(function (error) {
-                            if (error)
-                              res.json(500, error.toString);
-                            else
-                              res.redirect('/oauth/app/subauth');
-                          });
-                      }
-                    );
-                  }
-                }
-              }
-            );
-          }
-          else {
-            res.json(404, 'No connection found!: ' + req.session.apiNetworkCurrentRemote);
-          }
-        }
+    // Perform a serial iteration over services and authenticate with the first service
+    // without recent tokens.
+    // Array reduce approach based loosely on https://github.com/kriskowal/q#sequences
+    services.reduce(function (prevService, service) {
+      return prevService.then(function () {
+        req.app.db.models.ServiceToken
+          .findOne({
+            user: req.user._id,
+            service: service._id
+          })
+          .execQ()
+          .then(function (tokens) {
+            if (!tokens || (new Date().getTime() - tokens.timestamp) > 30000) {
+              this._authService(req, res, service, app);
+              // Break promise-chain iteration
+              throw new Error(NOT_AUTHENTICATED);
+            }
+          });
+      });
+    }, Q())
+    // No services without tokens
+    .then(function () {
+      // If all services have valid tokens, send us to the calling application
+      res.send('TODO: All APIs authenticated, go back to app callback, with token: ' +
+        req.session.apiNetworkToken);
+    })
+    .catch(function (error) {
+      // Trap Not Authenticated error and rethrow any others
+      if (error.message !== NOT_AUTHENTICATED) {
+        throw error;
       }
+    })
+  },
+
+  _authService: function (req, res, service, app) {
+    // Authenticate service. Its callback should send us to api/apps/subauth/callback.
+    req.session.apiNetworkCurrentRemote = service._id;
+    Q.nbind(req.session.save, req.session)()
+      .then(function () {
+        req.app.passport.authenticate('remote', {
+          type: service.type,
+          clientApp: app._id,
+          connectionData: service.connectionData,
+          callback: '/api/apps/subauth/callback'
+        })(req, res);
+      })
+      .catch(function (error) {
+        console.warn('authService error', error);
+      })
+  },
+
+  subauthCallback: function (req, res) {
+    req.app.db.models.Service
+      // Check for existence of an API service to help prevent abuse.
+      .findOne({
+        _id: req.session.apiNetworkCurrentRemote
+      }
+      .execQ()
+      .then(function (service) {
+        if (!service) {
+          var error = new Error('Not found');
+          error.type = 404;
+          throw error;
+        }
+
+        var serviceToken = req.app.db.models.ServiceToken
+          .findOne({
+            service: service._id,
+            user: req.user._id
+          })
+          .execQ();
+
+        return [service, serviceToken];
+      })
+      .spread(function (service, serviceToken) {
+        // If this service has tokens already, update and move on
+        if (serviceToken) {
+          serviceToken.timestamp = new Date().getTime(),
+          // Current remote tokens parsed and set automatically within lib/multi-passport.js
+          serviceToken.tokenSet = req.session.apiNetworkCurrentRemoteTokens;
+          serviceToken
+            .saveQ()
+            .then(function () {
+              res.redirect('/oauth/app/subauth');
+            });
+        }
+        // If this service does not have tokens, create them and move on
+        else {
+          var _serviceToken = {
+            service: service._id,
+            user: req.user._id,
+            timestamp: new Date().getTime(),
+            tokenSet: req.session.apiNetworkCurrentRemoteTokens
+          };
+
+          req.app.db.models.ServiceToken
+            .createQ(_serviceToken)
+            .then(function () {
+              res.redirect('/oauth/app/subauth');
+            });
+        }
+      })
+      .catch(function (error) {
+        if (error.type === 404) {
+          validator.failNotFound(res, error);
+        } else {
+          validator.failServer(res, error);
+        }
+      })
     );
   }
 };

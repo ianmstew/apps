@@ -8,7 +8,7 @@ var MongoStore = require('connect-mongo')(session);
 var http       = require('http');
 var path       = require('path');
 var passport   = require('passport');
-var mongoose   = require('mongoose');
+var mongoose   = require('mongoose-q')(require('mongoose'));
 var helmet     = require('helmet');
 
 // create express app

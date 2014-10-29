@@ -28,16 +28,19 @@ var validator = {
 
   failServer: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Internal Server Error';
+    console.error(500, error);
     res.send(500, errorMsg);
   },
 
   failParam: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Bad Request';
+    console.warn(400, error);
     res.send(400, errorMsg);
   },
 
   failNotFound: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Not Found';
+    console.warn(404, error);
     res.send(404, errorMsg);
   }
 };
