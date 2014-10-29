@@ -263,7 +263,7 @@ var appController = {
           serviceToken
             .saveQ()
             .then(function () {
-              res.redirect('/oauth/app/subauth');
+              res.redirect('/api/apps/subauth');
             });
         }
         // If this service does not have tokens, create them and move on
@@ -278,7 +278,7 @@ var appController = {
           req.app.db.models.ServiceToken
             .createQ(_serviceToken)
             .then(function () {
-              res.redirect('/oauth/app/subauth');
+              res.redirect('/api/apps/subauth');
             });
         }
       })
