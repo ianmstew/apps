@@ -4,78 +4,93 @@ var validator = require('../util/validator');
 var serviceController = {
 
   list: function (req, res) {
-    if (validator.failOnMissing(req.body, ['app'], res)) return;
-
     req.app.db.models.Service
       .find({
-        app: req.body.app
+        app: req.params.app
       })
-      .exec()
+      .execQ()
       .then(function (connections) {
         res.json(connections);
       })
-      .then(null, validator.failServer.bind(null, res));
+      .catch(validator.failServer.bind(null, res))
+      .done();
   },
 
-  connect: function (req, res) {
-    if (validator.failOnMissing(req.body, ['app', 'type'], res)) return;
-
-    var body = req.body;
-    var data = {
-      app: body.app,
-      type: body.type
-    };
-
-    if (body.connectionData) {
-      data.connectionData = body.connectionData;
-    }
+  find: function (req, res) {
+    req.app.db.models.Service
+      .find({
+        _id: req.params.id,
+        owner: req.user._id
+      })
+      .execQ()
+      .then(function (service) {
+        res.json(service);
+      })
+      .catch(validator.failServer.bind(null, res))
+      .done();
+  },
+  
+  create: function (req, res) {
+    // Set app based on path param
+    var data = _.extend({
+      app: req.params.app,
+      owner: req.user._id
+    }, _.pick(req.body, [
+      'type',
+      'connectionData'
+    ]));
 
     req.app.db.models.Service
-      .create(data)
-      .then(function (newApiConnection) {
-        return res.json(newApiConnection);
+      .createQ(data)
+      .then(function (service) {
+        return res.json(service);
       })
-      .then(null, validator.failServer.bind(null, res));
+      .catch(validator.failServer.bind(null, res))
+      .done();
   },
 
   update: function (req, res) {
-    if (validator.failOnMissing(req.body, ['app', 'type', '_id'], res)) return;
-
-    var _id = req.body._id;
-    var data = _.extend({}, _.pick(req.body, ['app', 'type', 'connectionData']));
+    // Do not allow changing of app
+    var data = _.extend({}, _.pick(req.body, [
+      'type',
+      'connectionData'
+    ]));
 
     req.app.db.models.Service
-      .update({ _id: _id }, data)
-      .exec()
+      .update({
+        _id: req.params.id,
+        app: req.params.app,
+        owner: req.user._id
+      }, data)
+      .execQ()
       .then(function (count) {
         if (count === 0) {
           validator.failNotFound(res);
         } else {
-          if (count > 1) console.warn('Removed ' + count + ', expected 1');
           res.json(data);
         }
       })
-      .then(null, validator.failServer.bind(null, res));
+      .catch(validator.failServer.bind(null, res))
+      .done();
   },
 
-  disconnect: function (req, res) {
-    if (validator.failOnMissing(req.body, ['_id'], res)) return;
-
+  destroy: function (req, res) {
     req.app.db.models.Service
       .remove({
-        owner: req.user._id,
-        _id: req.body._id
+        _id: req.params.id,
+        app: req.params.app,
+        owner: req.user._id
       })
-      .exec()
+      .execQ()
       .then(function (count) {
         if (count === 0) {
           validator.failNotFound(res);
         } else {
-          if (count > 1) console.warn('Removed ' + count + ', expected 1');
           res.json(200);
         }
       })
-      .then(null, validator.failServer.bind(null, res));
+      .catch(validator.failServer.bind(null, res))
+      .done();
   }
 };
 

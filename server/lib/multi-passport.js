@@ -1,6 +1,6 @@
 var _ = require('lodash');
 
-module.exports = exports = {
+module.exports = {
   strategies: function (passport) {
 
     var multipass = new (require('multi-passport').Strategy)({
@@ -22,7 +22,7 @@ module.exports = exports = {
       },
       function () {
         return function (req, accessToken, refreshToken, profile, done) {
-          req.session.apiNetworkCurrentRemoteTokens = {
+          req.session.serviceTokens = {
             accessToken: accessToken,
             refreshToken: refreshToken,
             profile: profile
@@ -46,7 +46,7 @@ module.exports = exports = {
       },
       function () {
         return function (req, token, tokenSecret, profile, done) {
-          req.session.apiNetworkCurrentRemoteTokens = {
+          req.session.serviceTokens = {
             token: token,
             tokenSecret: tokenSecret,
             profile: profile
@@ -60,10 +60,10 @@ module.exports = exports = {
 
   callbacks: function (passport, app) {
 
-    app.get('/oauth/callback/:connectionType',
+    app.get('/oauth/callback/:connectionType/',
       function (req, res) {
         req.app.db.models.Service.findOne({
-          _id: req.session.apiNetworkCurrentRemote
+          _id: req.session.service
         }, function (error, connection) {
           if (error)
             res.send(500, error.toString());
@@ -74,7 +74,7 @@ module.exports = exports = {
               if (error)
                 res.json(401, error);
               else {
-                res.redirect('/oauth/app/subauth/callback');
+                res.redirect('/oauth/subauth/callback/');
               }
             });
           }

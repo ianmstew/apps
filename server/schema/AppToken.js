@@ -2,12 +2,12 @@
 
 module.exports = function (app, mongoose) {
   var appTokenSchema = new mongoose.Schema({
-    user: String,
+    owner: String,
     clientId: { type: String, unique: true },
     token: { type: String }
   });
 
-  appTokenSchema.index({ user: 1 });
+  appTokenSchema.index({ owner: 1 });
   appTokenSchema.index({ clientId: 1 });
   appTokenSchema.index({ token: 1 });
 

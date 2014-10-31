@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = function(app, mongoose) {
+module.exports = function(app, mongoose) {
   var categorySchema = new mongoose.Schema({
     _id: { type: String },
     pivot: { type: String, default: '' },
