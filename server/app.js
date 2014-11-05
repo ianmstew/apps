@@ -64,12 +64,12 @@ app.use(require('cookie-parser')());
 // basic express security settings
 helmet.defaults(app);
 
-// setup passport
+// set up passport
 app.use(passport.initialize());
 app.use(passport.session());
 app.passport = passport;
 require('./lib/passport')(app);
-require('./lib/multi-passport.js').callbacks(passport, app);
+require('./lib/multi-passport.js').strategies(passport);
 
 // response locals--available to all view templates
 app.use(function (req, res, next) {
