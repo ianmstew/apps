@@ -28,13 +28,13 @@ var validator = {
 
   failServer: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Internal Server Error';
-    console.error(500, error);
+    console.error(error.stack, '\n    [500 error stack trace]');
     res.send(500, errorMsg);
   },
 
   failParam: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Bad Request';
-    console.warn(400, error);
+    console.warn(error.stack, '\n    [400 error stack trace]');
     res.send(400, errorMsg);
   },
 
