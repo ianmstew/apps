@@ -29,10 +29,10 @@ var serviceController = {
       .catch(validator.failServer.bind(null, res))
       .done();
   },
-  
+
   create: function (req, res) {
     // Set app based on path param
-    var data = _.extend({
+    var _service = _.extend({
       app: req.params.app,
       owner: req.user._id
     }, _.pick(req.body, [
@@ -41,7 +41,7 @@ var serviceController = {
     ]));
 
     req.app.db.models.Service
-      .createQ(data)
+      .createQ(_service)
       .then(function (service) {
         return res.json(service);
       })
@@ -51,7 +51,7 @@ var serviceController = {
 
   update: function (req, res) {
     // Do not allow changing of app
-    var data = _.extend({}, _.pick(req.body, [
+    var _service = _.extend({}, _.pick(req.body, [
       'type',
       'connectionData'
     ]));
@@ -61,13 +61,13 @@ var serviceController = {
         _id: req.params.id,
         app: req.params.app,
         owner: req.user._id
-      }, data)
+      }, _service)
       .execQ()
       .then(function (count) {
         if (count === 0) {
           validator.failNotFound(res);
         } else {
-          res.json(data);
+          res.json(_service);
         }
       })
       .catch(validator.failServer.bind(null, res))
