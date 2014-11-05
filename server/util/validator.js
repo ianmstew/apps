@@ -38,6 +38,12 @@ var validator = {
     res.send(400, errorMsg);
   },
 
+  failUnauthorized: function (res, error) {
+    var errorMsg = (error && error.toString()) || 'Not authorized';
+    console.warn(401, error);
+    res.send(401, errorMsg);
+  },
+
   failNotFound: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Not Found';
     console.warn(404, error);

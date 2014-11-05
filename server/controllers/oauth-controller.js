@@ -50,7 +50,7 @@ var oauthController = {
       .then(function () {
         res.redirect('/oauth/subauth');
       })
-      .catch(null, function (error) {
+      .catch(function (error) {
         if (error.type === 404) {
           validator.failNotFound(res, error);
         } else {
@@ -96,6 +96,7 @@ var oauthController = {
   },
 
   subauthCallback: function (req, res) {
+    console.log('>>>> HERE');
     req.app.db.models.Service
       // Check for existence of an API service to help prevent abuse.
       .findOne({
@@ -103,13 +104,15 @@ var oauthController = {
       })
       .execQ()
       .then(function (service) {
+        var serviceToken;
+
         if (!service) {
           var error = new Error('Not found');
           error.type = 404;
           throw error;
         }
 
-        var serviceToken = req.app.db.models.ServiceToken
+        serviceToken = req.app.db.models.ServiceToken
           .findOne({
             service: service._id,
             owner: req.user._id
@@ -159,6 +162,28 @@ var oauthController = {
       .done();
   },
 
+  serviceCallback: function (req, res) {
+    req.app.db.models.Service
+      .findOne({
+        _id: req.session.service
+      })
+      .execQ()
+      .then(function (service) {
+        // TODO: No authentication strategy for "service.app + ':' + service.type"
+        var authenticate = req.app.passport.authenticate(
+            service.app + ':' + service.type,
+            { session: false });
+        return Q.denodeify(authenticate)(req, res);
+      })
+      .then(function (user) {
+        res.redirect('/oauth/subauth/callback/');
+      })
+      .catch(function (error) {
+        validator.failServer(res, error);
+      })
+      .done();
+  },
+
   // Given the list of all services for an app, authenticate the first un-authenticated service.
   _authServices: function (req, res, app, services) {
     var NOT_AUTHENTICATED = 'Not authenticated';
@@ -189,7 +214,7 @@ var oauthController = {
           }
         });
     }, Q())
-    // No services without tokens
+    // No services without tokens; redirect to app callback with AppToken
     .then(function () {
       // If all services have valid tokens, send us to the calling application
       res.send('TODO: All APIs authenticated, go back to app callback, with token: ' +

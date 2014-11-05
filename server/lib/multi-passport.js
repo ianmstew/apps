@@ -16,7 +16,7 @@ module.exports = {
         return _.extend(_.cloneDeep(options), {
           // Set this here - don't rely on the client API to specify where we should come back to
           // for security reasons.
-          callbackURL: 'http://local.apinetwork.co:3000/oauth/callback/facebook',
+          callbackURL: 'http://local.apinetwork.co:3000/oauth/callback/facebook/',
           passReqToCallback: true
         });
       },
@@ -36,10 +36,10 @@ module.exports = {
       require('passport-twitter').Strategy,
       function (options) {
         return _.extend(_.cloneDeep(options), {
-          requestTokenURL: 'https://api.twitter.com/oauth/request_token',
-          userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
-          accessTokenURL: 'https://api.twitter.com/oauth/access_token',
-          callbackUrl: 'http://local.apinetwork.co:3000/oauth/callback/twitter',
+          requestTokenURL: 'https://api.twitter.com/oauth/request_token/',
+          userAuthorizationURL: 'https://api.twitter.com/oauth/authorize/',
+          accessTokenURL: 'https://api.twitter.com/oauth/access_token/',
+          callbackUrl: 'http://local.apinetwork.co:3000/oauth/callback/twitter/',
           // This one is required by passport strategies that extend OAuth.
           passReqToCallback: true
         });
@@ -56,30 +56,5 @@ module.exports = {
       });
 
     passport.use('remote', multipass);
-  },
-
-  callbacks: function (passport, app) {
-
-    app.get('/oauth/callback/:connectionType/',
-      function (req, res) {
-        req.app.db.models.Service.findOne({
-          _id: req.session.service
-        }, function (error, connection) {
-          if (error)
-            res.send(500, error.toString());
-          else if (connection) {
-            passport.authenticate(connection.app + ':' + connection.type, {
-              session: false
-            })(req, res, function () {
-              if (error)
-                res.json(401, error);
-              else {
-                res.redirect('/oauth/subauth/callback/');
-              }
-            });
-          }
-        });
-      }
-   );
   }
 };
