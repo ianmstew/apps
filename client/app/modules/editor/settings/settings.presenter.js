@@ -4,8 +4,14 @@ define(function (require) {
 
   var SettingsPresenter = Presenter.extend({
 
+    channelName: 'editor',
+
     onPresent: function () {
-      var settingsView = new SettingsView();
+      var app = this.channel.request('app');
+      var settingsView = new SettingsView({
+        model: app,
+        collection: app.get('services')
+      });
       this.show(settingsView);
     }
   });

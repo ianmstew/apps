@@ -1,0 +1,47 @@
+// Modal Styles
+// --------------------------------------------------
+
+// Changes background fade and color to white
+
+.modal-backdrop.fade.in,
+.modal-backdrop.fade {
+  background-color: @modal-backdrop-bg;
+}
+
+
+.modal {
+  background-color: rgba(255,255,255,0.95);
+
+  // Revised width for modal-dialog
+  .modal-dialog {
+    width: 80%;
+
+    @media all and (max-width: @screen-phone) {
+      width: 100%;
+    }
+
+    .modal-header {
+      border: 0;
+    }
+  }
+
+  .modal-content {
+    border: 0;
+    .border-radius(0);
+    .box-shadow(none);
+  }
+}
+
+// Moves modal headers below close button
+.modal-title,
+.modal-subheader {
+  text-align: center;
+}
+
+.modal-title {
+  clear: both;
+}
+
+.modal-subheader {
+  padding-bottom: 2%;
+}

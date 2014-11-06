@@ -1,0 +1,95 @@
+// App Item: Detail View (Overview, Services, Settings)
+// --------------------------------------------------
+
+// Styling for navigation button to app list
+.back-to-apps {
+  &:extend(.btn-sm, .btn-gray, .pull-right);
+}
+
+// Styling for main editor tabs
+.js-editor-tabs {
+  clear: both;
+  margin-bottom: 0.5%;
+}
+
+// Styling for editor content
+.js-editor-content {
+  margin-bottom: @content-margin;
+}
+
+// Editor Tab Nav
+// --------------------------------------------------
+// This is being overwritten somewhere; still debugging, until then
+// specifying nav-tabs styling on class .js-editor-tabs
+.js-editor-tabs .nav-tabs {
+  border-bottom: 1px solid @nav-tabs-border-color;
+  > li {
+    float: left;
+    // Make the list-items overlay the bottom border
+    margin-bottom: -1px;
+
+    // Actual tabs (as links)
+    > a {
+      margin-right: 2px;
+      line-height: @line-height-base;
+      border: 1px solid transparent;
+      .border-radius(@border-radius-base @border-radius-base 0 0);
+      .transition(background-color 0.5s ease, border-color 0.5s ease;);
+
+      &:hover, &.selected {
+        border-color: @nav-tabs-border-color;
+      }
+    }
+
+    > a.selected:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 1px;
+      left: 0;
+      border-bottom: 2px solid white;
+    }
+
+    > a.selected:hover:before {
+      border-bottom: 1px solid @nav-tabs-link-hover-border-color;
+    }
+
+    // Active state, and its :hover to override normal :hover
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @nav-tabs-active-link-hover-color;
+        background-color: @nav-tabs-active-link-hover-bg;
+        border: 1px solid @nav-tabs-active-link-hover-border-color;
+        border-bottom-color: transparent;
+        cursor: default;
+      }
+    }
+  }
+}
+
+
+/*
+// For future toggle feature for list.view vertical list and grid layout
+.js-list-toggle {
+  float: right;
+
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  i {
+    padding: 5px;
+    border: @border-gray;
+    .border-radius(3px);
+
+    &:hover {
+      background-color: @gray-even-lighter;
+    }
+  }
+}
+*/

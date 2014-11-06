@@ -1,0 +1,36 @@
+// Service Edit View
+// In Modules > Editor > Services > Service-Edit-View
+// --------------------------------------------------
+
+// Responsive-friendly styling for form via Bootstrap
+form.service-info {
+
+  [class$='-logo'] {
+    float: left;
+    margin-right: 15px;
+  }
+
+  &:extend(.form-horizontal);
+
+  div {
+    &:extend(.form-group);
+
+    div {
+      &:extend(.col-sm-12, .col-md-6, .col-lg-9);
+    }
+  }
+
+  label {
+    &:extend(.col-sm-12, .col-md-6, .col-lg-3);
+
+    margin-left: -15px;
+  }
+
+  input {
+    &:extend(.form-control);
+
+    @media screen and (max-width: @screen-phone) {
+      margin-left: -15px;
+    }
+  }
+}

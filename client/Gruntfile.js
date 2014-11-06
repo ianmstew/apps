@@ -54,7 +54,7 @@ module.exports = function (grunt) {
           sourceMapBasepath: '<%- path.build_style %>'
         },
         files: {
-          '<%- path.build_style %>/app.css': '<%- path.style %>/app.less'
+          '<%- path.build_style %>/app.css': '<%- path.app %>/app.less'
         }
       }
     },
@@ -162,6 +162,7 @@ module.exports = function (grunt) {
       style: {
         files: [
           '<%- path.style %>/**/*',
+          '<%- path.app %>/**/*.less',
           '<%- path.vendor %>/engine-ui/less/**/*'
         ],
         tasks: ['less:app']

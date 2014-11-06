@@ -13,6 +13,18 @@ define(function (require) {
 
     _editorView: null,
 
+    modelEvents: {
+      'change': 'render'
+    },
+
+    ui: {
+      appName: '.js-app-name'
+    },
+
+    nameChanged: function (model, value, options) {
+      this.ui.appName.text(value);
+    },
+
     onPresent: function (options) {
       this.tab = (options || {}).tab;
       this.show(this.getEditorView());
@@ -46,7 +58,10 @@ define(function (require) {
 
     getEditorView: function () {
       if (!this._editorView || this._editorView.isDestroyed) {
-        this._editorView = new EditorView();
+        var app = this.channel.request('app');
+        this._editorView = new EditorView({
+          model: app
+        });
       }
       return this._editorView;
     }

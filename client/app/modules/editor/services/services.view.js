@@ -1,8 +1,10 @@
 define(function (require) {
   var Marionette = require('marionette');
-  var ServiceView = require('modules/editor/services/child-views/service.view');
+  var ServiceView = require('modules/editor/services/service-view/service.view');
   var ServicesNoneView = require('modules/editor/services/services-none.view');
+  var ServiceAddView = require('modules/editor/services/service-add-view/service-add.view');
   var template = require('hgn!modules/editor/services/services.view');
+  var Radio = require('backbone.radio');
 
   var ServicesView = Marionette.CompositeView.extend({
 
@@ -17,20 +19,22 @@ define(function (require) {
 
     ui: {
       appId: '.js-services-appId',
-      'serviceCreate': '.service-create'
+      serviceCreate: '.js-service-create'
     },
 
     events: {
-      'click:increment': 'incrementClicked',
-      'click @ui.serviceCreate': 'addService'
+      'click @ui.serviceCreate': 'addMe'
     },
 
     appIdChanged: function (state, value) {
       this.ui.appId.text(value);
     },
 
-    addService: function () {
-      console.log('Add Service Overlay triggered');
+    addMe: function () {
+      var modalView = new ServiceAddView({
+        model: this.model
+      });
+      Radio.channel('modal').command('show:modal', modalView);
     }
   });
 

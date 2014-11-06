@@ -2,11 +2,14 @@ define(function (require) {
   var Marionette = require('marionette');
   var history = require('lib/util/history');
   var AppModule = require('app.module');
+  var ModalRegion = require('modules/modal/modal.region');
   var App = Marionette.Application.extend({
 
     regions: {
       contentRegion: '#content-region',
-      overlayRegion: '#overlay-region'
+      modalRegion: ModalRegion.extend({
+        el: '#modal-region'
+      })
     },
 
     constructor: function () {

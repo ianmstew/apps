@@ -1,0 +1,472 @@
+@import "../style/engine-ui-import.less";
+@import "../style/variables.less";
+@import "../style/mixins.less";
+@import "../style/login.less";
+@import "/modules/manager/list/list-view.less";
+@import "/modules/manager/create/create-view.less";
+@import "/modules/editor/editor-view.less";
+@import "/modules/editor/overview/overview-view.less";
+@import "/modules/editor/overview/service-rows/service-rows-view.less";
+@import "/modules/editor/services/services-view.less";
+@import "/modules/editor/services/service-edit-view/service-edit-view.less";
+@import "/modules/editor/services/service-add-view/service-add-view.less";
+@import "/modules/editor/services/service-add-view/service-add-detail-view/service-add-detail.less";
+@import "/modules/editor/settings/settings-view.less";
+@import "/modules/modal/modal.less";
+
+// Manager Styles
+// --------------------------------------------------
+body {
+  &:extend(.container);
+
+  width: 100%;
+  padding: 0;
+
+  > table {
+    &:extend(.table all, .table-striped all);
+    background-color: #FF0000;
+  }
+}
+
+.wrap {
+  width: 100%;
+  min-height: 100%;
+  margin-bottom: -(@footer-height); /* equal to footer height */
+
+  &:after {
+    content: "";
+    display: block;
+  }
+}
+
+header {
+  > nav {
+    > div {
+      &:extend(.container-fluid all);
+    }
+  }
+}
+
+main {
+  &:extend(.container-fluid all);
+
+  overflow:auto;
+  height: 100%;
+
+  /*
+  > div {
+    &:after {
+      display: block;
+      content: "";
+      height: @content-margin;
+    }
+  }
+  */
+
+  &:after {
+    display: block;
+    content: "";
+    height: @content-margin;
+  }
+}
+
+// For Create Apps button styling
+.content-wrap {
+  > button {
+    margin-bottom: 1%;
+  }
+}
+
+// Standard Gray Containers
+.section-gray {
+  margin-bottom: 1%;
+  padding: 10px;
+  .border-radius (3px);
+  background-color: @gray-even-lighter;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+
+.form-group {
+  box-sizing: border-box;
+
+  &:before {
+    display: table;
+    content: " ";
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+a.nav-previous {
+  &:extend(.pull-right all);
+
+  margin: 2.5% 2% 0;
+  text-decoration: none;
+}
+
+a:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+// Footer
+// --------------------------------------------------
+// For proper sticky footer placement
+footer,
+.wrap:after {
+  height: @footer-height;
+}
+
+footer {
+  // margin-top: 60px;
+  position: relative;
+  clear: both;
+  width: 100%;
+  color: #FFF;
+  background-color: #393939;
+
+  > div {
+    &:extend(.container-fluid all);
+
+    > p {
+      padding-top: 20px;
+
+      > a {
+        padding: 0 0.5%;
+
+        &:first-child {
+          padding-left: 1%;
+        }
+      }
+    }
+  }
+}
+
+// Grid Styling - in use by list.view and services.view
+// Styling for both apps-grid, services-grid
+// --------------------------------------------------
+// Used in list.view and services.view
+// Sets up our grid layout
+[class*='-grid'] {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li.grid-item {
+    position: relative;
+    padding: 1% 1% 0 1%;
+    background-color: @gray-even-lighter;
+    border: @border-gray;
+    .border-radius(3px);
+
+    > ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      /*
+      > li {
+        margin: 0;
+        padding: 0;
+      } */
+    }
+
+    i {
+      color: @gray;
+      // font-size: 2em;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    &:hover {
+      background-color: @gray-lighter;
+    }
+  }
+
+  a {
+    color: @gray-darker;
+    &:hover {
+      color: @gray-darker;
+      text-decoration: none;
+    }
+  }
+}
+
+.js-info,
+.js-services {
+  margin: 0;
+  padding: 0;
+}
+
+.js-services {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  list-style-type: none;
+
+  li {
+    float: left;
+    padding: 0 1%;
+  }
+}
+
+// Used in list.view and services.view
+// For apps-create and service-create buttons
+[class$='-create'],
+.grid-item {
+  // &:extend(.col-xs-12, .col-sm-6, .col-md-4, .col-lg-4);
+  float: left;
+  width: calc((100 - ((@num-cols * 2) * @grid-item-margin)) / @num-cols);
+  margin: @grid-item-margin;
+  box-sizing: border-box;
+  // min-height: 300px;
+  height: 300px;
+  .transition(background-color 0.5s ease);
+
+  // Clears last element in row for four column layout
+  &:nth-child(4n+4) {
+    clear: both;
+  }
+
+  @media screen (max-width: @screen-tablet) {
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// Styling for apps-create, service-create buttons
+[class$='-create'] {
+  &:extend(.btn-gray);
+
+  position: relative;
+  padding: 0.75% 0;
+  color: @gray-dark;
+  text-align: center;
+  background-color: #FFF;
+  border: 2px @gray-lighter dashed;
+
+  &:hover {
+    color: @brand-apiblue;
+    background-color: @gray-even-lighter;
+  }
+
+  &:link,
+  &:active,
+  &:hover,
+  &:visited,
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+// Remove unwanted Engine green outline
+[class$='-create']:active:focus {
+  outline: none;
+}
+
+
+[class$='-create'] > div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+}
+
+// For *-logo and *-name elements (apps, service)
+[class$='-logo'],
+[class$='-name'] {
+  float: left;
+}
+
+// For apps-logo and services-logo
+// Fixes width + height appropriately
+[class$='-logo'],
+[class$='-logo'] > img {
+    width: @app-logo-width;
+  }
+
+// Additional apps-logo, services-logo styling
+[class$='-logo'] {
+  float: right;
+  margin-bottom: 10px;
+  // margin-right: calc(@app-logo-width * 0.3);
+  height: @app-logo-width;
+  overflow: hidden;
+  .border-radius(2px);
+}
+
+
+
+// For apps-name and services-name
+[class$='-name'] {
+  font-size: @font-size-h4;
+  line-height: @app-logo-width;
+}
+
+// App List: Grid Style
+// --------------------------------------------------
+// Previously just for .app-description
+[class$='-description'] {
+  clear: both;
+  font-size: 12px;
+}
+
+// Dropdown menus
+// --------------------------------------------------
+.avatar {
+  margin-top: -7px;
+}
+
+// The following are styles that are either not being used
+// or being used for particular views
+// --------------------------------------------------
+
+/*
+// Social Network Styling
+// --------------------------------------------------
+
+.fa-twitter {
+  color: #55acee;
+}
+
+.fa-facebook-square {
+  color: #3b5998;
+}
+
+.fa-linkedin-square {
+  color: #0e76a8;
+}
+
+.fa-github {
+  color: #171515;
+}
+
+.fa-google-plus-square {
+  color: #dd4b39;
+}
+
+.social-google {
+  background-color: @brand-google;
+}
+
+.social-facebook {
+  background-color: @brand-facebook;
+}
+
+.social-twitter {
+  background-color: @brand-twitter;
+}
+
+.social-linkedin {
+  background-color: @brand-linkedin;
+}
+
+// Status Icon
+// --------------------------------------------------
+i.fa-smile-o {
+  color: @brand-success;
+}
+
+i.fa-meh-o {
+  color: @brand-warning;
+}
+
+i.fa-frown-o {
+  color: @brand-danger;
+}
+
+// Bars
+// --------------------------------------------------
+
+.bar {
+  &:hover {
+    background-color: @green-accent;
+    border-color: darken(@green-accent, 3%);
+  }
+}
+
+*/
+
+// jQuery Sortable
+// --------------------------------------------------
+
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ol.app-list li.placeholder {
+  position: relative;
+  /*
+  margin: 0;
+  padding: 0;
+  border: none;
+  width:50px;
+  height:60px;
+  */
+}
+ol.app-list li.placeholder:before {
+  position: absolute;
+  /*
+  content: "";
+  width: 0;
+  height: 0;
+  margin-top: -5px;
+  left: -5px;
+  top: -4px;
+  border: 5px solid transparent;
+  border-left-color: red;
+  border-right: none;
+  */
+}
+
+// App List: List Styling
+// --------------------------------------------------
+// *This is currently not being used. Styling for
+// list.view vertical list; we are instead employing a grid-style
+// layout until vertical list layout is desired.
+
+/*
+.js-info,
+.js-services {
+  float: left;
+  width: 50%;
+}
+
+.js-services {
+  li {
+    float: right;
+  }
+}
+*/

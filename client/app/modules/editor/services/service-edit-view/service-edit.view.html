@@ -1,0 +1,34 @@
+<h4 class="modal-title">Edit {{name}} Settings</h4>
+<h5 class="modal-subheader">You can edit the information below and save it:</h5>
+<form class="service-info" role="form">
+  <div class="service-logo">
+    <img src="http://placekitten.com/g/200/300" alt="kittenz yo" title="kittenz yo" />
+    <!-- Icon {{icon}} -->
+  </div>
+  <div class="service-name">{{name}}</div>
+  <div class="service-date-added">
+    <label for="serviceDateAdded">Added:</label>
+    <div>
+      <input name="service-date-added" value="{{dateAdded}}">
+    </div>
+  </div>
+  <div class="service-callback-url">
+    <label for="serviceCallbackUrl">Callback URL:</label>
+    <div>
+      <input name="service-callback-url" value="{{callbackUrl}}">
+    </div>
+  </div>
+  <div class="service-client-id">
+    <label for="serviceClientId">Client ID:</label>
+    <div>
+      <input name="service-client-id" value="{{clientId}}">
+    </div>
+  </div>
+  <div class="service-client-secret">
+    <label for="serviceClientSecret">Client Secret:</label>
+    <div>
+      <input name="service-client-secret" value="{{clientSecret}}">
+    </div>
+  </div>
+  <button class="btn-action">Save Service Settings</button>
+</form>

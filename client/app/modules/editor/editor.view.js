@@ -2,7 +2,7 @@ define(function (require) {
   var Marionette = require('marionette');
   var template = require('hgn!modules/editor/editor.view');
   var TabsCollection = require('modules/editor/entities/tabs.collection');
-  var TabsView = require('modules/editor/child-views/tabs.view');
+  var TabsView = require('modules/editor/tabs-view/tabs.view');
 
   var EditorView = Marionette.LayoutView.extend({
 
