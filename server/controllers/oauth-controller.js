@@ -1,6 +1,7 @@
 var validator = require('../util/validator');
 var uuid = require('node-uuid');
 var Q = require('q');
+var _ = require('lodash');
 
 var oauthController = {
 
@@ -96,7 +97,7 @@ var oauthController = {
   },
 
   subauthCallback: function (req, res) {
-    console.log('>>>> HERE');
+    var tokenSet = req.query;
     req.app.db.models.Service
       // Check for existence of an API service to help prevent abuse.
       .findOne({
@@ -104,53 +105,40 @@ var oauthController = {
       })
       .execQ()
       .then(function (service) {
-        var serviceToken;
-
         if (!service) {
           var error = new Error('Not found');
           error.type = 404;
           throw error;
         }
-
-        serviceToken = req.app.db.models.ServiceToken
+        var serviceToken = req.app.db.models.ServiceToken
           .findOne({
             service: service._id,
             owner: req.user._id
           })
-          .execQ()
-          .done();
-
+          .execQ();
         return [service, serviceToken];
       })
       .spread(function (service, serviceToken) {
         // If this service has tokens already, update and move on
         if (serviceToken) {
-          serviceToken.timestamp = new Date().getTime();
-          // Current remote tokens parsed and set automatically within lib/multi-passport.js
-          serviceToken.tokenSet = req.session.serviceTokens;
-          serviceToken
-            .saveQ()
-            .then(function () {
-              res.redirect('/oauth/subauth');
-            })
-            .done();
+          _.extend(serviceToken, {
+            timestamp: new Date().getTime(),
+            tokenSet: tokenSet
+          });
+          return serviceToken.saveQ();
         }
         // If this service does not have tokens, create them and move on
         else {
-          var _serviceToken = {
+          return req.app.db.models.ServiceToken.createQ({
             service: service._id,
             owner: req.user._id,
             timestamp: new Date().getTime(),
-            tokenSet: req.session.serviceTokens
-          };
-
-          req.app.db.models.ServiceToken
-            .createQ(_serviceToken)
-            .then(function () {
-              res.redirect('/oauth/subauth');
-            })
-            .done();
+            tokenSet: tokenSet
+          });
         }
+      })
+      .then(function () {
+        res.redirect('/oauth/subauth');
       })
       .catch(function (error) {
         if (error.type === 404) {
@@ -162,28 +150,6 @@ var oauthController = {
       .done();
   },
 
-  serviceCallback: function (req, res) {
-    req.app.db.models.Service
-      .findOne({
-        _id: req.session.service
-      })
-      .execQ()
-      .then(function (service) {
-        // TODO: No authentication strategy for "service.app + ':' + service.type"
-        var authenticate = req.app.passport.authenticate(
-            service.app + ':' + service.type,
-            { session: false });
-        return Q.denodeify(authenticate)(req, res);
-      })
-      .then(function (user) {
-        res.redirect('/oauth/subauth/callback/');
-      })
-      .catch(function (error) {
-        validator.failServer(res, error);
-      })
-      .done();
-  },
-
   // Given the list of all services for an app, authenticate the first un-authenticated service.
   _authServices: function (req, res, app, services) {
     var NOT_AUTHENTICATED = 'Not authenticated';
@@ -191,8 +157,8 @@ var oauthController = {
     // Perform a serial iteration over services and authenticate with the first service
     // without recent tokens.
     // Array reduce approach based loosely on https://github.com/kriskowal/q#sequences
-    return services.reduce(function (memo, service) {
-      return memo
+    return services.reduce(function (previous, service) {
+      return previous
         // Find service token
         .then(function () {
           return req.app.db.models.ServiceToken
@@ -231,17 +197,16 @@ var oauthController = {
   },
 
   _authService: function (req, res, app, service) {
-    // Authenticate service. Its callback should send us to api/oauth/subauth/callback.
     req.session.service = service._id;
+    // Save service id to session
     return Q.denodeify(req.session.save.bind(req.session))()
+      // Trigger multi-passport authentication for service
       .then(function () {
-        // TODO: ERROR: 'remote' not recognized as an authentication strategy
-        //   - see lib/multi-passport.js:58
         req.app.passport.authenticate('remote', {
           type: service.type,
           clientApp: app._id,
           connectionData: service.connectionData,
-          callback: '/oauth/subauth/callback'
+          callback: '/oauth/subauth/callback/'
         })(req, res);
       });
   }

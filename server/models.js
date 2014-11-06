@@ -15,8 +15,8 @@ exports = module.exports = function(app, mongoose) {
   require('./schema/LoginAttempt')(app, mongoose);
 
   // Things we added to Drywall
-  require( './schema/App' )( app, mongoose );
-  require( './schema/AppToken' )( app, mongoose );
-  require( './schema/Service' )( app, mongoose );
-  require( './schema/ServiceToken')( app, mongoose );
+  require('./schema/App')(app, mongoose);
+  require('./schema/AppToken')(app, mongoose);
+  require('./schema/Service')(app, mongoose);
+  require('./schema/ServiceToken')(app, mongoose);
 };

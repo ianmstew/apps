@@ -64,12 +64,19 @@ app.use(require('cookie-parser')());
 // basic express security settings
 helmet.defaults(app);
 
-// set up passport
+// set up remote API authentication handlers
+require('./lib/multi-passport.js').strategies(passport);
+
+// inititalize passport
 app.use(passport.initialize());
 app.use(passport.session());
 app.passport = passport;
+
+// set up local access passport
 require('./lib/passport')(app);
-require('./lib/multi-passport.js').strategies(passport);
+
+// set up routes
+require('./routes')(app, passport);
 
 // response locals--available to all view templates
 app.use(function (req, res, next) {
@@ -84,9 +91,6 @@ app.locals.projectName = app.config.projectName;
 app.locals.copyrightYear = new Date().getFullYear();
 app.locals.copyrightName = app.config.companyName;
 app.locals.cacheBreaker = 'br34k-01';
-
-// setup routes
-require('./routes')(app, passport);
 
 // custom (friendly) error handler
 app.use(require('./views/http/index').http500);

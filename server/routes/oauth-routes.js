@@ -16,8 +16,6 @@ var apiRoutes = function (app, passport) {
 
   // 2. User space: Looks into user/app and authenticates with whichever
   app.get('/oauth/subauth/callback/', oauthController.subauthCallback);
-
-  app.get('/oauth/callback/:service/', oauthController.serviceCallback);
 };
 
 module.exports = apiRoutes;

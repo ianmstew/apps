@@ -16,7 +16,7 @@ module.exports = {
         return _.extend(_.cloneDeep(options), {
           // Set this here - don't rely on the client API to specify where we should come back to
           // for security reasons.
-          callbackURL: 'http://local.apinetwork.co:3000/oauth/callback/facebook/',
+          callbackURL: 'http://local.apinetwork.co:3000/oauth/subauth/callback/',
           passReqToCallback: true
         });
       },
@@ -39,7 +39,7 @@ module.exports = {
           requestTokenURL: 'https://api.twitter.com/oauth/request_token/',
           userAuthorizationURL: 'https://api.twitter.com/oauth/authorize/',
           accessTokenURL: 'https://api.twitter.com/oauth/access_token/',
-          callbackUrl: 'http://local.apinetwork.co:3000/oauth/callback/twitter/',
+          callbackUrl: 'http://local.apinetwork.co:3000/oauth/subauth/callback/',
           // This one is required by passport strategies that extend OAuth.
           passReqToCallback: true
         });
