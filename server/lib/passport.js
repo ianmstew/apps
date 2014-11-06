@@ -1,10 +1,10 @@
 'use strict';
 
-exports = module.exports = function( app ) {
+module.exports = function (app) {
   var LocalStrategy = require('passport-local').Strategy;
 
   app.passport.use(new LocalStrategy(
-    function(username, password, done) {
+    function (username, password, done) {
       var conditions = { isActive: 'yes' };
       if (username.indexOf('@') === -1) {
         conditions.username = username;
@@ -13,7 +13,7 @@ exports = module.exports = function( app ) {
         conditions.email = username;
       }
 
-      app.db.models.User.findOne(conditions, function(err, user) {
+      app.db.models.User.findOne(conditions, function (err, user) {
         if (err) {
           return done(err);
         }
@@ -22,7 +22,7 @@ exports = module.exports = function( app ) {
           return done(null, false, { message: 'Unknown user' });
         }
 
-        app.db.models.User.validatePassword(password, user.password, function(err, isValid) {
+        app.db.models.User.validatePassword(password, user.password, function (err, isValid) {
           if (err) {
             return done(err);
           }
@@ -37,20 +37,24 @@ exports = module.exports = function( app ) {
     }
   ));
 
-  app.passport.serializeUser(function(user, done) {
+  app.passport.serializeUser(function (user, done) {
     done(null, user._id);
   });
 
-  app.passport.deserializeUser(function(id, done) {
-    app.db.models.User.findOne({ _id: id }).populate('roles.admin').populate('roles.account').exec(function(err, user) {
-      if (user && user.roles && user.roles.admin) {
-        user.roles.admin.populate("groups", function(err, admin) {
+  app.passport.deserializeUser(function (id, done) {
+    app.db.models.User
+      .findOne({ _id: id })
+      .populate('roles.admin')
+      .populate('roles.account')
+      .exec(function (err, user) {
+        if (user && user.roles && user.roles.admin) {
+          user.roles.admin.populate('groups', function (err, admin) {
+            done(err, user);
+          });
+        }
+        else {
           done(err, user);
-        });
-      }
-      else {
-        done(err, user);
-      }
-    });
+        }
+      });
   });
 };
