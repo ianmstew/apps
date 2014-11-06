@@ -48,12 +48,10 @@
 }
 
 a.header-link {
+  display: block;
+  padding-bottom: 5px;
   font-size: @font-size-h3;
   color: @gray-dark;
-
-  &:hover {
-    text-decoration: none;
-  }
 }
 
 h3 {
@@ -120,4 +118,8 @@ table {
       width: 5%;
     }
   }
+}
+
+.btn-edit {
+  &:extend(.btn-gray, .btn-xs, .pull-right);
 }

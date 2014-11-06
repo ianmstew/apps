@@ -1,6 +1,43 @@
-<div class="section-gray">
-  <a href="apps/#id/settings" class="header-link">
-    Application Details
+<div class="section-gray remote-services">
+  <a href="apps/{{_id}}/services" class="btn-edit">
+    <i class="fa fa-icon fa-pencil"></i> Edit
+  </a>
+  <a href="apps/{{_id}}/services" class="header-link">
+    Remote Services
+  </a>
+  <table class="table-app-services">
+    <thead>
+      <tr>
+        <th>
+        </th>
+        <th>
+          Service Name
+        </th>
+        <th>
+          Date Added
+        </th>
+        <th>
+          Callback URL
+        </th>
+        <th>
+          Client ID
+        </th>
+        <th>
+          Client Secret
+        </th>
+      </tr>
+    </thead>
+    <tbody class="js-service-rows">
+    </tbody>
+  </table>
+</div>
+
+<div class="section-gray application-settings">
+  <a href="apps/{{_id}}/settings" class="btn-edit">
+    <i class="fa fa-icon fa-pencil"></i> Edit
+  </a>
+  <a href="apps/{{_id}}/settings" class="header-link">
+    Application Settings
   </a>
   <table class="table-app-details">
     <tbody>
@@ -34,57 +71,6 @@
         </td>
         <td>
           {{callbackUrl}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="section-gray">
-  <a href="apps/#id/services" class="header-link">
-    Remote Services
-  </a>
-  <table class="table-app-services">
-    <thead>
-      <tr>
-        <th>
-        </th>
-        <th>
-          Service Name
-        </th>
-        <th>
-          Date Added
-        </th>
-        <th>
-          Callback URL
-        </th>
-        <th>
-          Client ID
-        </th>
-        <th>
-          Client Secret
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          {{icon}}
-        </td>
-        <td>
-          {{name}}
-        </td>
-        <td>
-          {{dateAdded}}
-        </td>
-        <td>
-          {{callbackURL}}
-        </td>
-        <td>
-          {{clientID}}
-        </td>
-        <td>
-          {{clientSecret}}
         </td>
       </tr>
     </tbody>

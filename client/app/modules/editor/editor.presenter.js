@@ -13,6 +13,18 @@ define(function (require) {
 
     _editorView: null,
 
+    modelEvents: {
+      'change': 'render'
+    },
+
+    ui: {
+      appName: '.js-app-name'
+    },
+
+    nameChanged: function (model, value, options) {
+      this.ui.appName.text(value);
+    },
+
     onPresent: function (options) {
       this.tab = (options || {}).tab;
       this.show(this.getEditorView());

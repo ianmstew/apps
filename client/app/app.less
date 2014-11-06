@@ -1,13 +1,16 @@
 @import "../style/engine-ui-import.less";
 @import "../style/variables.less";
 @import "../style/mixins.less";
-@import "../style/login.less"; // previously user-login.less
-@import "/modules/manager/list/list-view.less"; // previously dashboard.less
-@import "/modules/manager/create/create-view.less"; // previously create-app.less
-@import "/modules/editor/editor-view.less"; // previously app-detail.less
-@import "/modules/editor/overview/overview-view.less"; // previously app-overview.less
+@import "../style/login.less";
+@import "/modules/manager/list/list-view.less";
+@import "/modules/manager/create/create-view.less";
+@import "/modules/editor/editor-view.less";
+@import "/modules/editor/overview/overview-view.less";
+@import "/modules/editor/overview/service-rows/service-rows-view.less";
 @import "/modules/editor/services/services-view.less";
 @import "/modules/editor/services/service-edit-view/service-edit-view.less";
+@import "/modules/editor/services/service-add-view/service-add-view.less";
+@import "/modules/editor/services/service-add-view/service-add-detail-view/service-add-detail.less";
 @import "/modules/editor/settings/settings-view.less";
 @import "/modules/modal/modal.less";
 
@@ -163,7 +166,8 @@ footer {
 
   li.grid-item {
     position: relative;
-    padding: 0.5%;
+    padding: 1% 1% 0 1%;
+    background-color: @gray-even-lighter;
     border: @border-gray;
     .border-radius(3px);
 
@@ -188,6 +192,10 @@ footer {
       display: block;
       clear: both;
     }
+
+    &:hover {
+      background-color: @gray-lighter;
+    }
   }
 
   a {
@@ -207,7 +215,7 @@ footer {
 
 .js-services {
   position: absolute;
-  bottom: 0.5%;
+  bottom: 10px;
   width: 100%;
   list-style-type: none;
 
@@ -224,7 +232,7 @@ footer {
   // &:extend(.col-xs-12, .col-sm-6, .col-md-4, .col-lg-4);
   float: left;
   width: calc((100 - ((@num-cols * 2) * @grid-item-margin)) / @num-cols);
-  margin: 0 @grid-item-margin;
+  margin: @grid-item-margin;
   box-sizing: border-box;
   // min-height: 300px;
   height: 300px;
@@ -239,7 +247,6 @@ footer {
   }
 
   &:hover {
-    background-color: @gray-even-lighter;
     text-decoration: none;
   }
 }
@@ -250,12 +257,14 @@ footer {
 
   position: relative;
   padding: 0.75% 0;
-  color: @gray-darker;
+  color: @gray-dark;
   text-align: center;
-  background-color: @gray-even-lighter;
+  background-color: #FFF;
+  border: 2px @gray-lighter dashed;
 
   &:hover {
-    background-color: @gray-lighter;
+    color: @brand-apiblue;
+    background-color: @gray-even-lighter;
   }
 
   &:link,
@@ -296,12 +305,23 @@ footer {
 }
 
 // For apps-logo and services-logo
+// Fixes width + height appropriately
+[class$='-logo'],
+[class$='-logo'] > img {
+    width: @app-logo-width;
+  }
+
+// Additional apps-logo, services-logo styling
 [class$='-logo'] {
-  margin-right: calc(@app-logo-width * 0.3);
-  width: @app-logo-width;
+  float: right;
+  margin-bottom: 10px;
+  // margin-right: calc(@app-logo-width * 0.3);
   height: @app-logo-width;
   overflow: hidden;
+  .border-radius(2px);
 }
+
+
 
 // For apps-name and services-name
 [class$='-name'] {
@@ -311,8 +331,10 @@ footer {
 
 // App List: Grid Style
 // --------------------------------------------------
-.app-description {
+// Previously just for .app-description
+[class$='-description'] {
   clear: both;
+  font-size: 12px;
 }
 
 // Dropdown menus
