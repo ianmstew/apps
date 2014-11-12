@@ -23,6 +23,10 @@ define(function (require) {
         depends: ['connectionData'],
         get: function (fields) {
           return fields.connectionData.consumerKey;
+        },
+        set: function (value, fields) {
+          fields.connectionData = fields.connectionData || {};
+          fields.connectionData.consumerKey = value;
         }
       },
 
@@ -30,6 +34,10 @@ define(function (require) {
         depends: ['connectionData'],
         get: function (fields) {
           return fields.connectionData.consumerSecret;
+        },
+        set: function (value, fields) {
+          fields.connectionData = fields.connectionData || {};
+          fields.connectionData.consumerSecret = value;
         }
       }
     }

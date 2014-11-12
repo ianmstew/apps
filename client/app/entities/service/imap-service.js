@@ -21,7 +21,11 @@ define(function (require) {
       TODOImapField: {
         depends: ['connectionData'],
         get: function (fields) {
-          return fields.TODOImapField;
+          return fields.connectionData.TODOImapField;
+        },
+        set: function (value, fields) {
+          fields.connectionData = fields.connectionData || {};
+          fields.TODOImapField = value;
         }
       }
     }
