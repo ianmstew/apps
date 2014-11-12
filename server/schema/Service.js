@@ -1,5 +1,7 @@
 'use strict';
 
+// TODO: Use { type: ObjectId } for 'app'
+// TODO: Add 'createdAt' (http://stackoverflow.com/a/12670523/957813)
 module.exports = function (app, mongoose) {
   var serviceSchema = new mongoose.Schema({
     app: String,

@@ -1,15 +1,19 @@
 'use strict';
 
-// TODO: Propogate destroy to children:
+// TODO: Research Mongoose migrations
+// TODO: Propagate destroy to children (http://stackoverflow.com/a/14349259/957813)
 //   - AppTokens
 //   - Services
 //   - ServiceTokens
-// http://stackoverflow.com/a/14349259/957813
+// TODO: Use populate() to add services? What happens on save? on destroy?
+// TODO: Add 'createdAt' (http://stackoverflow.com/a/12670523/957813)
 module.exports = function (app, mongoose) {
   var appSchema = new mongoose.Schema({
-    name: String,
     clientId: { type: String, unique: true },
     clientSecret: { type: String },
+    description: String,
+    logo: String,
+    name: String,
     owner: String
   });
 

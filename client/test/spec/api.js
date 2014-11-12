@@ -1,7 +1,7 @@
 define(function (require) {
-  var Apps = require('entities/app/apps.collection');
-  var App = require('entities/app/app.model');
-  var User = require('entities/user/user.model');
+  var Apps = require('entities/app/apps');
+  var App = require('entities/app/app');
+  var User = require('entities/user/user');
   var apiData = require('test/data/api-data');
 
   describe('API', function () {

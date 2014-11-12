@@ -3,10 +3,9 @@ define(function (require) {
   var template = require('hgn!modules/editor/tabs-view/tab-view/tab.view');
   var HasState = require('lib/mixin/has-state');
   var HasChannel = require('lib/mixin/has-channel');
+  var Cocktail = require('backbone.cocktail');
 
   var TabView = Marionette.ItemView.extend({
-
-    mixins: [HasState, HasChannel],
 
     channelName: 'editor',
 
@@ -32,6 +31,8 @@ define(function (require) {
       return data;
     }
   });
+
+  Cocktail.mixin(TabView, HasState, HasChannel);
 
   return TabView;
 });

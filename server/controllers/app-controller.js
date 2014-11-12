@@ -1,6 +1,8 @@
 var validator = require('../util/validator');
 var uuid = require('node-uuid');
+var _ = require('lodash');
 
+// TODO! Implement logo uploader
 var appController = {
 
   list: function (req, res) {
@@ -31,13 +33,18 @@ var appController = {
   },
 
   create: function (req, res) {
+    var _app = _.extend({
+      clientId: uuid.v4(),
+      clientSecret: uuid.v4(),
+      owner: req.user._id
+    }, _.pick(req.body, [
+      'description',
+      'name',
+      'logo'
+    ]));
+
     req.app.db.models.App
-      .createQ({
-        name: req.body.name,
-        clientId: uuid.v4(),
-        clientSecret: uuid.v4(),
-        owner: req.user._id
-      })
+      .createQ(_app)
       .then(function (app) {
         res.json(app);
       })
@@ -47,23 +54,22 @@ var appController = {
 
   update: function (req, res) {
     // Update attributes whitelist
-    var data = _.extend({}, _.pick(req.body, [
+    var _app = _.extend({}, _.pick(req.body, [
+      'description',
       'name',
-      'clientId',
-      'clientSecret',
-      'owner'
+      'logo'
     ]));
 
     req.app.db.models.Service
       .updateQ({
         _id: req.params.id,
         owner: req.user._id
-      }, data)
+      }, _app)
       .then(function (count) {
         if (count === 0) {
           validator.failNotFound(res);
         } else {
-          res.json(data);
+          res.json(_app);
         }
       })
       .catch(validator.failServer.bind(null, res))
