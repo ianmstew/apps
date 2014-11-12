@@ -1,6 +1,6 @@
 define(function (require) {
   var Module = require('lib/classes/module');
-  var AppsCollection = require('entities/app/apps.collection');
+  var AppsCollection = require('entities/app/apps');
   var notifyUtil = require('modules/notify/notify.util');
 
   var EditorEntities = Module.extend({
@@ -25,9 +25,9 @@ define(function (require) {
     },
 
     // Anyone can ask for the shared Apps collection.
-    // When they do, fetch() is called to ensure the data is up to date.
     getApps: function () {
-      this.apps.fetch();
+      // fetch if never synced
+      if (_.isUndefined(this.apps.syncing)) this.apps.fetch();
       return this.apps;
     }
   });

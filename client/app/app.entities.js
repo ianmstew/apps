@@ -1,6 +1,6 @@
 define(function (require) {
   var Module = require('lib/classes/module');
-  var CurrentUserModel = require('entities/user/current-user.model');
+  var CurrentUserModel = require('entities/user/current-user');
   var notifyUtil = require('modules/notify/notify.util');
 
   var AppEntities = Module.extend({

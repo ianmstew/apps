@@ -10,7 +10,7 @@ define(function (require) {
       var app = this.channel.request('app');
       var servicesView = new ServicesView({
         model: app,
-        collection: app.get('services')
+        collection: app.services
       });
       this.show(servicesView, { loading: true });
     }
