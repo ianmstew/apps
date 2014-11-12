@@ -3,7 +3,7 @@ define(function (require) {
   var ServiceDetailView = require('modules/editor/services/service-add-view/service-add-detail-view/service-add-detail.view');
   var template = require('hgn!modules/editor/services/service-add-view/service-add.view');
 
-  var ServiceAddView = Marionette.ItemView.extend ({
+  var ServiceAddView = Marionette.LayoutView.extend ({
     template: template,
     /*
     childView: ServiceDetailView,

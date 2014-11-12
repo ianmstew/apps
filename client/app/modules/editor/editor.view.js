@@ -13,6 +13,20 @@ define(function (require) {
       content: '.js-editor-content'
     },
 
+    /*
+    modelEvents: {
+      'change:name': 'render'
+    },
+
+    ui: {
+      appName: '.js-application-name'
+    },
+
+    nameChanged: function (model, value, options) {
+      this.ui.appName.text(value);
+    },
+    */
+
     initialize: function () {
       this.tabs = new TabsCollection([{
         name: 'overview',

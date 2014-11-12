@@ -1,5 +1,9 @@
 'use strict';
 
+process.on('uncaughtException', function (error) {
+  console.log(error.stack);
+});
+
 // dependencies
 var config     = require('./config');
 var express    = require('express');
