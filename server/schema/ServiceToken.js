@@ -1,7 +1,7 @@
 'use strict'
 
-module.exports = function( app, mongoose ) {
-	var serviceTokenSchema = new mongoose.Schema( {
+module.exports = function(app, mongoose) {
+	var serviceTokenSchema = new mongoose.Schema({
 		service: String,
 		owner: String,
 		timestamp: Number,
