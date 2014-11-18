@@ -1,5 +1,5 @@
 {
-  "name": "Drywall",
+  "name": "apps-server",
   "dependencies": {
     "backbone": "~1.1.0",
     "bootstrap": "~3.1.1",
@@ -9,6 +9,6 @@
     "momentjs": "~2.5.0",
     "respond": "~1.4.2",
     "underscore": "~1.5.2",
-    "engine-ui": "https://github.com/LDEngine/engine-ui.git#cdf5faea4724bbefd2c3c3824046ca0dc3992c7c"
+    "api-network-ui": "git@github.com:APINetwork/api-network-ui.git#f1a7796300303710c05cebbe7afbeeb4e0cb21b3"
   }
 }

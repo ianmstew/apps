@@ -9,19 +9,17 @@ define(function (require) {
          'consequat. Excepteur ground round drumstick dolor ball tip shoulder voluptate ad. ' +
          'Turducken hamburger andouille, veniam cillum flank frankfurter duis tenderloin.',
       services: [{
-        name: 'facebook',
-        icon: 'http://placekitten.com/50/50',
-        dateAdded: '10/20/2013',
-        callbackUrl: 'http://callback.facebook.com',
-        clientId: 'app1-facebookClientId',
-        clientSecret: 'app1-facebookClientSecret'
+        type: 'facebook',
+        connectionData: {
+          clientID: 'app1-facebookClientId',
+          clientSecret: 'app1-facebookClientSecret'
+        }
       }, {
-        name: 'twitter',
-        icon: 'http://placekitten.com/50/50',
-        dateAdded: '04/10/2014',
-        callbackUrl: 'http://callback.twitter.com',
-        clientId: 'app1-twitterClientId',
-        clientSecret: 'app1-twitterClientSecret'
+        type: 'twitter',
+        connectionData: {
+          consumerKey: 'app1-twitterClientId',
+          consumerSecret: 'app1-twitterClientSecret'
+        }
       }]
     }, {
       name: 'App two',

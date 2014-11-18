@@ -2,6 +2,7 @@ define(function (require) {
   var Marionette = require('marionette');
   var HasChannel = require('lib/mixin/has-channel');
   var Radio = require('backbone.radio');
+  var Cocktail = require('backbone.cocktail');
 
   /*
    * A Presenter's purpose is to provide nestable presentation and data logic for views.
@@ -15,8 +16,6 @@ define(function (require) {
    *     until the view's model and/or collection data is ready.
    */
   var Presenter = Marionette.Object.extend({
-
-    mixins: [HasChannel],
 
     // My region
     region: null,
@@ -89,6 +88,8 @@ define(function (require) {
       }
     }
   });
+
+  Cocktail.mixin(Presenter, HasChannel);
 
   return Presenter;
 });

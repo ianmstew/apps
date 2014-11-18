@@ -1,6 +1,7 @@
 define(function (require) {
   var Marionette = require('marionette');
   var HasChannel = require('lib/mixin/has-channel');
+  var Cocktail = require('backbone.cocktail');
 
   /*
    * A Module is a top-level arbiter for application routing and channel events. Its purpose is to
@@ -13,8 +14,6 @@ define(function (require) {
    *   - May have child modules, which are started automatically unless startModules is false
    */
   var Module = Marionette.Object.extend({
-
-    mixins: [HasChannel],
 
     // Declarative set of child modules
     // { 'moduleName': ModuleClass }
@@ -138,6 +137,8 @@ define(function (require) {
       this._modules = null;
     }
   });
+
+  Cocktail.mixin(Module, HasChannel);
 
   return Module;
 });

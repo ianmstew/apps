@@ -1,7 +1,7 @@
 define(function (require) {
   var Marionette = require('marionette');
   var Module = require('lib/classes/module');
-  var AppModel = require('entities/app/app.model');
+  var AppModel = require('entities/app/app');
   var notifyUtil = require('modules/notify/notify.util');
 
   var EditorEntities = Module.extend({
@@ -37,7 +37,7 @@ define(function (require) {
     },
 
     _appIdChanged: function () {
-      this.app.get('services').reset();
+      this.app.services.reset();
       this.app.fetch();
     }
   });
