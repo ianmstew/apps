@@ -7,8 +7,8 @@ module.exports = function(grunt) {
       vendor: {
         files: [
           {
-            expand: true, cwd: 'bower_components/engine-ui/',
-            src: ['less/**'], dest: 'public/vendor/engine-ui/'
+            expand: true, cwd: 'bower_components/api-network-ui/',
+            src: ['less/**'], dest: 'public/vendor/api-network-ui/'
           },
           {
             expand: true, cwd: 'bower_components/bootstrap/',
