@@ -43,6 +43,7 @@ define(function (require) {
     },
 
     // Re-introduce services sub-collection into JSON output
+    // TODO: Remove this when no longer dependent on fake data
     toJSON: function () {
       var attrs = AppModel.__super__.toJSON.apply(this, arguments);
       _.extend(attrs, { services: _.map(this.services.models, _.clone) });

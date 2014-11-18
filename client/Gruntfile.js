@@ -43,7 +43,7 @@ module.exports = function (grunt) {
 
       precompile: {
         files: {
-          '<%- path.temp %>/engine-ui-grid-precompile.less': '<%- path.style %>/engine-ui-grid.less'
+          '<%- path.temp %>/api-network-ui-grid-precompile.less': '<%- path.style %>/api-network-ui-grid.less'
         }
       },
 
@@ -163,7 +163,7 @@ module.exports = function (grunt) {
         files: [
           '<%- path.style %>/**/*',
           '<%- path.app %>/**/*.less',
-          '<%- path.vendor %>/engine-ui/less/**/*'
+          '<%- path.vendor %>/api-network-ui/less/**/*'
         ],
         tasks: ['less:app']
       },

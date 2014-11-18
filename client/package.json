@@ -1,19 +1,13 @@
 {
-  "name": "endpoint-manager-client",
+  "name": "apps-client",
   "version": "0.0.1",
-  "description": "API Network Endpoint Manager",
-  "author": "API Network, Inc.",
   "private": true,
-  "scripts": {
-    "test": "grunt",
-    "coverage": "grunt coverage"
-  },
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
     "chai-jquery": "^1.2.3",
     "grunt": "^0.4.4",
-    "grunt-bower-task": "^0.3.4",
+    "grunt-bower-task": "^0.4.0",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-copy": "^0.5.0",
