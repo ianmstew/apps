@@ -5,10 +5,19 @@ define(function (require) {
 
   var ServiceAddView = Marionette.LayoutView.extend ({
     template: template,
-    /*
-    childView: ServiceDetailView,
-    childViewContainer: '.js-service-detail',
-    */
+
+    initialize: function () {
+      // var app = this.channel.request('app');
+      this.title = 'Add '/* + this.model.get('services')*/;
+      this.title += ' ' + 'Service';
+      this.description = 'Select an option below to add your service:';
+    },
+
+    onRender: function () {
+      var $title = $('<h4>', { text: this.title });
+      var $description = $('<h5>', { text: this.description });
+      this.$el.prepend($title, $description);
+    },
 
     regions: {
       serviceAddDetail: 'js-service-detail'
