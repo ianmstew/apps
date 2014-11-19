@@ -13,7 +13,7 @@ define(function (require) {
     childViewContainer: '.js-services',
 
     initialize: function (options) {
-      this.collection = this.model.get('services');
+      this.collection = this.model.services;
     }
   });
 

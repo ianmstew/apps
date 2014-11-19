@@ -1,6 +1,9 @@
 var _ = require('lodash');
 
 module.exports = {
+
+  // TODO: Add Gmail
+  // TODO: Account for IMAP (ask Curtis if need be?)
   strategies: function (passport) {
 
     var multipass = new (require('multi-passport').Strategy)({

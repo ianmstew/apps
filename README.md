@@ -1,44 +1,51 @@
-# Welcome to the Engine API Endpoint Manager
+# API Network's Apps Server
+
+1. Permits creation of apps with access to the API Network
+1. Authenticates apps with API Network itself and child services
+1. Maintains service endpoint for API calls, leveraging the personal-data-module
+1. Will ultimately enable billing for those API calls
 
 Requirements
 ------------
 
-You need [Node.js](http://nodejs.org/download/) and [MongoDB](http://www.mongodb.org/downloads) installed and running.
+* Ensure NodeJS and MongoDB are installed and running.
 
-We use [Grunt](http://gruntjs.com/) as our task runner. Get the CLI (command line interface).
+  ```bash
+  node --version # Should report v0.10.x
+  mongo          # Should connect to "MongoDB shell"
+  ```
 
-```bash
-$ npm install grunt-cli -g
-```
+* Ensure grunt and bower command line tools are installed.
 
-We use [Bower](http://bower.io/) as our front-end package manager. Get the CLI (command line interface).
+  ```bash
+  npm install -g grunt-cli
+  npm install -g bower
+  ```
 
-```bash
-$ npm install bower -g
-```
+* If encountering any issues related to _bcrypt_, refer to https://github.com/jedireza/drywall/wiki/bcrypt-Installation-Trouble.
 
-We use [`bcrypt`](https://github.com/ncb000gt/node.bcrypt.js) for hashing secrets. If you have issues during installation related to `bcrypt` then [refer to this wiki page](https://github.com/jedireza/drywall/wiki/bcrypt-Installation-Trouble).
+* Key-based Github access: https://gist.github.com/ianmstew/a240726f111f335220ba
 
 Install and Run
-------------
+---------------
 
 ```bash
-$ git clone https://github.com/LDEngine/endpoint-manager
-$ cd endpoint-manager
+$ git clone git@github.com:APINetwork/apps
+$ cd apps
 $ npm install
 $ grunt
 ```
 
 Setup
-------------
+-----
 
-You need a few records in the database to start using the user system.  First, start the mongo terminal:
+You need a few records in the database to initialize the user system.  First, start the mongo terminal:
 
 ```bash
 $ mongo
 ```
 
-Now, in the mogo terminal, run the following commands. __Make sure to substitute your actual email address below.__
+In the mogo terminal, run the following commands. _Make sure to substitute your actual email address below._
 
 ```js
 use apinetwork; // your mongo db name
@@ -52,7 +59,7 @@ rootAdmin.user = { id: rootUser._id, name: rootUser.username };
 db.admins.save(rootAdmin);
 ```
 
-Now just use the reset password feature to set a password.
+Use the reset password feature to set a password.
 
  - `http://localhost:3000/login/forgot/`
  - Submit your email address and wait a second.

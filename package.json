@@ -1,16 +1,16 @@
 {
-  "name": "endpoint-manager",
+  "name": "apps",
   "version": "0.0.1",
-  "description": "Engine API Endpoint Manager",
+  "description": "API Network Apps Server",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/LDEngine/endpoint-manager.git"
+    "url": "git://github.com/APINetwork/apps.git"
   },
-  "author": "Engine, Inc.",
+  "author": "API Network Foundation, Inc.",
   "readmeFilename": "README.md",
   "devDependencies": {
     "grunt": "^0.4.5",

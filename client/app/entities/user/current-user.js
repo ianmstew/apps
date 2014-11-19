@@ -1,5 +1,5 @@
 define(function (require) {
-  var UserModel = require('entities/user/user.model');
+  var UserModel = require('entities/user/user');
 
   var CurrentUserModel = UserModel.extend({
 
