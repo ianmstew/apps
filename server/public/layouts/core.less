@@ -290,3 +290,50 @@ footer {
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
+
+// For Help / Tutorial section
+.help-guide {
+  > li {
+    display: inline-block;
+    margin-bottom: 50px;
+    padding-right: 125px;
+    width: 50%;
+    vertical-align: top;
+
+    &:nth-child(odd) {
+      clear: both;
+    }
+  }
+
+  img {
+    border: 1px solid #ccc;
+  }
+}
+
+.acct-imgs {
+  img {
+    height: 270px;
+    margin-bottom: 10px
+  }
+}
+
+li.guide-app-detail {
+  width: 100%;
+
+  ul {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  li {
+    display: inline-block;
+    width: 50%;
+    padding-right: 125px;
+    vertical-align: top;
+  }
+}
+
+.title-descriptor {
+  color: @gray-light;
+  font-style: italic;
+}
