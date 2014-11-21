@@ -8,6 +8,7 @@ var MongoStore = require('connect-mongo')(session);
 var http       = require('http');
 var path       = require('path');
 var passport   = require('passport');
+// Wrapping mongoose in mongoose-q for conversion to q promises
 var mongoose   = require('mongoose-q')(require('mongoose'));
 var helmet     = require('helmet');
 
@@ -53,9 +54,18 @@ app.use(require('serve-static')(path.join(__dirname, 'public')));
 // static client app content
 app.use('/client', require('serve-static')(path.join(__dirname, '../client/build')));
 
-// accept content as JSON or url-encoded
-app.use(require('body-parser').json());
+// accept content as url-encoded or JSON
 app.use(require('body-parser').urlencoded({ extended: false }));
+app.use(require('body-parser').json());
+
+// handle json syntax errors without a 500
+app.use(function (error, req, res, next) {
+  if (error instanceof SyntaxError) {
+    res.send(400, error.message);
+  } else {
+    next();
+  }
+});
 
 // other
 app.use(require('method-override')());

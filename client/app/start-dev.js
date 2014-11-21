@@ -2,12 +2,15 @@ define(function (require) {
   require('appstrap');
   require('lib/util/debug-radio');
   require('lib/util/debug-rsvp');
-  require('test/util/fake-data');
+  var fakeData = require('test/util/fake-data');
   var App = require('app');
 
   var app = new App();
 
-  app.start();
+  fakeData.ensure().then(function () {
+    console.log('5');
+    app.start();
+  });
 
   return app;
 });

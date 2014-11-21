@@ -2,7 +2,6 @@ var validator = require('../util/validator');
 var uuid = require('node-uuid');
 var _ = require('lodash');
 
-// TODO! Implement logo uploader
 var appController = {
 
   list: function (req, res) {
@@ -10,6 +9,7 @@ var appController = {
       .find({
         owner: req.user._id
       })
+      .populate('services')
       .execQ()
       .then(function (apps) {
         res.json(apps);
@@ -20,13 +20,18 @@ var appController = {
 
   find: function (req, res) {
     req.app.db.models.App
-      .find({
+      .findOne({
         _id: req.params.id,
         owner: req.user._id
       })
+      .populate('services')
       .execQ()
       .then(function (app) {
-        res.json(app);
+        if (!app) {
+          validator.failNotFound(res);
+        } else {
+          res.json(app);
+        }
       })
       .catch(validator.failServer.bind(null, res))
       .done();
@@ -60,7 +65,7 @@ var appController = {
       'logo'
     ]));
 
-    req.app.db.models.Service
+    req.app.db.models.App
       .updateQ({
         _id: req.params.id,
         owner: req.user._id
@@ -78,16 +83,19 @@ var appController = {
 
   destroy: function (req, res) {
     req.app.db.models.App
-      .remove({
+      .findOneAndRemove({
         _id: req.params.id,
         owner: req.user._id
       })
       .execQ()
-      .then(function (count) {
-        if (count === 0) {
+      .then(function (app) {
+        if (!app) {
           validator.failNotFound(res);
         } else {
-          res.send(200);
+          // Workaround to trigger 'remove' hooks
+          // https://github.com/learnboost/mongoose/issues/1241#issuecomment-39104584
+          app.remove();
+          res.sendStatus(200);
         }
       })
       .catch(validator.failServer.bind(null, res))

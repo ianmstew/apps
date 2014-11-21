@@ -7,6 +7,21 @@ define(function (require) {
 
   var Services = Backbone.Collection.extend({
 
+    url: function () {
+      return '/api/apps/' + this.app + '/services/';
+    },
+
+    app: null,
+
+    initialize: function (models, options) {
+      this.setApp((options || {}).app);
+    },
+
+    // Set owning app for collection
+    setApp: function (app) {
+      this.app = app;
+    },
+
     model: function (attrs, options) {
       switch (attrs.type) {
         case 'facebook':

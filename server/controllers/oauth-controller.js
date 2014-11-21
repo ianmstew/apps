@@ -13,22 +13,23 @@ var oauthController = {
       })
       .execQ()
       // Find AppToken for App model
-      .then(function (clientApp) {
-        if (!clientApp) {
+      .then(function (app) {
+        if (!app) {
           var error = new Error('Invalid clientId');
           error.type = 404;
           throw error;
         } else {
-          return req.app.db.models.AppToken
+          var appToken = req.app.db.models.AppToken
             .findOne({
-              clientId: req.params.clientId,
+              app: app._id,
               owner: req.user._id
             })
             .execQ();
+          return [app, appToken];
         }
       })
       // Create AppToken if necessary
-      .then(function (appToken) {
+      .spread(function (app, appToken) {
         if (appToken) {
           // Token exists; pass along
           return appToken;
@@ -37,7 +38,7 @@ var oauthController = {
           return req.app.db.models.AppToken
             .createQ({
               token: uuid.v4(),
-              clientId: req.params.clientId,
+              app: app._id,
               owner: req.user._id
             });
         }
