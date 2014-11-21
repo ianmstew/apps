@@ -16,7 +16,8 @@ module.exports = function (app, mongoose) {
 
   serviceSchema.pre('remove', function (next) {
     // Remove my associated ServiceTokens
-    app.db.models.ServiceToken.remove({ service: this._id }).exec();
+    app.db.models.ServiceToken.remove({ service: this._id }).execQ()
+      .catch(next).done();
 
     // Remove myself from my parent's child Service IDs array
     app.db.models.App.findById(this.app, function (err, app) {
@@ -27,6 +28,7 @@ module.exports = function (app, mongoose) {
       }
       return next();
     }.bind(this));
+
     next();
   });
 
