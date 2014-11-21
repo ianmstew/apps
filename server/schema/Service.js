@@ -1,18 +1,46 @@
 'use strict';
 
-// TODO: Use { type: ObjectId } for 'app'
-// TODO: Add 'createdAt' (http://stackoverflow.com/a/12670523/957813)
+// TODO: Keep parent's child services in sync
 module.exports = function (app, mongoose) {
   var serviceSchema = new mongoose.Schema({
-    app: String,
+    app: { type: mongoose.Schema.Types.ObjectId, ref: 'App' },
     type: String,
-    connectionData: Object,
-    owner: String
+    connectionData: mongoose.Schema.Types.Mixed,
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    createdAt: { type: Date, default: Date.now }
   });
 
   serviceSchema.index({ app: 1 });
   serviceSchema.index({ owner: 1 });
-
   serviceSchema.set('autoIndex', (app.get('env') === 'development'));
+
+  serviceSchema.pre('remove', function (next) {
+    // Remove my associated ServiceTokens
+    app.db.models.ServiceToken.remove({ service: this._id }).exec();
+
+    // Remove myself from my parent's child Service IDs array
+    app.db.models.App.findById(this.app, function (err, app) {
+      if (err) return next(err);
+      if (app) {
+        app.services.pull(this._id);
+        return app.save(next);
+      }
+      return next();
+    }.bind(this));
+    next();
+  });
+
+  serviceSchema.pre('save', function (next) {
+    // Add myself to my parent's child Service IDs array
+    app.db.models.App.findById(this.app, function (err, app) {
+      if (err) return next(err);
+      if (app) {
+        app.services.push(this);
+        return app.save(next);
+      }
+      return next();
+    }.bind(this));
+  });
+
   app.db.model('Service', serviceSchema);
 };

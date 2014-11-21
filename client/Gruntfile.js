@@ -43,7 +43,8 @@ module.exports = function (grunt) {
 
       precompile: {
         files: {
-          '<%- path.temp %>/api-network-ui-grid-precompile.less': '<%- path.style %>/api-network-ui-grid.less'
+          '<%- path.temp %>/api-network-ui-grid-precompile.less':
+              '<%- path.style %>/api-network-ui-grid.less'
         }
       },
 
@@ -109,8 +110,8 @@ module.exports = function (grunt) {
       sync_dev: {
         command: [
           'PROJ_ROOT=$(pwd)',
-          'rsync . $PROJ_ROOT/<%- path.build %> ' +
-              '--update --delete --recursive --exclude-from $PROJ_ROOT/.build-dev-exclude'
+          'rsync . "$PROJ_ROOT/<%- path.build %>" ' +
+              '--update --delete --recursive --exclude-from "$PROJ_ROOT/.build-dev-exclude"'
         ].join('&&')
       },
 
@@ -118,12 +119,12 @@ module.exports = function (grunt) {
       sourcemap_links: {
         command: [
           'PROJ_ROOT=$(pwd)',
-          'mkdir -p <%- path.build_style %>',
-          'cd <%- path.build_style %>',
-          'rm -f <%- path.app %>',
-          'ln -s $PROJ_ROOT/<%- path.app %> <%- path.app %>',
-          'rm -f <%- path.build %>',
-          'ln -s $PROJ_ROOT/<%- path.build %> <%- path.build %>'
+          'mkdir -p "<%- path.build_style %>"',
+          'cd "<%- path.build_style %>"',
+          'rm -f "<%- path.app %>"',
+          'ln -s "$PROJ_ROOT/<%- path.app %>" "<%- path.app %>"',
+          'rm -f "<%- path.build %>"',
+          'ln -s "$PROJ_ROOT/<%- path.build %>" "<%- path.build %>"'
         ].join('&&')
       }
     },

@@ -18,13 +18,17 @@ var serviceController = {
 
   find: function (req, res) {
     req.app.db.models.Service
-      .find({
+      .findOne({
         _id: req.params.id,
         owner: req.user._id
       })
       .execQ()
       .then(function (service) {
-        res.json(service);
+        if (!service) {
+          validator.failNotFound(res);
+        } else {
+          res.json(service);
+        }
       })
       .catch(validator.failServer.bind(null, res))
       .done();
@@ -76,17 +80,19 @@ var serviceController = {
 
   destroy: function (req, res) {
     req.app.db.models.Service
-      .remove({
+      .findOneAndRemove({
         _id: req.params.id,
-        app: req.params.app,
         owner: req.user._id
       })
       .execQ()
-      .then(function (count) {
-        if (count === 0) {
+      .then(function (service) {
+        if (!service) {
           validator.failNotFound(res);
         } else {
-          res.json(200);
+          // Workaround to trigger 'remove' hooks
+          // https://github.com/learnboost/mongoose/issues/1241#issuecomment-39104584
+          service.remove();
+          res.sendStatus(200);
         }
       })
       .catch(validator.failServer.bind(null, res))

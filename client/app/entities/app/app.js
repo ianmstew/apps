@@ -12,7 +12,7 @@ define(function (require) {
   //     collection.set(array, { parse: true });
   // - Calling 'fetch'
   //     do nothing :) parse() is automatically called during a fetch
-  var AppModel = Backbone.Model.extend({
+  var App = Backbone.Model.extend({
 
     urlRoot: '/api/apps',
     idAttribute: '_id',
@@ -31,25 +31,19 @@ define(function (require) {
       owner: null
     },
 
-    constructor: function () {
+    constructor: function (attrs, options) {
       this.services = new ServicesCollection();
-      AppModel.__super__.constructor.apply(this, arguments);
+      App.__super__.constructor.apply(this, arguments);
     },
 
     // Extract 'services' into sub-collection
     parse: function (data, options) {
+      // Permit services to sync externally
+      this.services.setApp(data._id || this.get('_id'));
       this.services.set(data.services, options);
       return _.omit(data, 'services');
-    },
-
-    // Re-introduce services sub-collection into JSON output
-    // TODO: Remove this when no longer dependent on fake data
-    toJSON: function () {
-      var attrs = AppModel.__super__.toJSON.apply(this, arguments);
-      _.extend(attrs, { services: _.map(this.services.models, _.clone) });
-      return attrs;
     }
   });
 
-  return AppModel;
+  return App;
 });

@@ -4,10 +4,13 @@ var validator = {
   missing: function (obj, required) {
     var missing;
 
+    // Ensure required is an array
+    if (!_.isArray(required)) required = [required];
+
     if (!_.isObject(obj)) {
+      // If obj isn't an object, than it can't contain any properties; thus, all required are
+      // missing.
       missing = _.clone(required);
-    } else if (!_.isArray(required)) {
-      missing = [];
     } else {
       missing = _.difference(required, _.keys(obj));
     }
@@ -15,11 +18,11 @@ var validator = {
     return missing;
   },
 
-  failOnMissing: function (obj, required, res) {
+  failOnMissing: function (res, obj, required) {
     var missing = this.missing(obj, required);
 
     if (missing.length) {
-      this.failParam(res, 'Must include ' + missing.join(', '));
+      this.failParam(res, 'Required field(s) are missing: ' + missing.join(', '));
       return true;
     } else {
       return false;

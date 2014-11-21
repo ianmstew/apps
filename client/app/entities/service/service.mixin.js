@@ -6,21 +6,17 @@ define(function (require) {
 
     idAttribute: '_id',
 
-    urlRoot: function () {
-      return '/api/apps/' + this.get('app') + '/services';
-    },
-
     defaults: {
       _id: null,
-      app: null,       // Owning app id
-      type: null,      // Keyable service type; e.g., 'facebook' or 'twitter'
+      app: null,  // Owning app id
+      type: null, // Keyable service type; e.g., 'facebook' or 'twitter'
 
       // Computed
       dateAdded: null,
 
       // Read only
       connectionData: null,
-      createdAt: null,      // TODO: Not yet implemented on server
+      createdAt: null, // TODO: Not yet implemented on server
       owner: null,
 
       // View only
