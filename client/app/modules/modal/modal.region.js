@@ -15,7 +15,8 @@ define(function (require) {
       // Bootstrap-show modal
       view.$el.modal({
         show: true,
-        keyboard: true
+        keyboard: true,
+        title: view.title
       });
     },
 
