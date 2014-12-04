@@ -7,6 +7,7 @@ var routes = function (app, passport) {
   require('./admin-routes')(app, passport);
   require('./account-routes')(app, passport);
   require('./api-routes')(app, passport);
+  require('./user-routes')(app, passport);
 
   // route not found
   app.all('*', httpController.http404);

@@ -1,16 +1,23 @@
-define(function (require) {
+define(function (require, exports, module) {
   require('appstrap');
-  require('lib/util/debug-radio');
-  require('lib/util/debug-rsvp');
-  var fakeData = require('test/util/fake-data');
   var App = require('app');
+  var Logger = require('lib/util/logger');
+  var logger = require('lib/util/logger')(module);
 
-  var app = new App();
+  // Debug and development
+  var testData = require('test/data/test-data');
+  var debugRadio = require('lib/util/debug-radio');
 
-  fakeData.ensure().then(function () {
-    console.log('5');
+  var app;
+
+  debugRadio.enable();
+  Logger.enable('debug');
+
+  app = new App();
+
+  testData.ensure().then(function () {
     app.start();
-  });
+  }).catch(logger.error.bind(logger));
 
   return app;
 });

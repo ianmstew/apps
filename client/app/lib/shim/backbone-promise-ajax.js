@@ -1,4 +1,5 @@
 define(function (require) {
+  require('promise');
   var Backbone = require('backbone');
 
   Backbone.ajax = function () {

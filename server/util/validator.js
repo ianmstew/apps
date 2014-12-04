@@ -32,25 +32,25 @@ var validator = {
   failServer: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Internal Server Error';
     console.error(error.stack, '\n    [500 error stack trace]');
-    res.send(500, errorMsg);
+    res.json(500, { error: errorMsg });
   },
 
   failParam: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Bad Request';
     console.warn(error.stack, '\n    [400 error stack trace]');
-    res.send(400, errorMsg);
+    res.json(400, { error: errorMsg });
   },
 
   failUnauthorized: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Not authorized';
     console.warn(401, error);
-    res.send(401, errorMsg);
+    res.json(401, { error: errorMsg });
   },
 
   failNotFound: function (res, error) {
     var errorMsg = (error && error.toString()) || 'Not Found';
     console.warn(404, error);
-    res.send(404, errorMsg);
+    res.json(404, { error: errorMsg });
   }
 };
 

@@ -1,6 +1,7 @@
-define(function (require) {
+define(function (require, exports, module) {
   var Backbone = require('backbone');
   var ServicesCollection = require('entities/service/services');
+  var logger = require('lib/util/logger')(module);
 
   // Maintaining consistency of sub entities requires { parse: true } option.
   // There are several different cases where this is necessary, explained below:
@@ -17,18 +18,18 @@ define(function (require) {
     urlRoot: '/api/apps',
     idAttribute: '_id',
 
-    services: null,
+    services: undefined,
 
     defaults: {
-      _id: null,
-      clientId: null,
-      clientSecret: null,
-      description: null,
-      logo: null,
-      name: null,
+      _id:          undefined,
+      clientId:     undefined,
+      clientSecret: undefined,
+      description:  undefined,
+      logo:         undefined,
+      name:         undefined,
 
       // Read only
-      owner: null
+      owner:        undefined
     },
 
     constructor: function (attrs, options) {
@@ -36,12 +37,28 @@ define(function (require) {
       App.__super__.constructor.apply(this, arguments);
     },
 
+    initialize: function (options) {
+      this.on({
+        'change:_id': this.onChangeId.bind(this),
+        'destroy': this.onDestroy.bind(this)
+      });
+    },
+
+    onChangeId: function (app, _id) {
+      logger.debug('App id changed: ' + _id);
+      this.services.setAppId(_id);
+      this.services.reset();
+    },
+
     // Extract 'services' into sub-collection
     parse: function (data, options) {
-      // Permit services to sync externally
-      this.services.setApp(data._id || this.get('_id'));
       this.services.set(data.services, options);
-      return _.omit(data, 'services');
+      return _.omit(data, 'services', '__v');
+    },
+
+    onDestroy: function () {
+      this.services.reset();
+      this.services.stopListening();
     }
   });
 

@@ -1,37 +1,18 @@
 define(function (require) {
-  var Backbone = require('backbone');
-  var Cocktail = require('backbone.cocktail');
-  var ServiceMixin = require('entities/service/service.mixin');
+  var Service = require('entities/service/service');
 
-  var ImapService = Backbone.Model.extend({
+  // TODO: Parse out connectionData specific to IMAP
+  var ImapService = Service.extend({
 
     defaults: {
       type: 'imap',
 
-      // Computed
-      // TODO: Special IMAP fields inside connectionData
-      TODOImapField: null,
-
       // View only
       iconClass: 'fa-envelope',
-      name: 'IMAP'
-    },
-
-    computed: {
-      TODOImapField: {
-        depends: ['connectionData'],
-        get: function (fields) {
-          return fields.connectionData.TODOImapField;
-        },
-        set: function (value, fields) {
-          fields.connectionData = fields.connectionData || {};
-          fields.TODOImapField = value;
-        }
-      }
+      name: 'IMAP',
+      TODOImapField: undefined
     }
   });
-
-  Cocktail.mixin(ImapService, ServiceMixin);
 
   return ImapService;
 });

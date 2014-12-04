@@ -1,3 +1,4 @@
 define(function (require) {
-  return $.noop();
+  function noop() {}
+  return noop();
 });

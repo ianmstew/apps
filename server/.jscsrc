@@ -5,6 +5,7 @@
 {
   // Keywords
   "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
+  "disallowSpaceBeforeKeywords": ["else", "catch"],
   "disallowKeywords": ["with", "eval"],
 
   // Functions

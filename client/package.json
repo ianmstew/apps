@@ -2,6 +2,10 @@
   "name": "apps-client",
   "version": "0.0.1",
   "private": true,
+  "dependencies": {
+    "backbone": "git://github.com/jashkenas/backbone.git#70636d6d854b32cb73bb8c16ba827b590b33bc88",
+    "grunt-contrib-requirejs": "^0.4.4"
+  },
   "devDependencies": {
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",

@@ -1,6 +1,6 @@
 define(function (require) {
   var Module = require('lib/classes/module');
-  var CurrentUserModel = require('entities/user/current-user');
+  var User = require('entities/user/user');
   var notifyUtil = require('modules/notify/notify.util');
 
   var AppEntities = Module.extend({
@@ -14,7 +14,7 @@ define(function (require) {
     user: null,
 
     initialize: function () {
-      this.user = new CurrentUserModel();
+      this.user = new User();
       notifyUtil.handleModelErrors(this, this.user);
       this.user.fetch();
     },

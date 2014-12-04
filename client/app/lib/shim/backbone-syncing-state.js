@@ -1,4 +1,5 @@
 define(function (require) {
+  require('lib/shim/promise');
   var Backbone = require('backbone');
 
   var syncWrapper = function (sync) {
