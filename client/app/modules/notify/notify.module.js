@@ -1,6 +1,6 @@
-define(function (require) {
+define(function (require, exports, module) {
   var Module = require('lib/classes/module');
-  var logger = require('lib/util/logger');
+  var logger = require('lib/util/logger')(module);
 
   var NotificationModule = Module.extend({
 

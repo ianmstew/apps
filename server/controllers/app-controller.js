@@ -95,7 +95,7 @@ var appController = {
           // Workaround to trigger 'remove' hooks
           // https://github.com/learnboost/mongoose/issues/1241#issuecomment-39104584
           app.remove();
-          res.sendStatus(200);
+          res.json(app);
         }
       })
       .catch(validator.failServer.bind(null, res))

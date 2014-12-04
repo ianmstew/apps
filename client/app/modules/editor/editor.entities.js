@@ -1,8 +1,8 @@
-define(function (require) {
-  var Marionette = require('marionette');
+define(function (require, exports, module) {
   var Module = require('lib/classes/module');
   var AppModel = require('entities/app/app');
   var notifyUtil = require('modules/notify/notify.util');
+  var logger = require('lib/util/logger')(module);
 
   var EditorEntities = Module.extend({
 
@@ -14,14 +14,11 @@ define(function (require) {
       'set:appId': ['comply', 'setAppId']
     },
 
-    appModelEvents: {
-      'change:_id': '_appIdChanged'
-    },
-
     initialize: function () {
       this.app = new AppModel();
       notifyUtil.handleModelErrors(this, this.app);
-      Marionette.bindEntityEvents(this, this.app, this.appModelEvents);
+
+      this.listenTo(this.app, 'change:_id', this.onChangeAppId);
     },
 
     getApp: function () {
@@ -36,8 +33,8 @@ define(function (require) {
       this.app.set('_id', parseInt(appId));
     },
 
-    _appIdChanged: function () {
-      this.app.services.reset();
+    onChangeAppId: function (app, appId) {
+      logger.debug('App id changed: ' + appId);
       this.app.fetch();
     }
   });

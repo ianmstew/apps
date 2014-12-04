@@ -1,6 +1,6 @@
-define(function (require) {
+define(function (require, exports, module) {
   var Radio = require('backbone.radio');
-  var logger = require('lib/util/logger');
+  var logger = require('lib/util/logger')(module);
 
   var HasChannel = {
 

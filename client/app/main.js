@@ -17,7 +17,7 @@
       'spinner':                 '../vendor/spin.js/spin',
       'text':                    '../vendor/requirejs-hogan-plugin/text',
       'underscore':              '../vendor/underscore/underscore',
-      'rsvp':                    '../vendor/rsvp/rsvp',
+      'promise':                 '../vendor/rsvp/rsvp',
 
       // test
       'test':                    '../test',

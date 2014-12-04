@@ -1,6 +1,5 @@
 define(function (require) {
   require('appstrap');
-  require('test/util/fake-server');
   var mocha = require('mocha');
   var chai = require('chai');
   var chaiJquery = require('chai-jquery');
@@ -36,8 +35,7 @@ define(function (require) {
   setupTestHelpers();
 
   require([
-    'spec/api.js',
-    'spec/entities.js'
+    'spec/api.js'
   ], function () {
     mocha.run();
   });

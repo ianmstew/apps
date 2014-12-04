@@ -12,11 +12,6 @@ define(function (require) {
       })
     },
 
-    constructor: function () {
-      App.__super__.constructor.apply(this, arguments);
-      this.initialize();
-    },
-
     initialize: function () {
       this.appModule = new AppModule({
         app: this

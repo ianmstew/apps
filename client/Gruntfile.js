@@ -66,7 +66,8 @@ module.exports = function (grunt) {
           targetDir: '<%- path.vendor %>',
           layout: 'byComponent',
           bowerOptions: {
-            production: true
+            production: true,
+            forceLatest: true
           }
         }
       }
@@ -95,6 +96,11 @@ module.exports = function (grunt) {
         }, {
           src: 'node_modules/chai-as-promised/lib/chai-as-promised.js',
           dest: '<%- path.vendor %>/chai-as-promised/chai-as-promised.js'
+        }, {
+          // Backbone is checked out to a specific commit, but bower has issues forcing
+          // a specific commit; therefore, overwrite backbone with an npm-sourced commit.
+          src: 'node_modules/backbone/backbone.js',
+          dest: '<%- path.vendor %>/backbone/backbone.js'
         }]
       }
     },
@@ -126,6 +132,26 @@ module.exports = function (grunt) {
           'rm -f "<%- path.build %>"',
           'ln -s "$PROJ_ROOT/<%- path.build %>" "<%- path.build %>"'
         ].join('&&')
+      },
+
+      bower_backbone_master: {
+        command: 'echo 1 | bower install backbone'
+      }
+    },
+
+    requirejs: {
+      prod: {
+        options: {
+          baseUrl: '<%- path.app %>',
+          out: '<%- path.build %>/app.js',
+          mainConfigFile: '<%- path.app %>/main.js',
+          name: '../vendor/almond/almond',
+          include: ['start-prod'],
+          stubModules: ['text', 'hgn'],
+          optimize: 'uglify2',
+          preserveLicenseComments: false,
+          insertRequire: ['start-prod']
+        }
       }
     },
 
@@ -189,7 +215,16 @@ module.exports = function (grunt) {
   // bring in all grunt plugins from package.json
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('libs', ['bower', 'copy:npm_assets']);
+  grunt.registerTask('set-prod', function () {
+    grunt.config.data.less.options.cleancss = true;
+    grunt.config.data.less.app.options.sourceMap = false;
+  });
+
+  grunt.registerTask('libs', [
+    'shell:bower_backbone_master',
+    'bower',
+    'copy:npm_assets'
+  ]);
 
   grunt.registerTask('build-dev', [
     'clean:build',
@@ -197,6 +232,13 @@ module.exports = function (grunt) {
     'shell:sync_dev',
     'less',
     'shell:sourcemap_links'
+  ]);
+
+  grunt.registerTask('build-prod', [
+    'clean:all',
+    'libs',
+    'less',
+    'requirejs'
   ]);
 
   grunt.registerTask('default', ['build-dev']);

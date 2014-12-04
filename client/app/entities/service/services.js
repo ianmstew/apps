@@ -1,4 +1,4 @@
-define(function (require) {
+define(function (require, exports, module) {
   var Backbone = require('backbone');
   var FacebookService = require('entities/service/facebook-service');
   var TwitterService = require('entities/service/twitter-service');
@@ -8,18 +8,22 @@ define(function (require) {
   var Services = Backbone.Collection.extend({
 
     url: function () {
-      return '/api/apps/' + this.app + '/services/';
+      return '/api/apps/' + this.appId + '/services/';
     },
 
-    app: null,
-
-    initialize: function (models, options) {
-      this.setApp((options || {}).app);
+    modelId: function (attrs) {
+      return attrs._id;
     },
+
+    appId: undefined,
 
     // Set owning app for collection
-    setApp: function (app) {
-      this.app = app;
+    setAppId: function (appId) {
+      this.appId = appId;
+    },
+
+    getAppId: function () {
+      return this.appId;
     },
 
     model: function (attrs, options) {

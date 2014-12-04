@@ -6,6 +6,7 @@
   // Keywords
   "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
   "disallowKeywords": ["with", "eval"],
+  "disallowSpaceBeforeKeywords": ["else", "catch"],
 
   // Functions
   "requireParenthesesAroundIIFE": true,
