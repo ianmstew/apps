@@ -6,7 +6,6 @@ module.exports = function (app, mongoose) {
     clientId: { type: String, unique: true },
     clientSecret: { type: String },
     description: String,
-    logo: String,
     name: String,
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     services: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Service' }],

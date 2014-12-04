@@ -6,8 +6,6 @@ define(function (require) {
 
     defaults: {
       type: 'imap',
-
-      // View only
       iconClass: 'fa-envelope',
       name: 'IMAP',
       TODOImapField: undefined

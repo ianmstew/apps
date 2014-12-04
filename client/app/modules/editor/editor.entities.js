@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     },
 
     setAppId: function (appId) {
-      this.app.set('_id', parseInt(appId));
+      this.app.set('_id', appId);
     },
 
     onChangeAppId: function (app, appId) {

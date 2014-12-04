@@ -44,8 +44,7 @@ var appController = {
       owner: req.user._id
     }, _.pick(req.body, [
       'description',
-      'name',
-      'logo'
+      'name'
     ]));
 
     req.app.db.models.App
@@ -61,8 +60,7 @@ var appController = {
     // Update attributes whitelist
     var _app = _.extend({}, _.pick(req.body, [
       'description',
-      'name',
-      'logo'
+      'name'
     ]));
 
     req.app.db.models.App

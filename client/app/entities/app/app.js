@@ -3,6 +3,11 @@ define(function (require, exports, module) {
   var ServicesCollection = require('entities/service/services');
   var logger = require('lib/util/logger')(module);
 
+  var monthNames = new Array(
+    'January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December'
+  );
+
   // Maintaining consistency of sub entities requires { parse: true } option.
   // There are several different cases where this is necessary, explained below:
   // - New
@@ -22,14 +27,17 @@ define(function (require, exports, module) {
 
     defaults: {
       _id:          undefined,
-      clientId:     undefined,
-      clientSecret: undefined,
       description:  undefined,
-      logo:         undefined,
       name:         undefined,
 
       // Read only
-      owner:        undefined
+      owner:        undefined,
+      clientId:     undefined,
+      clientSecret: undefined,
+      createdAt:    undefined,
+
+      // View only
+      dateAdded:    undefined
     },
 
     constructor: function (attrs, options) {
@@ -40,6 +48,7 @@ define(function (require, exports, module) {
     initialize: function (options) {
       this.on({
         'change:_id': this.onChangeId.bind(this),
+        'change:createdAt': this.onChangeCreatedAt.bind(this),
         'destroy': this.onDestroy.bind(this)
       });
     },
@@ -50,15 +59,35 @@ define(function (require, exports, module) {
       this.services.reset();
     },
 
+    onChangeCreatedAt: function (service, createdAt) {
+      var dateFormatted = 'N/A';
+
+      if (createdAt) {
+        var dateTime = new Date(Date.parse(createdAt)),
+          month = monthNames[dateTime.getMonth()],
+          day = dateTime.getDate(),
+          year = dateTime.getFullYear();
+        dateFormatted = month + ' ' + day + ', ' + year;
+      }
+
+      this.set('dateAdded', dateFormatted);
+    },
+
     // Extract 'services' into sub-collection
     parse: function (data, options) {
       this.services.set(data.services, options);
-      return _.omit(data, 'services', '__v');
+      return _.omit(data, 'services');
     },
 
     onDestroy: function () {
       this.services.reset();
+      // TODO: Make sure this is enough
       this.services.stopListening();
+    },
+
+    toJSON: function () {
+      var attrs = App.__super__.toJSON.apply(this, arguments);
+      return _.omit(attrs, 'dateAdded');
     }
   });
 
