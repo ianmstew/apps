@@ -25,14 +25,14 @@ define(function (require) {
     _repliers: undefined,
     _compliers: undefined,
 
-    complyWith: function (channel, command, complier) {
+    complyFor: function (channel, command, complier) {
       channel.comply(command, complier.bind(this));
       this._compliers = this._compliers || [];
       this._compliers.push([channel, command]);
       return this;
     },
 
-    replyWith: function (channel, request, replier) {
+    replyFor: function (channel, request, replier) {
       channel.reply(request, replier.bind(this));
       this._repliers = this._repliers || [];
       this._repliers.push([channel, request]);
