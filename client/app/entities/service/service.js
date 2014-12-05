@@ -35,20 +35,24 @@ define(function (require) {
       dateAdded:      undefined
     },
 
+    originalType: undefined,
+
     initialize: function () {
       this.on({
         'change:createdAt': this.onChangeCreatedAt.bind(this),
-        'change': this.onChange.bind(this)
+        'change:type': this.onChangeType.bind(this)
       });
     },
 
-    // TODO: Changing type will break view bindings; is there a way to avoid that, or re-bind
-    //   using a new model?
-    onChange: function (service) {
-      // Maintain proper polymorphic model type in parent collection
-      if (this.changed.type) {
-        this.collection.remove(this);
-        this.collection.add(_.clone(this.attributes));
+    validate: function (attrs, options) {
+      if (attrs.type !== this.originalType) {
+        return "Can't change a service type; please remove and create a new one.";
+      }
+    },
+
+    onChangeType: function (service, type) {
+      if (_.isUndefined(this.previous('type'))) {
+        this.originalType = this.get('type');
       }
     },
 

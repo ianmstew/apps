@@ -7,7 +7,7 @@ define(function (require, exports, module) {
     channelName: 'notify',
 
     channelEvents: {
-      'entity:error': ['on', 'entityError']
+      'show:error': ['comply', 'entityError']
     },
 
     entityError: function (entity, message) {

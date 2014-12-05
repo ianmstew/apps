@@ -4,7 +4,7 @@ define(function (require) {
   var TabModel = Backbone.Model.extend({
 
     defaults: {
-      name: null,
+      name: undefined,
       title: null
     }
   });

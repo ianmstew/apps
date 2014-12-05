@@ -22,8 +22,8 @@ define(function (require) {
   }
 
   var RadioEvents = {
-    _repliers: null,
-    _compliers: null,
+    _repliers: undefined,
+    _compliers: undefined,
 
     complyWith: function (channel, command, complier) {
       channel.comply(command, complier.bind(this));

@@ -18,10 +18,10 @@ define(function (require) {
   var Presenter = Marionette.Object.extend({
 
     // My region
-    region: null,
+    region: undefined,
 
     // View whose destruction results in this Presenter destructing
-    _boundView: null,
+    _boundView: undefined,
 
     constructor: function (options) {
       this.initialize = _.wrap(this.initialize, function (initialize, options) {

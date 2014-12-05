@@ -21,7 +21,7 @@ define(function (require) {
       'modal': ModalModule
     },
 
-    app: null,
+    app: undefined,
 
     initialize: function (options) {
       this.app = (options || {}).app;

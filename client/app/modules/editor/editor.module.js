@@ -17,7 +17,7 @@ define(function (require) {
       'entities': EditorEntities
     },
 
-    _editor: null,
+    _editor: undefined,
 
     showOverviewTab: function (appId) {
       this.channel.command('set:appId', appId);

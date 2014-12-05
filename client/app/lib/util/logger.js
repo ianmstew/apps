@@ -10,10 +10,10 @@ define(function (require) {
   _.extend(Logger.prototype, {
     
     // AMD module's file name
-    fileName: null,
+    fileName: undefined,
 
     // AMD module's fully-qualified path
-    moduleUri: null,
+    moduleUri: undefined,
 
     _log: function (logger, logArgs) {
       console[logger].apply(console, ['['+this.fileName+']'].concat(_.toArray(logArgs)));
@@ -49,10 +49,10 @@ define(function (require) {
   _.extend(Logger, {
 
     // Current mode
-    mode: null,
+    mode: undefined,
 
     // Mode index for quick mode inclusiveness comparisions
-    modeIdx: null,
+    modeIdx: undefined,
     
     // Possible modes
     modes: ['debug', 'info', 'warn', 'error'],

@@ -5,13 +5,13 @@ define(function (require) {
   var HasState = {
 
     // Default state overridable by constructor 'state' option
-    defaultState: null,
+    defaultState: undefined,
 
     // Backbone model maintaining state
-    state: null,
+    state: undefined,
 
     // Initial state of model after defaults and constructor 'state' option
-    initialState: null,
+    initialState: undefined,
 
     initialize: function (options) {
       var state = (options || {}).state;
