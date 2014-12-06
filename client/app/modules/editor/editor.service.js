@@ -5,6 +5,8 @@ define(function (require, exports, module) {
   var notifyUtil = require('modules/notify/notify.util');
   var logger = require('lib/util/logger')(module);
 
+  // To be fully utilized, the Editor Service requires an appId;
+  // use Radio.command('editor', 'setId', appId).
   var EditorService = Module.extend({
 
     channelName: 'editor',
@@ -14,6 +16,7 @@ define(function (require, exports, module) {
       'appId': ['reply', 'getAppId'],
       'set:appId': ['comply', 'setAppId'],
       'services': ['reply', 'getServices'],
+      'service': ['reply', 'getService'],
       'new:service': ['reply', 'newService'],
       'update:service': ['comply', 'updateService'],
       'destroy:service': ['comply', 'destroyService']
@@ -33,6 +36,10 @@ define(function (require, exports, module) {
 
     getServices: function () {
       return this.services;
+    },
+
+    getService: function (serviceId) {
+      return this.services.get(serviceId);
     },
 
     getApp: function () {
@@ -71,11 +78,13 @@ define(function (require, exports, module) {
 
       var service = this.services.get(serviceId);
       var error;
+
       if (!service) {
         this.notifyChannel.command('add:userError',
           'The service you selected does not exist.', { serviceId: serviceId });
         return;
       }
+
       service.save(attrs);
       error = service.validationError;
       if (error) {
@@ -86,11 +95,13 @@ define(function (require, exports, module) {
 
     destroyService: function (serviceId) {
       var service = this.services.get(serviceId);
+
       if (!service) {
         this.notifyChannel.command('add:userError',
           'The service you selected does not exist.', { serviceId: serviceId });
         return;
       }
+
       service.destroy();
     },
 

@@ -1,7 +1,7 @@
 define(function (require) {
   var Module = require('lib/classes/module');
   var EditorPresenter = require('modules/editor/editor.presenter');
-  var EditorEntities = require('modules/editor/editor.entities');
+  var EditorService = require('modules/editor/editor.service');
 
   var EditorModule = Module.extend({
 
@@ -14,7 +14,7 @@ define(function (require) {
     },
 
     modules: {
-      'entities': EditorEntities
+      'entities': EditorService
     },
 
     _editor: undefined,
