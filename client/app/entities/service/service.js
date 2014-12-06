@@ -45,7 +45,7 @@ define(function (require) {
     },
 
     validate: function (attrs, options) {
-      if (attrs.type !== this.originalType) {
+      if (!_.isUndefined(this.originalType) && attrs.type !== this.originalType) {
         return "Can't change a service type; please remove and create a new one.";
       }
     },

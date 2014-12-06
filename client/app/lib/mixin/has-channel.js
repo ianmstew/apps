@@ -2,6 +2,14 @@ define(function (require, exports, module) {
   var Radio = require('backbone.radio');
   var logger = require('lib/util/logger')(module);
 
+  // Supports a declarative channelName and semi-custom channelEvents hash.
+  // Example:
+  //   channelName: 'notify'
+  //   channelEvents: {
+  //     'error': ['on', 'onError'],
+  //     'show:message': ['comply', 'showMessage']
+  //     'messages': ['reply', 'getMessages']
+  //   }
   var HasChannel = {
 
     // Declarative option for channel name
@@ -40,8 +48,8 @@ define(function (require, exports, module) {
         : channelHandler[1];
 
       if (!_.isFunction(eventHandler)) {
-        throw new Error('Channel handler for "' + eventType +
-          '" must be an inline function or an instance method');
+        throw new Error('Channel handler for "' + eventType
+          + '" must be an inline function or an instance method');
       }
 
       switch (eventType) {

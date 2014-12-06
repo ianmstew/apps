@@ -7,7 +7,18 @@ define(function (require) {
   var sinon = require('sinon');
   var sinonChai = require('sinon-chai');
 
+  var Radio = require('backbone.radio');
+  var Logger = require('lib/util/logger');
+  var debugRadio = require('lib/util/debug-radio');
+
   function setupTestHelpers() {
+    before(function () {
+      Logger.enable();
+      debugRadio.enable();
+      Radio.comply('notify', 'add:entityError', console.log.bind(console));
+      Radio.comply('notify', 'add:userError', console.log.bind(console));
+    });
+
     beforeEach(function () {
       this.sinon = sinon.sandbox.create();
       window.stub = _.bind(this.sinon.stub, this.sinon);
@@ -35,7 +46,8 @@ define(function (require) {
   setupTestHelpers();
 
   require([
-    'spec/api.js'
+    'spec/api.js',
+    'spec/services.js'
   ], function () {
     mocha.run();
   });

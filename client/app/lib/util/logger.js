@@ -38,7 +38,7 @@ define(function (require) {
     error: function () {
       if (Logger.enabled && Logger.modeIdx <= 3) {
         if (arguments[0] instanceof Error) {
-          this._log('error', [arguments[0].message, arguments[0].stack]);
+          this._log('error', [arguments[0].message, arguments[0].stack].concat(_.rest(arguments)));
         } else {
           this._log('error', arguments);
         }
@@ -64,6 +64,8 @@ define(function (require) {
     // Note that finer-grained modes include coarser modes; e.g., 'warn' implies 'error' but not
     // 'info' or 'debug'.
     enable: function (mode) {
+      // Don't enable logging unless a console logger exists
+      if (!(console && console.log && console.warn && console.error)) return;
       var _mode = mode || 'debug';
       var modeIdx = Logger.modes.indexOf(_mode);
       if (!~modeIdx) {

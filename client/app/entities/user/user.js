@@ -8,7 +8,7 @@ define(function (require) {
 
     // Default user is currently logged in user
     url: function () {
-      return this.urlRoot + '/' + (this.get('_id') || 'current') + '/';
+      return this.urlRoot + '/' + (this.id || 'current') + '/';
     },
 
     defaults: {

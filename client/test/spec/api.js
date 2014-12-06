@@ -3,7 +3,6 @@ define(function (require, exports, module) {
   var App = require('entities/app/app');
   var User = require('entities/user/user');
   var testData = require('test/data/test-data');
-  var logger = require('lib/util/logger')(module);
 
   describe('API', function () {
 
@@ -24,14 +23,14 @@ define(function (require, exports, module) {
 
       it('Create app1 should succeed.', function () {
         return app1.save().then(function (attrs) {
-          app1Id = app1.get('_id');
+          app1Id = app1.id;
           should.exist(app1Id);
         });
       });
 
       it('Create app2 should succeed.', function () {
         return app2.save().then(function (attrs) {
-          app2Id = app1.get('_id');
+          app2Id = app1.id;
           should.exist(app2Id);
         });
       });
@@ -47,7 +46,7 @@ define(function (require, exports, module) {
       it('Update app1 name should succeed.', function () {
         var newName = 'App one updated';
         var attrs = {
-          _id: app1.get('_id'),
+          _id: app1.id,
           name: newName
         };
         var app = new App(attrs);
@@ -67,18 +66,18 @@ define(function (require, exports, module) {
 
       it('Get app1 should succeed.', function () {
         var apps = new App({
-          _id: app1.get('_id')
+          _id: app1.id
         });
 
-        return apps.fetch().should.be.fulfilled;
+        return apps.fetch();
       });
 
       it('Destroy app1 should succeed.', function () {
-        return app1.destroy().should.be.fulfilled;
+        return app1.destroy();
       });
 
       it('Destroy app2 should succeed.', function () {
-        return app2.destroy().should.be.fulfilled;
+        return app2.destroy();
       });
 
       it('Get app1 should fail, because it was deleted.', function () {
@@ -108,7 +107,7 @@ define(function (require, exports, module) {
 
       it('Create parent app should succeed.', function () {
         return app.save().then(function (attrs) {
-          should.exist(app.get('_id'));
+          should.exist(app.id);
         });
       });
 
@@ -123,27 +122,31 @@ define(function (require, exports, module) {
       });
 
       it('Create service1 should succeed.', function () {
+        service1 = services.create(testData.services[0]);
         var promise = new Promise(function (resolve, reject) {
-          service1 = services.create(testData.services[0]);
           service1.once('sync', resolve);
+          service1.once('error', reject);
+          should.not.exist(service1.validationError);
         });
 
         return promise.then(function () {
-          service1Id = service1.get('_id');
+          service1Id = service1.id;
           should.exist(service1Id);
-        }).catch(logger.error.bind(logger));
+        });
       });
 
       it('Create service2 should succeed.', function () {
+        service2 = services.create(testData.services[0]);
         var promise = new Promise(function (resolve, reject) {
-          service2 = services.create(testData.services[0]);
           service2.once('sync', resolve);
+          service2.once('error', reject);
+          should.not.exist(service2.validationError);
         });
 
         return promise.then(function () {
-          service2Id = service2.get('_id');
+          service2Id = service2.id;
           should.exist(service2Id);
-        }).catch(logger.error.bind(logger));
+        });
       });
 
       it('Parent app should contain 2 services.', function () {
@@ -168,7 +171,7 @@ define(function (require, exports, module) {
       });
 
       it('Destroy service1 should succeed.', function () {
-        return services.get(service1).destroy().should.be.fulfilled;
+        return services.get(service1).destroy();
       });
 
       it('Parent app fetch should reflect 1 nested service.', function () {
@@ -184,7 +187,7 @@ define(function (require, exports, module) {
       });
 
       it('Destroy parent app should succeed.', function () {
-        return app.destroy().should.be.fulfilled;
+        return app.destroy();
       });
 
       it('Services should be empty, because app is deleted.', function () {
@@ -202,7 +205,7 @@ define(function (require, exports, module) {
 
       it('Get current user', function () {
         var user = new User();
-        return user.fetch().should.be.fulfilled;
+        return user.fetch();
       });
     });
   });

@@ -7,14 +7,12 @@ define(function (require) {
 
     apps: [{
       name: 'App one',
-      logo: 'http://placekitten.com/200/100',
-      description: 'Bacon ipsum dolor sit amet culpa sirloin do ham hock pig cupidatat ut tail' +
-         'consequat. Cow commodo sunt frankfurter pork excepteur.'
+      description: 'Bacon ipsum dolor sit amet culpa sirloin do ham hock pig cupidatat ut tail'
+        + 'consequat. Cow commodo sunt frankfurter pork excepteur.'
     }, {
       name: 'App two',
-      logo: 'http://placekitten.com/200/100',
-      description: 'Pancetta rump dolore, fugiat cow exercitation porchetta esse commodo quis ' +
-          'chuck ham hock dolore drumstick ham.',
+      description: 'Pancetta rump dolore, fugiat cow exercitation porchetta esse commodo quis '
+        + 'chuck ham hock dolore drumstick ham.',
       services: []
     }],
 
