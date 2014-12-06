@@ -6,7 +6,7 @@ define(function (require) {
 
     handleModelErrors: function (owner, model) {
       owner.listenTo(model, 'error', function (model, resp) {
-        notifyChannel.trigger('entity:error', this.app, resp.statusText);
+        notifyChannel.command('add:entityError', this.app, resp.statusText);
       });
     }
   };

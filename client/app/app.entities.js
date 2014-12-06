@@ -11,7 +11,7 @@ define(function (require) {
       'user': ['reply', 'getUser']
     },
 
-    user: null,
+    user: undefined,
 
     initialize: function () {
       this.user = new User();

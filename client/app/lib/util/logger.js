@@ -10,10 +10,10 @@ define(function (require) {
   _.extend(Logger.prototype, {
     
     // AMD module's file name
-    fileName: null,
+    fileName: undefined,
 
     // AMD module's fully-qualified path
-    moduleUri: null,
+    moduleUri: undefined,
 
     _log: function (logger, logArgs) {
       console[logger].apply(console, ['['+this.fileName+']'].concat(_.toArray(logArgs)));
@@ -38,7 +38,7 @@ define(function (require) {
     error: function () {
       if (Logger.enabled && Logger.modeIdx <= 3) {
         if (arguments[0] instanceof Error) {
-          this._log('error', [arguments[0].message, arguments[0].stack]);
+          this._log('error', [arguments[0].message, arguments[0].stack].concat(_.rest(arguments)));
         } else {
           this._log('error', arguments);
         }
@@ -49,10 +49,10 @@ define(function (require) {
   _.extend(Logger, {
 
     // Current mode
-    mode: null,
+    mode: undefined,
 
     // Mode index for quick mode inclusiveness comparisions
-    modeIdx: null,
+    modeIdx: undefined,
     
     // Possible modes
     modes: ['debug', 'info', 'warn', 'error'],
@@ -64,6 +64,8 @@ define(function (require) {
     // Note that finer-grained modes include coarser modes; e.g., 'warn' implies 'error' but not
     // 'info' or 'debug'.
     enable: function (mode) {
+      // Don't enable logging unless a console logger exists
+      if (!(console && console.log && console.warn && console.error)) return;
       var _mode = mode || 'debug';
       var modeIdx = Logger.modes.indexOf(_mode);
       if (!~modeIdx) {

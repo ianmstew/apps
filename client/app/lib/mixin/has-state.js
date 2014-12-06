@@ -4,20 +4,24 @@ define(function (require) {
 
   var HasState = {
 
-    // Default state overridable by constructor 'state' option
-    defaultState: null,
+    // Default state attributes hash overridable by constructor 'state' option
+    defaultState: undefined,
 
     // Backbone model maintaining state
-    state: null,
+    state: undefined,
 
-    // Initial state of model after defaults and constructor 'state' option
-    initialState: null,
+    // Initial state attributes hash after defaults and constructor 'state' option are applied
+    initialState: undefined,
 
+    // options {
+    //   state: {Model|attrs} Initial state
+    // }
     initialize: function (options) {
       var state = (options || {}).state;
 
       if (state && state instanceof Backbone.Model) {
         this.state = state;
+        this.initialState = _.clone(this.state.attributes);
       } else {
         this.initialState = _.defaults({}, state, this.defaultState);
         this.state = new Backbone.Model(this.initialState);
@@ -50,9 +54,8 @@ define(function (require) {
     },
 
     _serializeDataWrapper: function (serializeData) {
-      var origArgs = Array.prototype.slice.call(this, 1);
-      var data = serializeData.apply(this, origArgs);
-      data.state = this.state.toJSON();
+      var data = serializeData.apply(this, _.rest(arguments));
+      data.state = _.clone(this.state.attributes);
       return data;
     },
 
@@ -62,7 +65,7 @@ define(function (require) {
 
     _cleanupState: function () {
       if (this.stateEvents) this._detachStateEvents();
-      this.state.destroy();
+      this.state.stopListening();
       this.state = null;
     }
   };

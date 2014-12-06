@@ -2,14 +2,17 @@ define(function (require) {
   require('lib/shim/promise');
   var Backbone = require('backbone');
 
-  var syncWrapper = function (sync) {
-    var origArgs = _.toArray(arguments).slice(1);
-    var syncing = sync.apply(this, origArgs);
-    this.syncing = syncing;
-    return syncing;
-  };
+  function syncWrapped() {
+    return (this.syncing = Backbone.sync.apply(this, arguments));
+  }
 
-  var syncWrapped = _.wrap(Backbone.sync, syncWrapper);
+  // Guarantee a resolved promise
+  Backbone.Model.prototype.syncing
+    = Backbone.Collection.prototype.syncing
+    = Promise.resolve();
 
-  Backbone.Model.prototype.sync = Backbone.Collection.prototype.sync = syncWrapped;
+  // Override sync method
+  Backbone.Model.prototype.sync
+    = Backbone.Collection.prototype.sync
+    = syncWrapped;
 });

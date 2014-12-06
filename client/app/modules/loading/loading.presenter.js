@@ -8,8 +8,8 @@ define(function (require) {
    */
   var LoadingPresenter = Presenter.extend({
 
-    view: null,
-    LoadingView: null,
+    view: undefined,
+    LoadingView: undefined,
 
     initialize: function (options) {
       var opts = options || {};

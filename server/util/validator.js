@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var validIdReg = new RegExp("^[0-9a-fA-F]{24}$");
 
 var validator = {
   missing: function (obj, required) {
@@ -16,6 +17,10 @@ var validator = {
     }
 
     return missing;
+  },
+
+  validId: function (id) {
+    return validIdReg.test(id);
   },
 
   failOnMissing: function (res, obj, required) {

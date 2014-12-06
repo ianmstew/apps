@@ -9,9 +9,9 @@ define(function (require) {
 
     channelName: 'editor',
 
-    tab: null,
+    tab: undefined,
 
-    _editorView: null,
+    _editorView: undefined,
 
     modelEvents: {
       'change': 'render'

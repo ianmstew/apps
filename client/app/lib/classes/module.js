@@ -17,25 +17,25 @@ define(function (require) {
 
     // Declarative set of child modules
     // { 'moduleName': ModuleClass }
-    modules: null,
+    modules: undefined,
 
     // Backbone Router routes object
-    routes: null,
+    routes: undefined,
 
     // Whether to start child modules when I start
     startModules: true,
 
     // My region
-    region: null,
+    region: undefined,
 
     // Local storage of child module instances
-    _modules: null,
+    _modules: undefined,
 
     // Whether I am running
-    _isRunning: null,
+    _isRunning: undefined,
 
     // Router instance
-    _router: null,
+    _router: undefined,
 
     constructor: function () {
       // If child defines initialize, ensure call to my own initialize
