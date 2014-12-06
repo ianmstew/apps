@@ -2,7 +2,7 @@ define(function (require) {
   var Module = require('lib/classes/module');
   var ListLayout = require('modules/manager/list/list.layout');
   var CreatePresenter = require('modules/manager/create/create.presenter');
-  var ManagerEntities = require('modules/manager/manager.entities');
+  var ManagerService = require('modules/manager/manager.service');
 
   var ManagerModule = Module.extend({
 
@@ -17,7 +17,7 @@ define(function (require) {
 
     // Module-level entities are provided over events through the entities sub module
     modules: {
-      'entities': ManagerEntities
+      'entities': ManagerService
     },
 
     // Route 'apps'

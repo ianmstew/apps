@@ -22,6 +22,9 @@ define(function (require) {
       this.notifyChannel = Radio.channel('notify');
       this.apps = new AppsCollection();
       notifyUtil.handleModelErrors(this, this.apps);
+    },
+
+    onStart: function () {
       this.apps.fetch();
     },
 

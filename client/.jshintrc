@@ -16,7 +16,15 @@
     "define": true,
     "require": true,
     "_": true,
-    "Promise": true
+    "Promise": true,
+
+    // bleh.
+    "Parsley": true,
+    "ParsleyConfig": true,
+    "ParsleyExtend": true,
+    "ParsleyUI": true,
+    "ParsleyUtils": true,
+    "ParsleyValidator": true
   },
 
   // Unfortunate overkill, but necessary for preceding || and &&.

@@ -34,24 +34,22 @@ define(function (require) {
       return apps.fetch()
         .then(function () {
           if (apps.isEmpty()) {
-            var app1 = new App(this.apps[0], { parse: true });
-            var app2 = new App(this.apps[1], { parse: true });
+            var app1 = new App(testData.apps[0], { parse: true });
+            var app2 = new App(testData.apps[1], { parse: true });
 
             return Promise.all([app1, app2, app1.save(), app2.save()]);
           } else {
-            return Promise.resolve([]);
+            return [];
           }
-        }.bind(this))
+        })
         .then(function (apps) {
           if (apps.length) {
             var app1 = apps[0];
-
-            return Promise.all([
-              app1.services.create(this.services[0]),
-              app1.services.create(this.services[1])
-            ]);
+            var service1 = app1.services.create(testData.services[0]);
+            var service2 = app1.services.create(testData.services[1]);
+            return Promise.all([service1.syncing, service2.syncing]);
           }
-        }.bind(this));
+        });
     }
   };
 

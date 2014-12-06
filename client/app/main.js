@@ -18,6 +18,7 @@
       'text':                    '../vendor/requirejs-hogan-plugin/text',
       'underscore':              '../vendor/underscore/underscore',
       'promise':                 '../vendor/rsvp/rsvp',
+      'parsley':                 '../vendor/parsleyjs/parsley',
 
       // test
       'test':                    '../test',

@@ -18,7 +18,8 @@
     "backbone.syphon": "~0.4.1",
     "rsvp": "~3.0.13",
     "cocktail": "~0.5.9",
-    "backbone-computedfields": "~0.0.10"
+    "backbone-computedfields": "~0.0.10",
+    "parsleyjs": "^2.0.6"
   },
   "exportsOverride": {
     "backbone.wreqr": {
@@ -47,7 +48,7 @@
       "font": "fonts"
     },
     "parsleyjs": {
-      ".": "parsley.js"
+      ".": "dist/parsley.js"
     },
     "backbone.stickit": {
       ".": "backbone.stickit.js"

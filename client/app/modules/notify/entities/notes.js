@@ -1,10 +1,10 @@
 define(function (require) {
   var Backbone = require('backbone');
-  var Message = require('modules/notify/entities/message');
+  var Note = require('modules/notify/entities/note');
 
-  var Messages = Backbone.Collection.extend({
-    model: Message
+  var Notes = Backbone.Collection.extend({
+    model: Note
   });
 
-  return Messages;
+  return Notes;
 });

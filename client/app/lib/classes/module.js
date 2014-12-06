@@ -104,7 +104,7 @@ define(function (require) {
     _startModules: function (options) {
       _.chain(this._modules)
         .values()
-        .invoke('stop', options);
+        .invoke('start', options);
     },
 
     _stopModules: function (options) {
