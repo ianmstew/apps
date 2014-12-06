@@ -1,4 +1,4 @@
-<form class="service-info" role="form">
+<form class="service-info" role="form" data-parsley-validate>
   <div class="service-logo">
     <img src="http://placekitten.com/g/200/300" alt="kittenz yo" title="kittenz yo" />
     <!-- Icon {{icon}} -->
@@ -7,25 +7,25 @@
   <div class="service-date-added">
     <label for="serviceDateAdded">Added:</label>
     <div>
-      <input name="serviceDateAdded" value="{{dateAdded}}">
+      {{dateAdded}}
     </div>
   </div>
   <div class="service-callback-url">
     <label for="serviceCallbackUrl">Callback URL:</label>
     <div>
-      <input name="serviceCallbackUrl" value="{{callbackUrl}}">
+      <input name="serviceCallbackUrl" id="serviceCallbackUrl" value="{{callbackUrl}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceCallbackUrl" data-parsley-error-message="Something is amiss ..." required >
     </div>
   </div>
   <div class="service-client-id">
     <label for="serviceClientId">Client ID:</label>
     <div>
-      <input name="serviceClientId" value="{{clientId}}">
+      <input name="serviceClientId" id="serviceClientId" value="{{clientId}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceClientId" data-parsley-error-message="Your client ID is not correct!" required >
     </div>
   </div>
   <div class="service-client-secret">
     <label for="serviceClientSecret">Client Secret:</label>
     <div>
-      <input name="serviceClientSecret" value="{{clientSecret}}">
+      <input name="serviceClientSecret" value="{{clientSecret}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceClientSecret" data-parsley-error-message="Darn, your client secret isn't correct." required >
     </div>
   </div>
   <button class="btn-action">Update {{name}} Settings</button>

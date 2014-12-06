@@ -16,5 +16,8 @@
     "grunt": "^0.4.5",
     "load-grunt-tasks": "^0.4.0",
     "grunt-subgrunt": "^0.4.0"
+  },
+  "dependencies": {
+    "parsleyjs": "^2.0.6"
   }
 }
