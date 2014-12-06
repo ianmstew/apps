@@ -2,8 +2,9 @@ define(function (require) {
   // Browser polyfills
   require('lib/shim/promise');
 
-  // Initialize Twitter Bootstrap scripts
+  // Front end libraries
   require('bootstrap');
+  require('parsley');
 
   // Backbone shims and extensions
   require('backbone.radio');
