@@ -144,9 +144,9 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      client: {
+      all: {
         options: {
-          jshintrc: '.jshintrc-client',
+          jshintrc: '.jshintrc',
           ignores: [
             'public/layouts/**/*.min.js',
             'public/views/**/*.min.js'
@@ -155,15 +155,6 @@ module.exports = function(grunt) {
         src: [
           'public/layouts/**/*.js',
           'public/views/**/*.js'
-        ]
-      },
-      server: {
-        options: {
-          jshintrc: '.jshintrc-server'
-        },
-        src: [
-          'schema/**/*.js',
-          'views/**/*.js'
         ]
       }
     },
