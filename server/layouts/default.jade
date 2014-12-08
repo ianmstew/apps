@@ -12,7 +12,9 @@ html
       include includes/default/header.jade
 
       main#content-region.content
-        block body
+        div.content-fixed
+          block body
+        block body-fluid
 
     include includes/footer.jade
 
