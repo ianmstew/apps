@@ -74,11 +74,7 @@ module.exports = function(grunt) {
           'public/layouts/**/*.js', '!public/layouts/**/*.min.js',
           'public/views/**/*.js', '!public/views/**/*.min.js'
          ],
-         tasks: ['newer:uglify', 'newer:jshint:client']
-      },
-      serverJS: {
-         files: ['views/**/*.js'],
-         tasks: ['newer:jshint:server']
+         tasks: ['newer:uglify']
       },
       lessViews: {
          files: [
@@ -144,9 +140,9 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      client: {
+      all: {
         options: {
-          jshintrc: '.jshintrc-client',
+          jshintrc: '.jshintrc',
           ignores: [
             'public/layouts/**/*.min.js',
             'public/views/**/*.min.js'
@@ -155,15 +151,6 @@ module.exports = function(grunt) {
         src: [
           'public/layouts/**/*.js',
           'public/views/**/*.js'
-        ]
-      },
-      server: {
-        options: {
-          jshintrc: '.jshintrc-server'
-        },
-        src: [
-          'schema/**/*.js',
-          'views/**/*.js'
         ]
       }
     },

@@ -4,25 +4,25 @@
     <!-- Icon {{icon}} -->
   </div>
   <div class="service-name">{{name}}</div>
-  <div class="service-date-added">
+  <div class="service-field service-date-added">
     <label for="serviceDateAdded">Added:</label>
     <div>
       {{dateAdded}}
     </div>
   </div>
-  <div class="service-callback-url">
+  <div class="service-field service-callback-url">
     <label for="serviceCallbackUrl">Callback URL:</label>
     <div>
       <input name="serviceCallbackUrl" id="serviceCallbackUrl" value="{{callbackUrl}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceCallbackUrl" data-parsley-error-message="Something is amiss ..." required >
     </div>
   </div>
-  <div class="service-client-id">
+  <div class="service-field service-client-id">
     <label for="serviceClientId">Client ID:</label>
     <div>
       <input name="serviceClientId" id="serviceClientId" value="{{clientId}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceClientId" data-parsley-error-message="Your client ID is not correct!" required >
     </div>
   </div>
-  <div class="service-client-secret">
+  <div class="service-field service-client-secret">
     <label for="serviceClientSecret">Client Secret:</label>
     <div>
       <input name="serviceClientSecret" value="{{clientSecret}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceClientSecret" data-parsley-error-message="Darn, your client secret isn't correct." required >

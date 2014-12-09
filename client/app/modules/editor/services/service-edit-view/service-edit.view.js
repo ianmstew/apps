@@ -5,6 +5,8 @@ define(function (require) {
   var ServiceEditView = Marionette.ItemView.extend ({
     template: template,
 
+    className: 'service-edit-form',
+
     events: {
       'submit form': 'formSubmitted'
     },

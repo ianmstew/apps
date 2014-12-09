@@ -79,44 +79,27 @@ h3 {
   vertical-align: middle;
 }
 
-table {
-  width: 100%;
-
-  tr {
-    td {
-      width: 200px;
-
-      &:first-child {
-        font-weight: bold;
-      }
-    }
-  }
-}
-
 .table-app-details,
 .table-app-services {
   &:extend(.table all);
+  margin-bottom: 0 !important;
 }
 
 .table-app-details {
-  td {
-    &:first-child {
-      width: 10%;
-    }
+  th {
+    width: 10%;
   }
-
-  > tbody > tr > td {
-    border-top: 0;
+  .first-row td,
+  .first-row th {
+    border-top: none !important;
   }
 }
 
 .table-app-services {
   &:extend(.table-striped all, .table-hover all);
-
   th {
-    &:first-child {
-      width: 5%;
-    }
+    width: 5%;
+    white-space: nowrap;
   }
 }
 

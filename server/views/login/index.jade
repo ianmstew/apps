@@ -8,6 +8,9 @@ block feet
   script(src='/views/signup/index.min.js?#{cacheBreaker}')
 
 block body
+  block contentVars
+    - contentClass = 'inverse-background'
+
   .user-login
     .user-account-form
       h1 Power your app with APINetwork.
@@ -24,6 +27,8 @@ block body
       .tab-content
         #createAccount.tab-pane.fade.in.active
           #signup
+            // NOTE: The contents of #signup are replaced by Backbone using #tmpl-signup.
+            // We retain this "useless" form for Javascript-naive SEO.
             form.form-horizontal(role='form')
               .form-group
                 label.sr-only(for='emailAddress') Email address
@@ -45,6 +50,8 @@ block body
 
         #userLogin.tab-pane.fade
           #login
+            // NOTE: The contents of #login are replaced by Backbone using #tmpl-login.
+            // We retain this "useless" form for Javascript-naive SEO.
             form.form-horizontal(role='form')
               .form-group
                 label.sr-only(for='emailAddress') Email address
@@ -78,7 +85,7 @@ block body
           label.sr-only(for='username') Pick Username
           input#username.form-control(type='text', name='username', value!='<%= username %>', placeholder='Username')
           span.help-block <%- errfor.username %>
-      .form-group(class!='<%- errfor.username ? "has-error" : "" %>')
+      .form-group(class!='<%- errfor.email ? "has-error" : "" %>')
         label.sr-only(for='emailAddress') Email address
         input#emailAddress.form-control(type='email', name='email', value!='<%= email %>', placeholder='E-mail Address')
         span.help-block <%- errfor.username %>

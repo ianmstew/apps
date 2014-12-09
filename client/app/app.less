@@ -28,6 +28,10 @@ body {
   }
 }
 
+.url-cell {
+  word-break: break-word;
+}
+
 .wrap {
   width: 100%;
   min-height: 100%;
@@ -166,9 +170,10 @@ footer {
 
   li.grid-item {
     position: relative;
-    padding: 1% 1% 0 1%;
+    padding: 1% 1% 1% 1%;
     background-color: @gray-even-lighter;
     border: @border-gray;
+    word-wrap: break-word;
     .border-radius(3px);
 
     > ul {
@@ -205,6 +210,20 @@ footer {
       text-decoration: none;
     }
   }
+
+  .service-description {
+    width: 100%;
+    table-layout: fixed;
+
+    th {
+      width: 100px;
+      vertical-align: top;
+    }
+
+    td {
+      word-wrap: break-word;
+    }
+  }
 }
 
 .js-info,
@@ -236,6 +255,7 @@ footer {
   box-sizing: border-box;
   // min-height: 300px;
   height: 300px;
+  width: 300px;
   .transition(background-color 0.5s ease);
 
   // Clears last element in row for four column layout
