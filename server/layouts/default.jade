@@ -8,7 +8,9 @@ html
     link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
     block neck
   body
-    div.sticky-footer-wrap
+    // Inject variables at the content wrapper level
+    block contentVars
+    div(class="sticky-footer-wrap #{contentClass}")
       include includes/default/header.jade
 
       main#content-region.content
@@ -22,9 +24,6 @@ html
 
     div.ajax-spinner
       img(src='/media/ajax-pulse.gif')
-
-    //if lte IE 9
-      script(src='/layouts/ie-sucks.min.js?#{cacheBreaker}')
     script(src='/layouts/core.min.js?#{cacheBreaker}')
 
     block feet

@@ -6,9 +6,12 @@ block head
 block feet
   script(src='/views/login/forgot/index.min.js?#{cacheBreaker}')
 
-block body-fluid
+block body
+  block contentVars
+    - contentClass = 'inverse-background'
+
   .user-login
-    .user-account-form.content-fixed
+    .user-account-form
       h1 Forgot Your Password?
       div#forgot
 
