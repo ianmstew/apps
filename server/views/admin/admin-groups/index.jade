@@ -1,4 +1,4 @@
-extends ../../../layouts/admin
+extends ../../../layouts/default
 
 block head
   title Manage Admin Groups
@@ -10,11 +10,10 @@ block feet
   script(src='/views/admin/admin-groups/index.min.js?#{cacheBreaker}')
 
 block body
-  .static-content
-    div#header
-    div#filters
-    div#results-table
-    div#results-paging
+  div#header
+  div#filters
+  div#results-table
+  div#results-paging
 
   script(type='text/template', id='tmpl-header')
     form.form-inline.pull-right

@@ -13,10 +13,8 @@ html
     div(class="sticky-footer-wrap #{contentClass}")
       include includes/default/header.jade
 
-      main#content-region.content
-        div.content-fixed
-          block body
-        block body-fluid
+      main#content-region.content.content-fixed
+        block body
 
     include includes/footer.jade
 

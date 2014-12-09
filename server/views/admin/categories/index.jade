@@ -1,4 +1,4 @@
-extends ../../../layouts/admin
+extends ../../../layouts/default
 
 block head
   title Manage Categories
@@ -10,11 +10,10 @@ block feet
   script(src='/views/admin/categories/index.min.js?#{cacheBreaker}')
 
 block body
-  .static-content
-    div#header
-    div#filters
-    div#results-table
-    div#results-paging
+  div#header
+  div#filters
+  div#results-table
+  div#results-paging
 
   script(type='text/template', id='tmpl-header')
     form.form-inline.pull-right
