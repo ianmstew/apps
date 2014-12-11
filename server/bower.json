@@ -9,6 +9,6 @@
     "momentjs": "~2.5.0",
     "respond": "~1.4.2",
     "underscore": "~1.5.2",
-    "api-network-ui": "git@github.com:APINetwork/api-network-ui.git#f1a7796300303710c05cebbe7afbeeb4e0cb21b3"
+    "api-network-ui": "git@github.com:APINetwork/api-network-ui.git#56df5cb0eaf532cab6c93d5e141a03efd62fe6e3"
   }
 }
