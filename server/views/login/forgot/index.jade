@@ -29,8 +29,8 @@ block body
               | If an account matched that address, an email will be sent with instructions.
             |<% } %>
           |<% if (!success) { %>
-          div.form-group(class!='<%- errfor.email ? "has-error" : "" %>')
-            label Enter Your Email:
+          div.form-group.forgot-form(class!='<%- errfor.email ? "has-error" : "" %>')
+            h4 Enter Your Email:
             input.form-control(type='text', name='email', value!='<%= email %>')
             span.help-block <%- errfor.email %>
           |<% } %>

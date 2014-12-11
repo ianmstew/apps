@@ -19,7 +19,7 @@ define(function (require) {
 
     ui: {
       appId: '.js-services-appId',
-      serviceCreate: '.js-service-create'
+      serviceCreate: '.js-grid-create'
     },
 
     events: {

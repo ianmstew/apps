@@ -10,7 +10,7 @@
   "dependencies": {
     "almond": "~0.3.0",
     "backbone.radio": "~0.8.3",
-    "api-network-ui": "git@github.com:APINetwork/api-network-ui.git#f1a7796300303710c05cebbe7afbeeb4e0cb21b3",
+    "api-network-ui": "git@github.com:APINetwork/api-network-ui.git#56df5cb0eaf532cab6c93d5e141a03efd62fe6e3",
     "marionette": "~2.2.2",
     "requirejs": "~2.1.15",
     "requirejs-hogan-plugin": "~0.3.1",

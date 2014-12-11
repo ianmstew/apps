@@ -18,7 +18,7 @@ define(function (require) {
     },
 
     ui: {
-      appName: '.js-app-name'
+      appName: '.js-grid-name'
     },
 
     nameChanged: function (model, value, options) {
