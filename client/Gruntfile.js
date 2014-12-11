@@ -9,7 +9,7 @@ module.exports = function (grunt) {
       app: 'app',
       test: 'test',
       assets: 'assets',
-      style: 'style',
+      style: 'app/common-style',
 
       // Intermediate folders (transient)
       temp: 'temp',
@@ -37,7 +37,8 @@ module.exports = function (grunt) {
       options: {
         paths: [
           '<%- path.vendor %>',
-          '<%- path.temp %>'
+          '<%- path.temp %>',
+          '<%- path.app %>'
         ]
       },
 

@@ -1,0 +1,162 @@
+// Used in list.view and services.view
+// Sets up our grid layout
+
+.grid {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  .grid-item {
+    position: relative;
+    padding: 1% 1% 1% 1%;
+    background-color: @gray-even-lighter;
+    border: @border-gray;
+    word-wrap: break-word;
+    .border-radius(3px);
+
+    > ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    i {
+      color: @gray;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    &:hover {
+      background-color: @gray-lighter;
+    }
+  }
+
+  a {
+    color: @gray-darker;
+    &:hover {
+      color: @gray-darker;
+      text-decoration: none;
+    }
+  }
+
+  .grid-description {
+    width: 100%;
+    table-layout: fixed;
+
+    th {
+      width: 100px;
+      vertical-align: top;
+    }
+
+    td {
+      word-wrap: break-word;
+    }
+  }
+
+  .services {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      float: left;
+      padding: 0 1%;
+    }
+  }
+}
+
+// Used in list.view and services.view
+.grid-item {
+  // &:extend(.col-xs-12, .col-sm-6, .col-md-4, .col-lg-4);
+  float: left;
+  width: calc((100 - ((@num-cols * 2) * @grid-item-margin)) / @num-cols);
+  margin: @grid-item-margin;
+  box-sizing: border-box;
+  // min-height: 300px;
+  height: 300px;
+  width: 300px;
+  .transition(background-color 0.5s ease);
+
+  // Clears last element in row for four column layout
+  &:nth-child(4n+4) {
+    clear: both;
+  }
+
+  @media screen (max-width: @screen-tablet) {
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.grid-create {
+  &:extend(.btn-gray);
+
+  position: relative;
+  padding: 0.75% 0;
+  color: @gray-dark;
+  text-align: center;
+  background-color: #FFF;
+  border: 2px @gray-lighter dashed;
+
+  &:hover {
+    color: @brand-apiblue;
+    background-color: @gray-even-lighter;
+  }
+
+  &:link,
+  &:active,
+  &:hover,
+  &:visited,
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+  }
+}
+
+.grid-logo {
+  float: right;
+  width: @grid-logo-width;
+  height: @grid-logo-width;
+  margin-bottom: 10px;
+  .border-radius(2px);
+  overflow: hidden;
+
+  // Fixes width + height appropriately
+  > img {
+    width: @grid-logo-width;
+  }
+}
+
+.grid-name {
+  font-size: @font-size-h4;
+  line-height: @grid-logo-width;
+}
+
+.grid-description {
+  clear: both;
+  font-size: 12px;
+}
