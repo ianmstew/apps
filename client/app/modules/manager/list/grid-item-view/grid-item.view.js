@@ -6,7 +6,6 @@ define(function (require) {
 
   var GridItemView = Marionette.CompositeView.extend({
     template: template,
-    className: 'grid-item',
     tagName: 'li',
     emptyView: ServiceNoneView,
     childView: ServiceView,

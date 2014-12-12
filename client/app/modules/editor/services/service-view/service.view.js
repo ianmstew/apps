@@ -7,14 +7,13 @@ define(function (require) {
   var ServiceView = Marionette.ItemView.extend ({
     template: template,
     tagName: 'li',
-    className: 'grid-item',
 
     ui: {
       serviceInfo: '.service-info'
     },
 
     events: {
-      'click @ui.serviceInfo': 'editMe'
+      'click': 'editMe'
     },
 
     editMe: function () {
