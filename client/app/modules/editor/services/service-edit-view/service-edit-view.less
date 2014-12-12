@@ -3,38 +3,35 @@
 // --------------------------------------------------
 
 // Responsive-friendly styling for form via Bootstrap
-form.service-info {
-
-  [class$='-logo'] {
-    float: left;
-    margin-right: 15px;
-  }
-
+.service-info {
   &:extend(.form-horizontal);
 
-  div {
-    &:extend(.form-group);
+  .service-name {
+    margin-bottom: 30px;
 
-    div {
-      &:extend(.col-sm-12, .col-md-6, .col-lg-9);
+    .fa {
+      margin-right: 10px;
     }
   }
 
-  label {
-    &:extend(.col-sm-12, .col-md-6, .col-lg-3);
-
-    margin-left: -15px;
+  .update-button {
+    margin-top: 15px;
   }
 
-  input {
-    &:extend(.form-control);
-
-    @media screen and (max-width: @screen-phone) {
-      margin-left: -15px;
-    }
-  }
-
-  .service-field {
+  .form-group {
     .clearfix;
+  }
+
+  .form-group label {
+    &:extend(.col-xs-2);
+  }
+
+  .service-callback-url .form-control {
+    &:extend(.col-xs-10);
+  }
+
+  .service-client-id .form-control,
+  .service-client-secret .form-control {
+    &:extend(.col-xs-5);
   }
 }

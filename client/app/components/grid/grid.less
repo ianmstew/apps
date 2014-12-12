@@ -1,60 +1,37 @@
-// Used in list.view and services.view
 // Sets up our grid layout
+@grid-logo-width: 40px;
 
 .grid {
+  .clearfix;
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
 
-  .grid-item {
-    position: relative;
-    padding: 1% 1% 1% 1%;
-    background-color: @gray-even-lighter;
-    border: @border-gray;
-    word-wrap: break-word;
-    .border-radius(3px);
+.grid-item {
+  display: block;
+  position: relative;
+  float: left;
+  height: 300px;
+  width: 300px;
+  margin: 10px;
+  padding: 10px;
+  border: @border-gray;
+  .border-radius(3px);
+  box-sizing: border-box;
+  color: @gray-darker;
+  background-color: @gray-even-lighter;
+  word-wrap: break-word;
+  .transition(background-color 0.2s ease);
 
-    > ul {
-      margin: 0;
-      padding: 0;
-      list-style-type: none;
-    }
-
-    i {
-      color: @gray;
-    }
-
-    &:after {
-      content: "";
-      display: block;
-      clear: both;
-    }
-
-    &:hover {
-      background-color: @gray-lighter;
-    }
-  }
-
-  a {
+  &:hover,
+  &:active,
+  &:focus {
     color: @gray-darker;
-    &:hover {
-      color: @gray-darker;
-      text-decoration: none;
-    }
-  }
-
-  .grid-description {
-    width: 100%;
-    table-layout: fixed;
-
-    th {
-      width: 100px;
-      vertical-align: top;
-    }
-
-    td {
-      word-wrap: break-word;
-    }
+    text-decoration: none;
+    background-color: @gray-lighter;
+    outline: 0;
+    cursor: pointer;
   }
 
   .services {
@@ -72,37 +49,20 @@
   }
 }
 
-// Used in list.view and services.view
-.grid-item {
-  // &:extend(.col-xs-12, .col-sm-6, .col-md-4, .col-lg-4);
-  float: left;
-  width: calc((100 - ((@num-cols * 2) * @grid-item-margin)) / @num-cols);
-  margin: @grid-item-margin;
-  box-sizing: border-box;
-  // min-height: 300px;
-  height: 300px;
-  width: 300px;
-  .transition(background-color 0.5s ease);
+.grid-description {
+  width: 100%;
 
-  // Clears last element in row for four column layout
-  &:nth-child(4n+4) {
-    clear: both;
+  th {
+    width: 100px;
+    vertical-align: top;
   }
 
-  @media screen (max-width: @screen-tablet) {
-  }
-
-  &:hover {
-    text-decoration: none;
+  td {
+    word-break: break-word;
   }
 }
 
 .grid-create {
-  &:extend(.btn-gray);
-
-  position: relative;
-  padding: 0.75% 0;
-  color: @gray-dark;
   text-align: center;
   background-color: #FFF;
   border: 2px @gray-lighter dashed;
@@ -112,16 +72,7 @@
     background-color: @gray-even-lighter;
   }
 
-  &:link,
-  &:active,
-  &:hover,
-  &:visited,
-  &:focus {
-    box-shadow: none;
-    outline: none;
-  }
-
-  > div {
+  .create-label {
     position: absolute;
     top: 0;
     bottom: 0;

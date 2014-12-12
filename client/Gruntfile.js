@@ -199,15 +199,12 @@ module.exports = function (grunt) {
       // Start livereload server at http://localhost:35729/livereload.js
       livereload: {
         options: {
-          cwd: '<%- path.build %>',
           livereload: true
         },
 
         files: [
-          '*.html',
-          'views/*.html',
-          'app/**/*.html',
-          'style/*.css'
+          'build/app/**/*.html',
+          'build/style/*.css'
         ]
       }
     }

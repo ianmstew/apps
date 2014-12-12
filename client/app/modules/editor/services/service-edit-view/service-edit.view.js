@@ -19,8 +19,8 @@ define(function (require) {
     },
 
     onRender: function () {
-      var $title = $('<h4>', { text: this.title });
-      var $description = $('<h5>', { text: this.description });
+      var $title = $('<h2>', { text: this.title, class: 'header' });
+      var $description = $('<div>', { text: this.description, class: 'subheader' });
       this.$el.prepend($title, $description);
     },
 

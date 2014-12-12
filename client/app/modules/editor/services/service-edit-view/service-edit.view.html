@@ -1,32 +1,33 @@
 <form class="service-info" role="form" data-parsley-validate>
-  <div class="grid-logo">
-    <img src="http://placekitten.com/g/200/300" alt="kittenz yo" title="kittenz yo" />
-    <!-- Icon {{icon}} -->
+  <h3 class="service-name">
+    <i class="fa {{iconClass}}"></i> {{name}}
+  </h3>
+  <div class="form-group service-callback-url">
+    <label class="control-label" for="serviceCallbackUrl">Callback URL:</label>
+    <input class="form-control" name="serviceCallbackUrl" value="{{callbackUrl}}" readonly>
   </div>
-  <div class="grid-name">{{name}}</div>
-  <div class="service-field service-date-added">
-    <label for="serviceDateAdded">Added:</label>
-    <div>
-      {{dateAdded}}
-    </div>
+  <div class="form-group service-client-id">
+    <label class="control-label" for="serviceClientId">Client ID:</label>
+    <input class="form-control"
+      name="serviceClientId" id="serviceClientId" value="{{clientId}}"
+      data-parsley-trigger="change"
+      data-parsley-class-handler=".service-client-id"
+      data-parsley-error-class="has-error"
+      data-parsley-errors-container=".service-client-id .errors"
+      data-parsley-required-message="Please provide your {{name}} account client ID."
+      required>
+    <div class="errors"></div>
   </div>
-  <div class="service-field service-callback-url">
-    <label for="serviceCallbackUrl">Callback URL:</label>
-    <div>
-      <input name="serviceCallbackUrl" id="serviceCallbackUrl" value="{{callbackUrl}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceCallbackUrl" data-parsley-error-message="Something is amiss ..." required >
-    </div>
+  <div class="form-group service-client-secret">
+    <label class="control-label" for="serviceClientSecret">Client Secret:</label>
+    <input class="form-control" name="serviceClientSecret" value="{{clientSecret}}"
+      data-parsley-trigger="change"
+      data-parsley-class-handler=".service-client-secret"
+      data-parsley-error-class="has-error"
+      data-parsley-errors-container=".service-client-secret .errors"
+      data-parsley-required-message="Please provide your {{name}} account client secret."
+      required>
+    <div class="errors"></div>
   </div>
-  <div class="service-field service-client-id">
-    <label for="serviceClientId">Client ID:</label>
-    <div>
-      <input name="serviceClientId" id="serviceClientId" value="{{clientId}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceClientId" data-parsley-error-message="Your client ID is not correct!" required >
-    </div>
-  </div>
-  <div class="service-field service-client-secret">
-    <label for="serviceClientSecret">Client Secret:</label>
-    <div>
-      <input name="serviceClientSecret" value="{{clientSecret}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#serviceClientSecret" data-parsley-error-message="Darn, your client secret isn't correct." required >
-    </div>
-  </div>
-  <button class="btn-action">Update {{name}} Settings</button>
+  <button class="update-button btn-action">Update {{name}} Settings</button>
 </form>
