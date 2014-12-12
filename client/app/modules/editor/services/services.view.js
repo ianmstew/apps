@@ -13,6 +13,8 @@ define(function (require) {
     childView: ServiceView,
     childViewContainer: '.js-service',
 
+    className: 'services',
+
     modelEvents: {
       'change:_id': 'appIdChanged'
     },

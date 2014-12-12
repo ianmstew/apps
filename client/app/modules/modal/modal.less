@@ -10,7 +10,7 @@
 
 
 .modal {
-  background-color: rgba(255,255,255,0.95);
+  background-color: rgba(255,255,255,0.85);
 
   // Revised width for modal-dialog
   .modal-dialog {
@@ -30,6 +30,7 @@
   .modal-content {
     border: 0;
     .border-radius(0);
+    background: none;
     .box-shadow(none);
   }
 }
@@ -41,12 +42,13 @@
 }
 
 .modal {
-  h4 {
+  .header {
     &:extend(.modal-title);
   }
 
-  h5 {
+  .subheader {
     &:extend(.modal-subheader);
+    margin-top: 5px;
   }
 }
 

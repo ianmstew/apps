@@ -7,9 +7,7 @@ define(function (require) {
     template: template,
 
     initialize: function () {
-      // var app = this.channel.request('app');
-      this.title = 'Add '/* + this.model.get('services')*/;
-      this.title += ' ' + 'Service';
+      this.title = 'Add Service';
       this.description = 'Select an option below to add your service:';
     },
 
@@ -20,7 +18,7 @@ define(function (require) {
     },
 
     regions: {
-      serviceAddDetail: 'js-service-detail'
+      serviceAddDetail: '.js-service-detail'
     },
 
     events: {
