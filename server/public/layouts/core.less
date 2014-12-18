@@ -101,6 +101,10 @@ header {
   margin-right: auto;
   padding-left: 10px;
   padding-right: 10px;
+
+  @media screen and (max-width: @screen-phone) {
+    width: 100%;
+  }
 }
 
 .inverse-background {
@@ -309,7 +313,7 @@ footer {
 .help-guide {
   > li {
     display: inline-block;
-    margin-bottom: 50px;
+    margin-bottom: 3%;
     padding-right: 125px;
     width: 50%;
     vertical-align: top;
@@ -317,21 +321,38 @@ footer {
     &:nth-child(odd) {
       clear: both;
     }
+
+    /* Revises li width so they stack vertically on mobile */
+    @media screen and (max-width: @screen-phone) {
+      padding-right: 0;
+      width: 100%;
+    }
   }
 
   img {
     border: 1px solid #ccc;
   }
+
+  @media screen and (max-width: @screen-phone) {
+    padding-left: 0;
+    max-width: 100%;
+  }
 }
 
 .acct-imgs {
   img {
-    height: 270px;
-    margin-bottom: 10px
+    height: 230px;
+    margin-bottom: 10px;
+
+    @media screen and (max-width: @screen-phone) {
+      width: 370px;
+      height: auto;
+    }
   }
 }
 
 li.guide-app-detail {
+  padding-right: 0;
   width: 100%;
 
   ul {
@@ -341,9 +362,25 @@ li.guide-app-detail {
 
   li {
     display: inline-block;
+    margin-bottom: 3%;
     width: 50%;
     padding-right: 125px;
     vertical-align: top;
+
+    /* Matches same mobile width as parent ul > li so li stack vertically */
+    @media screen and (max-width: @screen-phone) {
+      width: 100%;
+    }
+  }
+
+  img {
+    width: 422px;
+    height: auto;
+
+    /* This matches our responsive width of .acct-imgs > img */
+    @media screen and (max-width: @screen-phone) {
+      width: 370px;
+    }
   }
 }
 
