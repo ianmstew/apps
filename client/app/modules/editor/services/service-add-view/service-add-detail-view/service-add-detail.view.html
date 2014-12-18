@@ -1,3 +1,31 @@
 <div>
-  Let's add Twitter via this form! { insert form }
+  <form class="form-service-add" role="form" data-parsley-validate>
+    <h3 class="service-name">
+      Enter {{name}} Authorization Credentials:
+    </h3>
+    <div class="form-group service-client-id">
+      <label class="control-label" for="serviceClientId">Client ID:</label>
+      <input class="form-control"
+      name="serviceClientId" id="serviceClientId" value="{{clientId}}"
+      data-parsley-trigger="change"
+      data-parsley-class-handler=".service-client-id"
+      data-parsley-error-class="has-error"
+      data-parsley-errors-container=".service-client-id .errors"
+      data-parsley-required-message="Please provide your {{name}} account client ID."
+      required>
+      <div class="errors"></div>
+    </div>
+    <div class="form-group service-client-secret">
+      <label class="control-label" for="serviceClientSecret">Client Secret:</label>
+      <input class="form-control" name="serviceClientSecret" value="{{clientSecret}}"
+      data-parsley-trigger="change"
+      data-parsley-class-handler=".service-client-secret"
+      data-parsley-error-class="has-error"
+      data-parsley-errors-container=".service-client-secret .errors"
+      data-parsley-required-message="Please provide your {{name}} account client secret."
+      required>
+      <div class="errors"></div>
+    </div>
+    <button class="update-button btn-action">Add {{name}} Service</button>
+  </form>
 </div>

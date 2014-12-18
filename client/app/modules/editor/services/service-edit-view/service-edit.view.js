@@ -12,7 +12,6 @@ define(function (require) {
     },
 
     initialize: function () {
-      // var app = this.channel.request('app');
       this.title = 'Edit '/* + this.model.get('services')*/;
       this.title += ' ' + 'Settings';
       this.description = 'View and edit your settings below:';

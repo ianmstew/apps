@@ -27,6 +27,7 @@ define(function (require) {
 
     displayServiceDetail: function () {
       // console.log('I display the service detail form!');
+      // var app = this.channel.request('app');
       var serviceDetailView = new ServiceDetailView();
       this.getRegion('serviceAddDetail').show(serviceDetailView);
     }
