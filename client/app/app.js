@@ -24,7 +24,7 @@ define(function (require) {
       history.start();
 
       if (history.getCurrentRoute() === '') {
-        history.navigate('/apps', { trigger: true });
+        history.navigate('apps/', { trigger: true });
       }
     }
   });

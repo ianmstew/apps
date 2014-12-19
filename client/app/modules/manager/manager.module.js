@@ -11,8 +11,8 @@ define(function (require) {
 
     // This module's routes
     routes: {
-      'apps': 'listApps',
-      'apps/create': 'createApp'
+      'apps/': 'listApps',
+      'apps/create/': 'createApp'
     },
 
     // Module-level entities are provided over events through the entities sub module
