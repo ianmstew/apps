@@ -87,10 +87,13 @@ h3 {
 
 .table-app-details {
   th {
-    width: 10%;
+    white-space: nowrap;
   }
-  .first-row td,
-  .first-row th {
+  td {
+    width: 100%;
+  }
+  td,
+  th {
     border-top: none !important;
   }
 }
@@ -104,5 +107,8 @@ h3 {
 }
 
 .btn-edit {
-  &:extend(.btn-gray, .btn-xs, .pull-right);
+  &:extend(.btn-gray, .btn-xs);
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }

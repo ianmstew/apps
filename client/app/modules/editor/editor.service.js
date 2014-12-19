@@ -19,7 +19,8 @@ define(function (require, exports, module) {
       'service': ['reply', 'getService'],
       'new:service': ['reply', 'newService'],
       'update:service': ['comply', 'updateService'],
-      'destroy:service': ['comply', 'destroyService']
+      'destroy:service': ['comply', 'destroyService'],
+      'update:app': ['comply', 'updateApp']
     },
 
     app: undefined,
@@ -50,6 +51,33 @@ define(function (require, exports, module) {
       return this.app.id;
     },
 
+    // Update this App
+    // - Arguments
+    //     attrs: {object} Attributes hash
+    // - Notifies user on non-existent App ID or validation error.
+    updateApp: function (attrs) {
+      var app = this.app;
+      var errorMsg;
+      app.save(attrs);
+      if (app.validationError) {
+        errorMsg = 'Your app was not updated. ' + app.validationError;
+        this.notifyChannel.command('add:userError', errorMsg, { appId: app.id });
+      } else {
+        Radio.command('manager', 'update:app', app.id, attrs, { sync: false });
+      }
+    },
+
+    destroyApp: function () {
+      var app = this.app;
+      if (!app) {
+        this.notifyChannel.command('add:userError',
+          'The app you selected does not exist.', { appId: app.id });
+      } else {
+        app.destroy();
+        Radio.command('manager', 'destroy:app', app.id, { sync: false });
+      }
+    },
+
     // Create a new Service.
     // - Arguments
     //     attrs: {object} Attributes hash
@@ -58,7 +86,7 @@ define(function (require, exports, module) {
     newService: function (attrs) {
       if (!this.app.id) throw new Error('Must set an App ID');
 
-      var service = this.services.create(attrs);
+      var service = this.services.create(attrs, { parse: true });
       var error = service.validationError;
       if (error) {
         this.notifyChannel.command('add:userError',

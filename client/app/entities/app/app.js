@@ -26,18 +26,19 @@ define(function (require, exports, module) {
     services: undefined,
 
     defaults: {
-      _id:          undefined,
-      description:  undefined,
-      name:         undefined,
+      _id:           undefined,
+      description:   undefined,
+      name:          undefined,
+      oauthCallback: undefined,
 
       // Read only
-      owner:        undefined,
-      clientId:     undefined,
-      clientSecret: undefined,
-      createdAt:    undefined,
+      owner:         undefined,
+      clientId:      undefined,
+      clientSecret:  undefined,
+      createdAt:     undefined,
 
       // View only
-      dateAdded:    undefined
+      dateAdded:     undefined
     },
 
     constructor: function (attrs, options) {

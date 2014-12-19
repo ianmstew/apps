@@ -1,6 +1,9 @@
 define(function (require) {
   var Marionette = require('marionette');
+  var Syphon = require('backbone.syphon');
+  var Radio = require('backbone.radio');
   var template = require('hgn!modules/manager/create/create.view');
+  var history = require('lib/util/history');
 
   var CreateView = Marionette.CompositeView.extend({
     template: template,
@@ -15,8 +18,9 @@ define(function (require) {
       e.preventDefault();
 
       // Gets all the name:value's for the forms elements with a "name"
-      var data = Syphon.serialize(this);
-      console.log('Create application form submitted!', data);
+      var attrs = Syphon.serialize(this);
+      var app = Radio.request('manager', 'new:app', attrs);
+      if (!app.validationError) history.navigate('/apps', { trigger: true });
     }
   });
 

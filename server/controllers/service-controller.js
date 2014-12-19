@@ -4,7 +4,10 @@ var validator = require('../util/validator');
 var serviceController = {
 
   list: function (req, res) {
-    if (!validator.validId(req.params.app)) validator.failNotFound(res);
+    if (!validator.validId(req.params.app)) {
+      validator.failNotFound(res);
+      return;
+    }
 
     req.app.db.models.Service
       .find({
@@ -19,7 +22,10 @@ var serviceController = {
   },
 
   find: function (req, res) {
-    if (!validator.validId(req.params.app)) validator.failNotFound(res);
+    if (!validator.validId(req.params.app)) {
+      validator.failNotFound(res);
+      return;
+    }
 
     req.app.db.models.Service
       .findOne({
@@ -40,7 +46,10 @@ var serviceController = {
   },
 
   create: function (req, res) {
-    if (!validator.validId(req.params.app)) validator.failNotFound(res);
+    if (!validator.validId(req.params.app)) {
+      validator.failNotFound(res);
+      return;
+    }
 
     // Set app based on path param
     var _service = _.extend({
@@ -61,7 +70,10 @@ var serviceController = {
   },
 
   update: function (req, res) {
-    if (!validator.validId(req.params.app)) validator.failNotFound(res);
+    if (!validator.validId(req.params.app)) {
+      validator.failNotFound(res);
+      return;
+    }
 
     // Do not allow changing of app
     var _service = _.extend({}, _.pick(req.body, [
@@ -88,7 +100,10 @@ var serviceController = {
   },
 
   destroy: function (req, res) {
-    if (!validator.validId(req.params.app)) validator.failNotFound(res);
+    if (!validator.validId(req.params.app)) {
+      validator.failNotFound(res);
+      return;
+    }
 
     req.app.db.models.Service
       .findOneAndRemove({

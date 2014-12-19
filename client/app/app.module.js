@@ -30,8 +30,9 @@ define(function (require) {
     onStart: function () {
       var contentRegion = this.app.getRegion('contentRegion');
       var modalRegion = this.app.getRegion('modalRegion');
+      var alertRegion = this.app.getRegion('alertRegion');
       this.getModule('entities').start();
-      this.getModule('notify').start();
+      this.getModule('notify').start({ region: alertRegion });
       this.getModule('loading').start();
       this.getModule('manager').start({ region: contentRegion });
       this.getModule('editor').start({ region: contentRegion });

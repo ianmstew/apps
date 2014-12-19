@@ -9,7 +9,8 @@ define(function (require) {
       contentRegion: '#content-region',
       modalRegion: ModalRegion.extend({
         el: '#modal-region'
-      })
+      }),
+      alertRegion: '#alert-region'
     },
 
     initialize: function () {

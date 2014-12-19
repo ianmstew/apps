@@ -10,7 +10,7 @@
   "dependencies": {
     "almond": "~0.3.0",
     "backbone.radio": "~0.8.3",
-    "api-network-ui": "git@github.com:APINetwork/api-network-ui.git#a9827d036169196424547f1973588a8e62aada60",
+    "api-network-ui": "git@github.com:APINetwork/api-network-ui.git#949442afcf4856c87a86996f5b20fa81ca652c42",
     "marionette": "~2.2.2",
     "requirejs": "~2.1.15",
     "requirejs-hogan-plugin": "~0.3.1",
@@ -18,7 +18,6 @@
     "backbone.syphon": "~0.4.1",
     "rsvp": "~3.0.13",
     "cocktail": "~0.5.9",
-    "backbone-computedfields": "~0.0.10",
     "parsleyjs": "^2.0.6"
   },
   "exportsOverride": {

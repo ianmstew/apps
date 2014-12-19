@@ -12,7 +12,7 @@ define(function (require) {
         model: app,
         collection: app.services
       });
-      this.show(settingsView);
+      this.show(settingsView, { loading: true });
     }
   });
 

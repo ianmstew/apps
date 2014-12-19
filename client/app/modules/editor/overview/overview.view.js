@@ -4,9 +4,14 @@ define(function (require) {
   var template = require('hgn!modules/editor/overview/overview.view');
 
   var OverviewView = Marionette.CompositeView.extend({
+
     template: template,
     childView: ServiceRowView,
-    childViewContainer: '.js-service-rows'
+    childViewContainer: '.js-service-rows',
+
+    modelEvents: {
+      'change': 'render'
+    }
   });
 
   return OverviewView;

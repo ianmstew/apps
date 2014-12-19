@@ -4,30 +4,32 @@
   </h3>
   <div class="form-group service-callback-url">
     <label class="control-label" for="serviceCallbackUrl">Callback URL:</label>
-    <input class="form-control" name="serviceCallbackUrl" value="{{callbackUrl}}" readonly>
+    <input class="form-control" value="{{callbackUrl}}" readonly>
   </div>
   <div class="form-group service-client-id">
     <label class="control-label" for="serviceClientId">Client ID:</label>
     <input class="form-control"
-      name="serviceClientId" id="serviceClientId" value="{{clientId}}"
+      name="clientId" id="serviceClientId" value="{{clientId}}"
       data-parsley-trigger="change"
       data-parsley-class-handler=".service-client-id"
       data-parsley-error-class="has-error"
       data-parsley-errors-container=".service-client-id .errors"
       data-parsley-required-message="Please provide your {{name}} account client ID."
-      required>
+      data-parsley-required>
     <div class="errors"></div>
   </div>
   <div class="form-group service-client-secret">
     <label class="control-label" for="serviceClientSecret">Client Secret:</label>
-    <input class="form-control" name="serviceClientSecret" value="{{clientSecret}}"
+    <input class="form-control" name="clientSecret" value="{{clientSecret}}"
       data-parsley-trigger="change"
       data-parsley-class-handler=".service-client-secret"
       data-parsley-error-class="has-error"
       data-parsley-errors-container=".service-client-secret .errors"
       data-parsley-required-message="Please provide your {{name}} account client secret."
-      required>
+      data-parsley-required>
     <div class="errors"></div>
   </div>
+  <input type="hidden" name="type" value="{{type}}">
   <button class="update-button btn-action">Update {{name}} Settings</button>
+  <button type="button" class="js-remove-service remove-service">Remove {{name}}</button>
 </form>
