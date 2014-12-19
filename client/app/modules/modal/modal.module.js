@@ -6,15 +6,24 @@ define(function (require) {
 
     channelName: 'modal',
 
+    lastModalView: undefined,
+
     channelEvents: {
-      'show:modal': ['comply', 'showModal']
+      'show:modal': ['comply', 'showModal'],
+      'close:modal': ['comply', 'closeModal']
     },
 
     showModal: function (view, options) {
-      var modalLayout = new ModalLayout({
+      this.lastModalView = new ModalLayout({
         bodyView: view
       });
-      this.show(modalLayout);
+      this.show(this.lastModalView);
+    },
+
+    closeModal: function () {
+      if (this.lastModalView && !this.lastModalView.isDestroyed) {
+        this.lastModalView.hide();
+      }
     }
   });
 

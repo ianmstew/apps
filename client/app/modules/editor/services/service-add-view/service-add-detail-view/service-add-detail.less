@@ -10,4 +10,13 @@
   height: 200px;
   border: 1px solid @gray-lighter;
   .border-radius(5px);
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.selected {
+    color: white !important;
+    background: lighten(desaturate(#007BB6, 40%), 15%) !important;
+    border-color: lighten(desaturate(#006A9D, 40%), 15%) !important; 
+  }
 }

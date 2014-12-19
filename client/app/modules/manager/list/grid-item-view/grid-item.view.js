@@ -11,6 +11,10 @@ define(function (require) {
     childView: ServiceView,
     childViewContainer: '.js-services',
 
+    modelEvents: {
+      'change': 'render'
+    },
+
     initialize: function (options) {
       this.collection = this.model.services;
     }

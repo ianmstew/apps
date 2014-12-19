@@ -1,46 +1,48 @@
-<div class="js-settings settings-tab">
-  <form class="section-gray" role="form" data-parsley-validate>
+<form class="" role="form"
+    data-parsley-validate>
+  <div class="section-gray">
     <h3>Application Settings</h3>
     <div class="form-group">
       <label for="applicationName" class="required">Name</label>
-      <input type="text" class="form-control half" id="applicationName" placeholder="Enter application name" value="{{name}}" data-parsley-class-handler=".has-error" data-parsley-errors-container="#applicationName" data-parsley-error-message="Whoops! This didn't work." required >
+      <input type="text" name="name" class="form-control half" id="applicationName" placeholder="Enter application name" value="{{name}}"
+          data-parsley-class-handler=".has-error"
+          data-parsley-errors-container="#applicationName"
+          data-parsley-error-message="Whoops! This didn't work."
+          data-parsley-required>
     </div>
     <div class="form-group">
       <label for="applicationDescription" class="required">Description</label>
-      <input type="text" class="form-control" id="applicationDescription" placeholder="Enter application description" value="{{description}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#applicationDescription" data-parsley-error-message="Argh. Something isn't right." required >
+      <textarea type="text" name="description" class="form-control" id="applicationDescription" placeholder="Enter application description" value="{{description}}"
+          data-parsley-trigger="change"
+          data-parsley-class-handler=".has-error"
+          data-parsley-errors-container="#applicationDescription"
+          data-parsley-error-message="Argh. Something isn't right."
+          data-parsley-required></textarea>
     </div>
     <div class="form-group">
-      <label for="applicationCallbackUrl" class="required">Callback URL</label>
-      <input type="text" class="form-control" id="applicationCallbackUrl" placeholder="Enter callback URL" value="{{callbackUrl}}" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#applicationCallbackUrl" data-parsley-error-message="Your callback URL isn't right!" required >
+      <label for="applicationCallbackUrl" class="required">Oauth Callback URL</label>
+      <input type="text" class="form-control" name="oauthCallback" id="applicationCallbackUrl" placeholder="Enter callback URL" value="{{oauthCallback}}"
+          data-parsley-trigger="change"
+          data-parsley-class-handler=".has-error"
+          data-parsley-errors-container="#applicationCallbackUrl"
+          data-parsley-error-message="Your callback URL isn't right!"
+          data-parsley-required>
     </div>
-  </form>
-
-  <form class="section-gray" role="form">
     <h3>Application API Keys</h3>
     <div class="form-group row">
       <label for="clientId" class="col-sm-2 control-label">Client ID</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control half" id="clientId" placeholder="Enter Client ID" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#clientId" data-parsley-error-message="Please re-enter your client ID.">
+        <input type="text" class="form-control half" id="clientId" placeholder="Enter Client ID" value="{{clientId}}"
+            data-parsley-trigger="change" readonly>
       </div>
     </div>
     <div class="form-group row">
       <label for="clientSecret" class="col-sm-2 control-label">Client Secret</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control half" id="clientSecret" placeholder="Enter Client Secret" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#clientSecret" data-parsley-error-message="Sorry! Something's up with your client secret.">
-      </div>
-    </div>
-  </form>
-
-  <div class="section-gray">
-    <h3>Organization</h3>
-    <div class="form-group row">
-      <label for="orgName" class="col-sm-2 control-label">Organization Name</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control half" id="orgName" placeholder="Enter Organization Name" data-parsley-trigger="change" data-parsley-class-handler=".has-error" data-parsley-errors-container="#orgName" data-parsley-error-message="Whoops! Something went wrong with your org name.">
+        <input type="text" class="form-control half" id="clientSecret" placeholder="Enter Client Secret" value="{{clientSecret}}" readonly>
       </div>
     </div>
   </div>
   <button class="btn-action">Update Settings</button>
-
-  <button class="js-delete-app delete-app">Delete Application</button>
-</div>
+  <button type="button" class="js-delete-app delete-app">Delete Application</button>
+</form>

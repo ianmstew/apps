@@ -25,10 +25,12 @@ define(function (require) {
     },
 
     onStart: function () {
+      // TODO: Do we really want to load all apps on start?  If so, we should move the apps
+      // service to a higher (global) level.
       this.apps.fetch();
     },
 
-    // Create a new App.
+    // Create a new App
     // - Arguments
     //     attrs: {object} Attributes hash
     // - Returns a new App that is either syncing with server, or in validationError state.
@@ -47,28 +49,36 @@ define(function (require) {
     //     attrs: {object} Attributes hash
     // - Returns a new App that is either syncing with server, or in validationError state
     // - Notifies user on non-existent App ID or validation error.
-    updateApp: function (appId, attrs) {
+    updateApp: function (appId, attrs, options) {
       var app = this.apps.get(appId);
-      var error;
+      var errorMsg;
       if (!app) {
-        this.notifyChannel.command('add:userError',
-          'The app you selected does not exist.', { appId: appId });
-        return;
+        errorMsg = 'The app you selected does not exist.'; 
+        this.notifyChannel.command('add:userError', errorMsg, { appId: appId });
       }
-      app.save(attrs);
-      error = app.validationError;
-      if (error) this.notifyChannel.command('add:userError',
-        'Your app was not updated. ' + error, { app: app });
+      if ((options || {}).sync === false) {
+        app.set(attrs);
+      } else {
+        app.save(attrs);
+      }
+      if (app.validationError) {
+        errorMsg = 'Your app was not updated. ' + app.validationError;
+        this.notifyChannel.command('add:userError', errorMsg, { app: app });
+      }
     },
 
-    destroyApp: function (appId) {
+    destroyApp: function (appId, options) {
       var app = this.apps.get(appId);
       if (!app) {
         this.notifyChannel.command('add:userError',
           'The app you selected does not exist.', { appId: appId });
         return;
       }
-      app.destroy();
+      if ((options || {}).sync === false) {
+        this.apps.remove(app);
+      } else {
+        app.destroy();
+      }
     },
 
     getApps: function () {

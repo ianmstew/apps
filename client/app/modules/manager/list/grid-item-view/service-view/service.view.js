@@ -3,8 +3,12 @@ define(function (require) {
   var template = require('hgn!modules/manager/list/grid-item-view/service-view/service.view');
 
   var ServiceView = Marionette.ItemView.extend({
+
     template: template,
-    tagName: 'li'
+    tagName: 'li',
+    modelEvents: {
+      'change': 'render'
+    }
   });
 
   return ServiceView;

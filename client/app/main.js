@@ -7,7 +7,6 @@
       'backbone.radio':          '../vendor/backbone.radio/backbone.radio',
       'backbone.wreqr':          'lib/util/noop',
       'backbone.syphon':         '../vendor/backbone.syphon/backbone.syphon',
-      'backbone.computedfields': '../vendor/backbone-computedfields/backbone.computedfields',
       'backbone.cocktail':       '../vendor/cocktail/Cocktail',
       'bootstrap':               '../vendor/bootstrap/bootstrap',
       'hogan':                   '../vendor/requirejs-hogan-plugin/hogan',

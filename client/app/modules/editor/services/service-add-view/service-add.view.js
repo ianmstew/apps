@@ -8,12 +8,16 @@ define(function (require) {
 
     initialize: function () {
       this.title = 'Add Service';
-      this.description = 'Select an option below to add your service:';
+      this.description = 'Select a service to add:';
+    },
+
+    ui: {
+      serviceButtons: '.js-select-service'
     },
 
     onRender: function () {
-      var $title = $('<h4>', { text: this.title });
-      var $description = $('<h5>', { text: this.description });
+      var $title = $('<h2>', { text: this.title, class: 'header' });
+      var $description = $('<div>', { text: this.description, class: 'subheader' });
       this.$el.prepend($title, $description);
     },
 
@@ -25,10 +29,14 @@ define(function (require) {
       'click .js-select-service': 'displayServiceDetail'
     },
 
-    displayServiceDetail: function () {
-      // console.log('I display the service detail form!');
-      // var app = this.channel.request('app');
-      var serviceDetailView = new ServiceDetailView();
+    displayServiceDetail: function (evt) {
+      var $btnTile = $(evt.target);
+      var type = $btnTile.data('type');
+      this.ui.serviceButtons.removeClass('selected');
+      $btnTile.addClass('selected');
+      var serviceDetailView = new ServiceDetailView({
+        type: type
+      });
       this.getRegion('serviceAddDetail').show(serviceDetailView);
     }
   });

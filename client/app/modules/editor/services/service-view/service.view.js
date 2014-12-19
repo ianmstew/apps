@@ -16,6 +16,14 @@ define(function (require) {
       'click': 'editMe'
     },
 
+    modelEvents: {
+      'change': 'render'
+    },
+
+    onRender: function () {
+      console.log(this, this.model);
+    },
+
     editMe: function () {
       var modalView = new ServiceEditView({
         model: this.model

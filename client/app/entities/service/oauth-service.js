@@ -4,10 +4,10 @@ define(function (require) {
   var OauthService = Service.extend({
 
     defaults: _.defaults({
-      connectionData: {
-        clientId:     undefined,
-        clientSecret: undefined
-      },
+      // connectionData: {
+      //   clientId:     undefined,
+      //   clientSecret: undefined
+      // },
 
       // View only
       callbackUrl:    'https://apinetwork.co/oauth/subauth/callback/',
@@ -15,10 +15,11 @@ define(function (require) {
       clientSecret:   undefined
     }, Service.prototype.defaults),
 
-    initialize: function () {
+    constructor: function () {
       this.on({
-        'change:connectionData': this.onConnectionDataChanged.bind(this)
-      });
+        'change:connectionData': this.onConnectionDataChanged
+      }, this);
+      OauthService.__super__.constructor.apply(this, arguments);
     },
 
     onConnectionDataChanged: function (oauthService, connectionData) {

@@ -37,11 +37,17 @@ define(function (require) {
 
     originalType: undefined,
 
-    initialize: function () {
+    constructor: function () {
       this.on({
-        'change:createdAt': this.onChangeCreatedAt.bind(this),
-        'change:type': this.onChangeType.bind(this)
-      });
+        'change:createdAt': this.onChangeCreatedAt,
+        'change:type': this.onChangeType,
+        'change:clientId': this.onChangeClientId
+      }, this);
+      Service.__super__.constructor.apply(this, arguments);
+    },
+
+    onChangeClientId: function () {
+      //debugger;
     },
 
     validate: function (attrs, options) {

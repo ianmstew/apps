@@ -17,8 +17,12 @@ define(function (require) {
     events: {
       'click .close': function (e) {
         e.preventDefault();
-        this.trigger('dialog:close');
+        this.hide();
       }
+    },
+
+    hide: function () {
+      this.trigger('dialog:close');
     },
 
     initialize: function (options) {

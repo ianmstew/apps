@@ -37,7 +37,8 @@ define(function (require) {
     // Router instance
     _router: undefined,
 
-    constructor: function () {
+    constructor: function (options) {
+      this.region = (options || {}).region;
       // If child defines initialize, ensure call to my own initialize
       // (Child will not have to call superclass initialize)
       if (this.initialize !== Module.prototype.initialize) {
@@ -53,8 +54,7 @@ define(function (require) {
       Module.__super__.constructor.apply(this, arguments);
     },
 
-    initialize: function (options) {
-      this.region = (options || {}).region;
+    initialize: function () {
       if (this.routes) this._constructRouter();
       if (this.modules) {
         this._constructModules();

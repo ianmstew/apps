@@ -19,6 +19,11 @@ var appController = {
   },
 
   find: function (req, res) {
+    if (!validator.validId(req.params.id)) {
+      validator.failNotFound(res);
+      return;
+    }
+
     req.app.db.models.App
       .findOne({
         _id: req.params.id,
@@ -44,7 +49,8 @@ var appController = {
       owner: req.user._id
     }, _.pick(req.body, [
       'description',
-      'name'
+      'name',
+      'oauthCallback'
     ]));
 
     req.app.db.models.App
@@ -57,10 +63,16 @@ var appController = {
   },
 
   update: function (req, res) {
+    if (!validator.validId(req.params.id)) {
+      validator.failNotFound(res);
+      return;
+    }
+
     // Update attributes whitelist
     var _app = _.extend({}, _.pick(req.body, [
       'description',
-      'name'
+      'name',
+      'oauthCallback'
     ]));
 
     req.app.db.models.App

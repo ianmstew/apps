@@ -5,8 +5,9 @@ module.exports = function (app, mongoose) {
   var appSchema = new mongoose.Schema({
     clientId: { type: String, unique: true },
     clientSecret: { type: String },
-    description: String,
-    name: String,
+    oauthCallback: { type: String },
+    description: { type: String },
+    name: { type: String },
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     services: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Service' }],
     createdAt: { type: Date, default: Date.now }

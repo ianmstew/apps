@@ -1,7 +1,10 @@
 define(function (require, exports, module) {
-  var Notes = require('modules/notify/entities/notes');
+  var Alerts = require('modules/notify/entities/alerts');
+  var Alert = require('modules/notify/entities/alert');
+  var AlertsView = require('modules/notify/alert/alerts.view');
   var Module = require('lib/classes/module');
   var logger = require('lib/util/logger')(module);
+  var Backbone = require('backbone');
 
   var NotificationModule = Module.extend({
 
@@ -10,39 +13,45 @@ define(function (require, exports, module) {
     channelEvents: {
       'add:entityError': ['comply', 'addEntityError'],
       'add:userError': ['comply', 'addUserError'],
-      'remove:note': ['comply', 'removeNote'],
+      'remove:alert': ['comply', 'removeAlert'],
       'clear:all': ['comply', 'clearAll']
     },
 
-    initialize: function () {
-      this.notes = new Notes();
-      this.listenTo(this.notes, {
+    onStart: function () {
+      this.alerts = new Alerts();
+      this.listenTo(this.alerts, {
         'add': this.onAdd
       });
+      this.getRegion().show(new AlertsView({
+        collection: this.alerts
+      }));
+
+      // Clear notifications on route change
+      Backbone.history.on('route', this.clearAll, this);
     },
 
     addEntityError: function (entity, message) {
-      this.notes.create({
+      this.alerts.add(new Alert({
         type: 'error',
         message: 'We had an issue with your request; please try again or contact support.'
-      });
+      }));
       logger.error(entity, message);
     },
 
     addUserError: function (message, metadata) {
-      this.notes.create({
+      this.alerts.add(new Alert({
         type: 'error',
         message: message
-      });
+      }));
       logger.error(message, metadata);
     },
 
-    removeNote: function (noteId) {
-      this.notes.remove(noteId);
+    removeAlert: function (alertId) {
+      this.alerts.remove(alertId);
     },
 
     clearAll: function () {
-      this.notes.reset();
+      this.alerts.reset();
     }
   });
 
