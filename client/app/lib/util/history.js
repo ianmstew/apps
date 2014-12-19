@@ -13,6 +13,10 @@ define(function (require) {
 
     getCurrentRoute: function () {
       return Backbone.history.fragment;
+    },
+
+    on: function () {
+      return Backbone.history.on.apply(Backbone.history, arguments);
     }
   };
 

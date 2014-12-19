@@ -27,12 +27,12 @@ define(function (require) {
       evt.preventDefault();
       var attrs = Syphon.serialize(this);
       Radio.command('editor', 'update:app', attrs);
-      history.navigate('/apps/' + this.model.get('_id'), { trigger: true });
+      history.navigate('apps/' + this.model.get('_id') + '/', { trigger: true });
     },
 
     deleteApplication: function () {
       Radio.command('editor', 'destroy:app');
-      history.navigate('/apps', { trigger: true });
+      history.navigate('apps/', { trigger: true });
     }
   });
 

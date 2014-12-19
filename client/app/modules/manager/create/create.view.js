@@ -20,7 +20,7 @@ define(function (require) {
       // Gets all the name:value's for the forms elements with a "name"
       var attrs = Syphon.serialize(this);
       var app = Radio.request('manager', 'new:app', attrs);
-      if (!app.validationError) history.navigate('/apps', { trigger: true });
+      if (!app.validationError) history.navigate('apps/', { trigger: true });
     }
   });
 

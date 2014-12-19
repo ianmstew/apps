@@ -20,7 +20,8 @@ define(function (require, exports, module) {
       'new:service': ['reply', 'newService'],
       'update:service': ['comply', 'updateService'],
       'destroy:service': ['comply', 'destroyService'],
-      'update:app': ['comply', 'updateApp']
+      'update:app': ['comply', 'updateApp'],
+      'destroy:app': ['comply', 'destroyApp']
     },
 
     app: undefined,
