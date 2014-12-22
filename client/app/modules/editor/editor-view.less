@@ -71,6 +71,33 @@
   }
 }
 
+// Delete Confirm Styles
+// --------------------------------------------------
+
+.delete-app-form,
+.delete-service-form {
+  text-align: center;
+
+  > div {
+    &:extend(.text-danger);
+    margin-bottom: 2%;
+    padding: 2%;
+  }
+
+  a {
+    &:extend(.btn);
+  }
+
+  .btn-delete {
+    &:extend(.btn-danger);
+  }
+
+  .btn-cancel {
+    &:extend(.btn-link);
+  }
+}
+
+
 
 /*
 // For future toggle feature for list.view vertical list and grid layout

@@ -8,10 +8,6 @@ define(function (require) {
     template: template,
     tagName: 'li',
 
-    ui: {
-      serviceInfo: '.service-info'
-    },
-
     events: {
       'click': 'editMe'
     },
