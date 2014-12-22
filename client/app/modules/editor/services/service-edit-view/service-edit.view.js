@@ -1,6 +1,7 @@
 define(function (require) {
   var Marionette = require('marionette');
   var Syphon = require('backbone.syphon');
+  var DeleteConfirmView = require('modules/editor/services/service-edit-view/delete-confirm/delete-confirm.view');
   var Radio = require('backbone.radio');
   var template = require('hgn!modules/editor/services/service-edit-view/service-edit.view');
 
@@ -11,7 +12,7 @@ define(function (require) {
 
     events: {
       'submit form': 'formSubmitted',
-      'click .js-remove-service': 'onClickRemoveService'
+      'click .js-remove-service': 'deleteConfirm'
     },
 
     onRender: function () {
@@ -22,11 +23,6 @@ define(function (require) {
       this.$el.prepend($title, $description);
     },
 
-    onClickRemoveService: function () {
-      Radio.command('editor', 'destroy:service', this.model);
-      Radio.command('modal', 'close:modal');
-    },
-
     formSubmitted: function (e) {
       // Prevents the form from doing a default submit + page refresh
       e.preventDefault();
@@ -35,6 +31,11 @@ define(function (require) {
       var attrs = Syphon.serialize(this);
       Radio.command('editor', 'update:service', this.model, attrs);
       if (!this.model.validationError) Radio.command('modal', 'close:modal');
+    },
+
+    deleteConfirm: function () {
+      var deleteConfirmView = new DeleteConfirmView();
+      Radio.channel('modal').command('show:modal', deleteConfirmView);
     }
   });
 

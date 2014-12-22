@@ -2,6 +2,7 @@ define(function (require) {
   var Marionette = require('marionette');
   var template = require('hgn!modules/editor/settings/settings.view');
   var Syphon = require('backbone.syphon');
+  var DeleteConfirmView = require('modules/editor/settings/delete-confirm/delete-confirm.view');
   var Radio = require('backbone.radio');
   var history = require('lib/util/history');
 
@@ -15,7 +16,7 @@ define(function (require) {
     },
 
     events: {
-      'click @ui.jsDeleteApp': 'deleteApplication',
+      'click @ui.jsDeleteApp': 'deleteConfirm',
       'submit form': 'onSubmit'
     },
 
@@ -30,9 +31,9 @@ define(function (require) {
       history.navigate('apps/' + this.model.get('_id') + '/', { trigger: true });
     },
 
-    deleteApplication: function () {
-      Radio.command('editor', 'destroy:app');
-      history.navigate('apps/', { trigger: true });
+    deleteConfirm: function () {
+      var deleteConfirmView = new DeleteConfirmView();
+      Radio.channel('modal').command('show:modal', deleteConfirmView);
     }
   });
 
