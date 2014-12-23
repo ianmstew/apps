@@ -4,7 +4,7 @@ define(function (require) {
 
   var Apps = Backbone.Collection.extend({
 
-    url: '/api/apps',
+    url: '/api/apps/',
     model: AppModel
   });
 

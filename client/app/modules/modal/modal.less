@@ -25,6 +25,11 @@
     .modal-header {
       border: 0;
     }
+
+    .close {
+      position: absolute;
+      right: 0;
+    }
   }
 
   .modal-content {
@@ -41,23 +46,9 @@
   text-align: center;
 }
 
-.modal {
-  .header {
-    &:extend(.modal-title);
-  }
-
-  .subheader {
-    &:extend(.modal-subheader);
-    margin-top: 5px;
-  }
-}
-
-.modal-title {
-  clear: both;
-}
-
 .modal-subheader {
   padding-bottom: 2%;
+  margin-top: 5px;
 }
 
 .modal-header .close {

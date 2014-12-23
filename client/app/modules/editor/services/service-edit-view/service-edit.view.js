@@ -15,14 +15,6 @@ define(function (require) {
       'click .js-remove-service': 'deleteConfirm'
     },
 
-    onRender: function () {
-      var title = 'Edit ' + this.model.get('name') + ' Settings';
-      var description = 'View and edit your settings below:';
-      var $title = $('<h2>', { text: title, class: 'header' });
-      var $description = $('<div>', { text: description, class: 'subheader' });
-      this.$el.prepend($title, $description);
-    },
-
     formSubmitted: function (e) {
       // Prevents the form from doing a default submit + page refresh
       e.preventDefault();
@@ -34,8 +26,14 @@ define(function (require) {
     },
 
     deleteConfirm: function () {
-      var deleteConfirmView = new DeleteConfirmView();
+      var deleteConfirmView = new DeleteConfirmView({ model: this.model });
+      this.listenToOnce(deleteConfirmView, 'remove:service', this.onRemoveService);
       Radio.channel('modal').command('show:modal', deleteConfirmView);
+    },
+
+    onRemoveService: function () {
+      Radio.command('editor', 'destroy:service', this.model);
+      Radio.command('modal', 'close:modal');
     }
   });
 

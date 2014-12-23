@@ -25,18 +25,21 @@ define(function (require) {
     },
 
     events: {
-      'click @ui.serviceCreate': 'addMe'
+      'click @ui.serviceCreate': 'onClickServiceCreate'
     },
 
     appIdChanged: function (state, value) {
       this.ui.appId.text(value);
     },
 
-    addMe: function () {
+    onClickServiceCreate: function () {
       var modalView = new ServiceAddView({
         model: this.model
       });
-      Radio.channel('modal').command('show:modal', modalView);
+      Radio.command('modal', 'show:modal', modalView, {
+        title: 'Add Service',
+        subtitle: 'Select a service to add:'
+      });
     }
   });
 

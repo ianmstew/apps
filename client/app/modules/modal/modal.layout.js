@@ -1,8 +1,8 @@
 define(function (require) {
   var Marionette = require('marionette');
   var template = require('hgn!modules/modal/modal.layout');
-  var ModalPresenter = require('modules/modal/modal.presenter');
 
+  // Bootstrap-aware modal view
   var ModalView = Marionette.LayoutView.extend({
 
     channelName: 'modal',
@@ -10,31 +10,50 @@ define(function (require) {
     template: template,
     className: 'modal fade',
 
+    hiding: undefined,
+
     regions: {
       modalBody: '.js-modal-body'
     },
 
     events: {
-      'click .close': function (e) {
-        e.preventDefault();
-        this.hide();
-      }
+      'hide.bs.modal': 'onHide'
     },
 
-    hide: function () {
-      this.trigger('dialog:close');
+    templateHelpers: function () {
+      return {
+        title: this.title,
+        subtitle: this.subtitle
+      };
     },
 
     initialize: function (options) {
-      this.bodyView = (options || {}).bodyView;
+      options = options || {};
+      this.bodyView = options.bodyView;
+      this.title = options.title || this.bodyView.title;
+      this.subtitle = options.subtitle || this.bodyView.subtitle;
+    },
+
+    onHide: function () {
+      this.hiding = true;
+      this.destroy();
     },
 
     onShow: function () {
-      new ModalPresenter({
-        region: this.getRegion('modalBody'),
-        view: this.bodyView,
-        present: true
+      // Bootstrap-show modal
+      this.$el.modal({
+        show: true,
+        keyboard: true
       });
+
+      this.getRegion('modalBody').show(this.bodyView);
+    },
+
+    destroy: function () {
+      // Attach handler to Bootstrap "modal hidden" event
+      // http://getbootstrap.com/javascript/#modals-usage
+      this.$el.on('hidden.bs.modal', ModalView.__super__.destroy.bind(this));
+      if (!this.hiding) this.$el.modal('hide');
     }
   });
 

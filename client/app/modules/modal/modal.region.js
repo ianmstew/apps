@@ -1,33 +1,34 @@
 define(function (require) {
   var Marionette = require('marionette');
 
-  // Modal region designed to be subclassed to provide 'el' in context.
-  // E.g., var modalRegion = ModalRegion.extend({ el: '<modal-region-el>' });
   var ModalRegion = Marionette.Region.extend({
 
-    onShow: function (view) {
-      // Attach handler to Bootstrap "modal hidden" event
-      // http://getbootstrap.com/javascript/#modals-usage
-      view.$el.on('hidden.bs.modal', this.modalHidden.bind(this));
+    modals: undefined,
 
-      view.once('dialog:close', this.closeModal.bind(this));
-
-      // Bootstrap-show modal
-      view.$el.modal({
-        show: true,
-        keyboard: true,
-        title: view.title
-      });
+    initialize: function () {
+      this.modals = [];
     },
 
-    // Close modal using Bootstrap's hide method
-    closeModal: function () {
-      this.currentView.$el.modal('hide');
+    show: function (view, options) {
+      options = _.extend({}, options, { preventDestroy: true });
+      view.once('destroy', this.onViewDestroy.bind(this, view));
+      ModalRegion.__super__.show.call(this, view, options);
+      this.modals.push(view);
     },
 
-    // Once modal is hidden, throw out the view
-    modalHidden: function () {
-      this.empty();
+    attachHtml: function (view) {
+      this.el.appendChild(view.el);
+    },
+
+    closeLast: function () {
+      var last = this.modals.pop();
+      last.destroy();
+    },
+
+    onViewDestroy: function (view) {
+      // Ensure view is removed from array, in case it was removed by a method other than
+      // closeLast()
+      this.modals = _.without(this.modals, view);
     }
   });
 
