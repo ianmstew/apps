@@ -24,7 +24,10 @@ define(function (require) {
       var modalView = new ServiceEditView({
         model: this.model
       });
-      Radio.channel('modal').command('show:modal', modalView);
+      Radio.command('modal', 'show:modal', modalView, {
+        title: 'Edit ' + this.model.get('name') + ' Settings',
+        subtitle: 'View and edit your settings below:'
+      });
     }
   });
 

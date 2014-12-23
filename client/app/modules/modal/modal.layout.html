@@ -2,10 +2,8 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <!--
-      <h4 class="modal-title">HELLO I'M A TITLE</h4>
-      <h5 class="modal-subheader">descriptions!</h5>
-      -->
+        {{#title}}<h1 class="modal-title">{{title}}</h1>{{/title}}
+        {{#subtitle}}<div class="modal-subheader">{{subtitle}}</div>{{/subtitle}}
     </div>
     <div class="modal-body js-modal-body"></div>
   </div><!-- /.modal-content -->

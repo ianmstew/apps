@@ -6,19 +6,8 @@ define(function (require) {
   var ServiceAddView = Marionette.LayoutView.extend ({
     template: template,
 
-    initialize: function () {
-      this.title = 'Add Service';
-      this.description = 'Select a service to add:';
-    },
-
     ui: {
       serviceButtons: '.js-select-service'
-    },
-
-    onRender: function () {
-      var $title = $('<h2>', { text: this.title, class: 'header' });
-      var $description = $('<div>', { text: this.description, class: 'subheader' });
-      this.$el.prepend($title, $description);
     },
 
     regions: {
