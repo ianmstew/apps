@@ -5,6 +5,7 @@ define(function (require) {
   // Front end libraries
   require('bootstrap');
   require('parsley');
+  require('lib/config/bootstrap-parsley-config');
 
   // Backbone shims and extensions
   require('backbone.radio');

@@ -12,7 +12,8 @@ define(function (require) {
     className: 'settings-tab',
 
     ui: {
-      jsDeleteApp: '.js-delete-app'
+      jsDeleteApp: '.js-delete-app',
+      form: 'form'
     },
 
     events: {
@@ -22,6 +23,10 @@ define(function (require) {
 
     modelEvents: {
       'change': 'render'
+    },
+
+    onShow: function () {
+      this.ui.form.parsley();
     },
 
     onSubmit: function (evt) {

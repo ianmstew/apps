@@ -3,37 +3,31 @@
   <div class="section-gray">
     <h3>Application Settings</h3>
     <div class="form-group">
-      <label for="applicationName" class="required">Name</label>
-      <input type="text" name="name" class="form-control half" id="applicationName" placeholder="Enter application name" value="{{name}}"
-          data-parsley-class-handler=".has-error"
-          data-parsley-errors-container="#applicationName"
-          data-parsley-error-message="Whoops! This didn't work."
-          data-parsley-required>
+      <label for="settings-name" class="required">Name</label>
+      <input type="text" name="name" class="form-control half" id="settings-name" placeholder="Enter application name" value="{{name}}"
+          data-parsley-required
+          data-parsley-required-message="Please supply a name.">
+      <div class="error-messages"></div>
     </div>
     <div class="form-group">
-      <label for="applicationDescription" class="required">Description</label>
-      <textarea type="text" name="description" class="form-control" id="applicationDescription" placeholder="Enter application description" value="{{description}}"
-          data-parsley-trigger="change"
-          data-parsley-class-handler=".has-error"
-          data-parsley-errors-container="#applicationDescription"
-          data-parsley-error-message="Argh. Something isn't right."
-          data-parsley-required></textarea>
+      <label for="settings-description" class="required">Description</label>
+      <textarea type="text" name="description" class="form-control" id="settings-description" placeholder="Enter application description" value="{{description}}"
+          data-parsley-required
+          data-parsley-required-message="Please supply a description."></textarea>
+      <div class="error-messages"></div>
     </div>
     <div class="form-group">
-      <label for="applicationCallbackUrl" class="required">Oauth Callback URL</label>
-      <input type="text" class="form-control" name="oauthCallback" id="applicationCallbackUrl" placeholder="Enter callback URL" value="{{oauthCallback}}"
-          data-parsley-trigger="change"
-          data-parsley-class-handler=".has-error"
-          data-parsley-errors-container="#applicationCallbackUrl"
-          data-parsley-error-message="Your callback URL isn't right!"
-          data-parsley-required>
+      <label for="settings-callbackUrl" class="required">Oauth Callback URL</label>
+      <input type="text" class="form-control" name="oauthCallback" id="settings-callbackUrl" placeholder="Enter callback URL" value="{{oauthCallback}}"
+          data-parsley-required
+          data-parsley-required-message="Please supply an oauth callback URL.">
+      <div class="error-messages"></div>
     </div>
     <h3>Application API Keys</h3>
     <div class="form-group row">
       <label for="clientId" class="col-sm-2 control-label">Client ID</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control half" id="clientId" placeholder="Enter Client ID" value="{{clientId}}"
-            data-parsley-trigger="change" readonly>
+        <input type="text" class="form-control half" id="clientId" placeholder="Enter Client ID" value="{{clientId}}" readonly>
       </div>
     </div>
     <div class="form-group row">
