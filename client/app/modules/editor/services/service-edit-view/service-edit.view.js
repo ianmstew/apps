@@ -34,7 +34,9 @@ define(function (require) {
     },
 
     deleteConfirm: function () {
-      var deleteConfirmView = new DeleteConfirmView();
+      var deleteConfirmView = new DeleteConfirmView({
+        model: this.model
+      });
       Radio.channel('modal').command('show:modal', deleteConfirmView);
     }
   });

@@ -14,7 +14,7 @@ define(function (require) {
     },
 
     onClickRemoveService: function () {
-      Radio.command('editor', 'destroy:service', this.model);
+      Radio.command('editor', 'destroy:service');
       Radio.command('modal', 'close:modal');
       history.navigate('apps/' + this.model.get('_id') + '/services/', { trigger: true });
     }
