@@ -10,13 +10,17 @@ define(function (require) {
 
     className: 'service-edit-form',
 
+    ui: {
+      form: 'form'
+    },
+
     events: {
-      'submit form': 'formSubmitted',
+      'submit @ui.form': 'formSubmitted',
       'click .js-remove-service': 'deleteConfirm'
     },
 
-    onShow: function () {
-      $('form').parsley();
+    onAttach: function () {
+      this.ui.form.parsley();
     },
 
     formSubmitted: function (e) {

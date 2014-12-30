@@ -14,16 +14,20 @@ define(function (require) {
       };
     },
 
+    ui: {
+      form: 'form'
+    },
+
     events: {
-      'submit': 'onSubmit'
+      'submit @ui.form': 'onSubmit'
     },
 
     initialize: function (options) {
       this.type = (options || {}).type;
     },
 
-    onShow: function () {
-      $('form').parsley();
+    onAttach: function () {
+      this.ui.form.parsley();
     },
 
     onSubmit: function (evt) {

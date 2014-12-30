@@ -9,19 +9,22 @@ define(function (require) {
     template: template,
     className: 'js-main-content',
 
+    ui: {
+      form: 'form'
+    },
+
     events: {
-      'submit form': 'onSubmit'
+      'submit @ui.form': 'onSubmit'
     },
 
     onShow: function () {
-      $('form').parsley();
-      // disableSubmit();
+      this.ui.form.parsley();
     },
 
     onSubmit: function (evt) {
       evt.preventDefault();
       var attrs = Syphon.serialize(this);
-      Radio.command('editor', 'update:app', attrs);
+      Radio.request('manager', 'new:app', attrs);
       history.navigate('apps/', { trigger: true });
     },
 
