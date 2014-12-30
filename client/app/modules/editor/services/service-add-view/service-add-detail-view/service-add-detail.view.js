@@ -22,6 +22,10 @@ define(function (require) {
       this.type = (options || {}).type;
     },
 
+    onShow: function () {
+      $('form').parsley();
+    },
+
     onSubmit: function (evt) {
       evt.preventDefault();
       var attrs = Syphon.serialize(this);
