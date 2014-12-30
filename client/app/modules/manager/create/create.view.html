@@ -9,12 +9,9 @@
   <div class="form-group">
     <label for="applicationName" class="required">Name</label>
     <input type="text" class="form-control half" name="name" id="applicationName" placeholder="Enter application name"
-        data-parsley-trigger="change"
-        data-parsley-class-handler=".has-error"
-        data-parsley-errors-container="#error-applicationName"
-        data-parsley-error-message="Uh-oh! Something isn't quite right with this name."
-        data-parsley-required>
-    <div id="#error-applicationName"></div>
+        data-parsley-required
+        data-parsley-required-message="Please supply a name.">
+    <div class="error-messages"></div>
   </div>
   <div class="form-group">
     <label for="applicationDescription" class="required">Description <em>(max char: 140)</em></label>
