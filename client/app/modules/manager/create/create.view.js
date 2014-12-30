@@ -15,7 +15,7 @@ define(function (require) {
 
     onShow: function () {
       this.ui.form.parsley();
-      disableSubmit();
+      // disableSubmit();
     },
 
     onSubmit: function (evt) {
