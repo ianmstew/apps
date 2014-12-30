@@ -33,7 +33,7 @@ define(function (require) {
       this.ui.alert.one('close.bs.alert', this.onClose.bind(this));
     },
 
-    onShow: function () {
+    onBeforeShow: function () {
       this.ui.alert.addClass('in');
     },
 

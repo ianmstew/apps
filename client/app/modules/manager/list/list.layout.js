@@ -14,7 +14,7 @@ define(function (require) {
 
     // The list layout contains some basic wrapper HTML.
     // Once it's shown, then pass control of the 'list' region to the List presenter.
-    onShow: function () {
+    onBeforeShow: function () {
       new ListPresenter({
         region: this.getRegion('list'),
         present: true

@@ -61,8 +61,8 @@ define(function (require) {
     // }
     show: function (view, options) {
       var opts = options || {};
+      var eventsRegistered = false;
 
-      if (!opts.silent) this.triggerMethod('before:show', view);
       if (!opts.noDestroy) this._bindToView(view);
 
       if (opts.loading) {
@@ -70,14 +70,15 @@ define(function (require) {
         Radio.channel('loading').command('show:loading', view, this.region, opts);
       } else {
         // Show into region directly
+        if (!opts.silent && this.region.currentView !== view) {
+          view.once('before:show', this.triggerMethod.bind(this, 'before:show', view));
+          view.once('show', this.triggerMethod.bind(this, 'show', view));
+          eventsRegistered = true;
+        }
+        if (!opts.silent && !eventsRegistered) this.triggerMethod('before:show', view);
         this.region.show(view, opts);
+        if (!opts.silent && !eventsRegistered) this.triggerMethod('show', view);
       }
-
-      // View and its regions are instantiated and available even if loading view is shown first.
-      // The loading presenter is responsible for ultimately showing into a region or destroying
-      // the view, so children can reliably depend on view's regions to either be added to the DOM
-      // or destroyed.  I.e., chaining onShow() to handle nested views is safe even while loading.
-      if (!opts.silent) this.triggerMethod('show', view, opts);
     },
 
     _bindToView: function (view) {

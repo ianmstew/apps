@@ -39,7 +39,7 @@ define(function (require) {
       this.destroy();
     },
 
-    onShow: function () {
+    onBeforeShow: function () {
       // Bootstrap-show modal
       this.$el.modal({
         show: true,

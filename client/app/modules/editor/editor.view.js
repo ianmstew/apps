@@ -26,7 +26,7 @@ define(function (require) {
       }]);
     },
 
-    onShow: function () {
+    onBeforeShow: function () {
       var tabsView = new TabsView({
         collection: this.tabs
       });

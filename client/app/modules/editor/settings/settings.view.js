@@ -25,7 +25,7 @@ define(function (require) {
       'change': 'render'
     },
 
-    onShow: function () {
+    onAttach: function () {
       this.ui.form.parsley();
     },
 

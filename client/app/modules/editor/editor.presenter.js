@@ -30,7 +30,7 @@ define(function (require) {
       this.show(this.getEditorView());
     },
 
-    onShow: function (editorView) {
+    onBeforeShow: function (editorView) {
       var contentRegion = editorView.getRegion('content');
       var presenter;
 
