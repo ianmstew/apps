@@ -13,6 +13,10 @@ define(function (require) {
       'submit form': 'formSubmitted'
     },
 
+    onShow: function () {
+      disableSubmit();
+    },
+
     formSubmitted: function (e) {
       // Prevents the form from doing a default submit + page refresh
       e.preventDefault();
@@ -21,6 +25,19 @@ define(function (require) {
       var attrs = Syphon.serialize(this);
       var app = Radio.request('manager', 'new:app', attrs);
       if (!app.validationError) history.navigate('apps/', { trigger: true });
+    },
+
+    disableSubmit: function () {
+      this.getElementById("tos-checkbox").disabled = true;
+    },
+
+    activateButton: function (element) {
+      if(element.checked) {
+        this.getElementById("tos-checkbox").disabled = false;
+      }
+      else  {
+        this.getElementById("tos-checkbox").disabled = true;
+      }
     }
   });
 
