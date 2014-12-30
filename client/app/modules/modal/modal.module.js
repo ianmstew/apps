@@ -14,16 +14,17 @@ define(function (require) {
     },
 
     showModal: function (view, options) {
+      options = options || {};
       this.lastModalView = new ModalLayout({
-        bodyView: view
+        bodyView: view,
+        title: options.title,
+        subtitle: options.subtitle
       });
       this.show(this.lastModalView);
     },
 
     closeModal: function () {
-      if (this.lastModalView && !this.lastModalView.isDestroyed) {
-        this.lastModalView.hide();
-      }
+      this.getRegion().closeLast();
     }
   });
 
