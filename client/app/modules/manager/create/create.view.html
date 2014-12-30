@@ -17,14 +17,14 @@
     <label for="application-description" class="required">Description <em>(max char: 140)</em></label>
     <input type="text" class="form-control" name="description" id="application-description" placeholder="Enter application description"
         data-parsley-required
-        data-parsley-required-message="Please include a description.">
+        data-parsley-required-message="Please supply a description.">
     <div class="error-messages"></div>
   </div>
   <div class="form-group">
     <label for="application-callbackUrl" class="required">Oauth Callback URL</label>
     <input type="text" class="form-control" name="oauthCallback" id="application-callbackURL" placeholder="Enter callback URL"
         data-parsley-required
-        data-parsley-required-message="Enter a Callback URL.">
+        data-parsley-required-message="Please enter a callback URL.">
     <div class="error-messages"></div>
   </div>
 
@@ -43,7 +43,6 @@
       <label>
         <input type="checkbox" id="tos-checkbox"
             data-parsley-check="[1]"
-            data-parsley-errors-container="#error-terms-service"
             data-parsley-error-message="Please select the checkbox to confirm that you agree with our terms &amp; services." require > Yes, I agree to the above Terms and Conditions
       </label>
     </div>

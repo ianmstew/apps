@@ -5,7 +5,7 @@ define(function (require) {
   var Radio = require('backbone.radio');
   var history = require('lib/util/history');
 
-  var CreateView = Marionette.CompositeView.extend({
+  var CreateView = Marionette.ItemView.extend({
     template: template,
     className: 'js-main-content',
 
@@ -14,7 +14,7 @@ define(function (require) {
     },
 
     onShow: function () {
-      this.ui.form.parsley();
+      $('form').parsley();
       // disableSubmit();
     },
 

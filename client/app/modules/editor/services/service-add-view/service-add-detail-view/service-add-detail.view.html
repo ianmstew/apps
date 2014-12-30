@@ -6,10 +6,6 @@
     <div class="form-group service-client-id">
       <label class="control-label" for="serviceClientId">Client ID:</label>
       <input class="form-control half" name="clientId" id="serviceClientId" value="{{clientId}}"
-          data-parsley-trigger="change"
-          data-parsley-class-handler=".service-client-id"
-          data-parsley-error-class="has-error"
-          data-parsley-errors-container=".service-client-id .errors"
           data-parsley-required-message="Please provide your {{name}} account client ID."
           data-parsley-required>
       <div class="errors"></div>
@@ -17,10 +13,6 @@
     <div class="form-group service-client-secret">
       <label class="control-label" for="serviceClientSecret">Client Secret:</label>
       <input class="form-control half" name="clientSecret" value="{{clientSecret}}"
-          data-parsley-trigger="change"
-          data-parsley-class-handler=".service-client-secret"
-          data-parsley-error-class="has-error"
-          data-parsley-errors-container=".service-client-secret .errors"
           data-parsley-required-message="Please provide your {{name}} account client secret."
           data-parsley-required>
       <div class="errors"></div>

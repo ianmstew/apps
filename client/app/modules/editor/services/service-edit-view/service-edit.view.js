@@ -15,6 +15,10 @@ define(function (require) {
       'click .js-remove-service': 'deleteConfirm'
     },
 
+    onShow: function () {
+      $('form').parsley();
+    },
+
     formSubmitted: function (e) {
       // Prevents the form from doing a default submit + page refresh
       e.preventDefault();
