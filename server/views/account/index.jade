@@ -8,4 +8,7 @@ block neck
   link(rel='stylesheet', href='/views/account/index.min.css?#{cacheBreaker}')
 
 block feet
-  script(src='/client/vendor/requirejs/require.js', data-main='/client/app/main.js')
+  if mode_dev
+    script(src='/client/vendor/requirejs/require.js', data-main='/client/app/main.js')
+  else
+    script(src='/client/app.js')

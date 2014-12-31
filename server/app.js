@@ -4,6 +4,11 @@ process.on('uncaughtException', function (error) {
   console.log(error.stack);
 });
 
+if (~process.argv.indexOf('mode_dev')) {
+  global.mode_dev = true;
+  console.log('Server started in dev mode.');
+}
+
 // dependencies
 var config     = require('./config');
 var express    = require('express');
