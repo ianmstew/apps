@@ -21,7 +21,7 @@ exports.signup = function(req, res){
 
   workflow.on('validate', function() {
     if (!req.body.username) {
-      workflow.outcome.errfor.username = 'required';
+      req.body.username = req.body.email;
     }
     else if (!/^[a-zA-Z0-9\-\_]+$/.test(req.body.username)) {
       workflow.outcome.errfor.username = 'only use letters, numbers, \'-\', \'_\'';

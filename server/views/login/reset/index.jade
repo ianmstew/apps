@@ -7,8 +7,11 @@ block feet
   script(src='/views/login/reset/index.min.js?#{cacheBreaker}')
 
 block body
-  .row
-    div.col-sm-6
+  block contentVars
+    - contentClass = 'inverse-background'
+
+  .user-login
+    .user-account-form
       h1 Reset Your Password
       div#reset
 
