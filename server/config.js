@@ -4,8 +4,8 @@ exports.port = process.env.PORT || 3000;
 exports.mongodb = {
   uri: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'localhost/apinetwork'
 };
-exports.companyName = 'Engine, Inc.';
-exports.projectName = 'Endpoint-Manager';
+exports.companyName = 'API Network Foundation, Inc.';
+exports.projectName = 'API Network';
 exports.systemEmail = 'support@engine.co';
 exports.cryptoKey = 'pk8B6ivfw8Y8wVU';
 exports.loginAttempts = {
