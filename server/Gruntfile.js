@@ -47,21 +47,24 @@ module.exports = function(grunt) {
     },
     concurrent: {
       dev: {
-        tasks: ['nodemon', 'watch'],
+        tasks: ['supervisor', 'watch'],
         options: {
           logConcurrentOutput: true
         }
       }
     },
-    nodemon: {
+    supervisor: {
       dev: {
         script: 'app.js',
         options: {
+          args: ['mode_dev'],
           ignore: [
+            'Gruntfile.js',
             'node_modules/**',
+            'bower_components/**',
             'public/**'
           ],
-          ext: 'js'
+          extensions: 'js'
         }
       }
     },
@@ -221,6 +224,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'clean',
     'shell:bower',
     'copy:vendor',
     'uglify',

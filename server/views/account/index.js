@@ -32,7 +32,8 @@ var renderSettings = function(req, res, next, oauthMessage) {
 
     res.render('account/index', {
       account: JSON.stringify(outcome.account),
-      user: JSON.stringify(outcome.user)
+      user: JSON.stringify(outcome.user),
+      mode_dev: global.mode_dev
     });
   };
 

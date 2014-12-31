@@ -141,7 +141,7 @@ module.exports = function (grunt) {
     },
 
     requirejs: {
-      prod: {
+      build: {
         options: {
           baseUrl: '<%- path.app %>',
           out: '<%- path.build %>/app.js',
@@ -224,20 +224,22 @@ module.exports = function (grunt) {
     'copy:npm_assets'
   ]);
 
-  grunt.registerTask('build-dev', [
+  grunt.registerTask('develop', [
     'clean:build',
     'libs',
     'shell:sync_dev',
     'less',
-    'shell:sourcemap_links'
+    'shell:sourcemap_links',
+    'watch'
   ]);
 
-  grunt.registerTask('build-prod', [
+  grunt.registerTask('build', [
+    'set-prod',
     'clean:all',
     'libs',
     'less',
     'requirejs'
   ]);
 
-  grunt.registerTask('default', ['build-dev']);
+  grunt.registerTask('default', ['develop']);
 };
