@@ -164,3 +164,14 @@ footer {
 .avatar {
   margin-top: -7px;
 }
+
+// Parsley Validation Styling
+// --------------------------------------------------
+ul.parsley-errors-list {
+  list-style-type: none;
+  padding-left: 0;
+
+  li {
+    &:extend(.text-danger);
+  }
+}
