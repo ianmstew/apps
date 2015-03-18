@@ -17,6 +17,11 @@ define(function (require) {
 
     on: function () {
       return Backbone.history.on.apply(Backbone.history, arguments);
+    },
+
+    redirect: function (route, options) {
+      options = _.extend({}, options, { replace: true, trigger: true });
+      this.navigate(route, options);
     }
   };
 
