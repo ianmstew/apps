@@ -4,6 +4,7 @@ process.on('uncaughtException', function (error) {
   console.log(error.stack);
 });
 
+// TODO: Convert to using NODE_ENV !== 'production'
 if (~process.argv.indexOf('mode_dev')) {
   global.mode_dev = true;
   console.log('Server started in dev mode.');

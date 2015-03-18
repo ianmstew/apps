@@ -47,24 +47,26 @@ module.exports = function(grunt) {
     },
     concurrent: {
       dev: {
-        tasks: ['supervisor', 'watch'],
+        tasks: ['nodemon', 'watch'],
         options: {
           logConcurrentOutput: true
         }
       }
     },
-    supervisor: {
+    nodemon: {
       dev: {
         script: 'app.js',
         options: {
-          args: ['mode_dev'],
           ignore: [
             'Gruntfile.js',
             'node_modules/**',
             'bower_components/**',
             'public/**'
           ],
-          extensions: 'js'
+          ext: 'js',
+          args: [
+            'mode_dev'
+          ]
         }
       }
     },
