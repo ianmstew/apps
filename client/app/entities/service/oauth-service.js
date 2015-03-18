@@ -24,7 +24,7 @@ define(function (require) {
 
     onConnectionDataChanged: function (oauthService, connectionData) {
       this.set({
-        clientId: connectionData.clientId,
+        clientId: connectionData.clientID,
         clientSecret: connectionData.clientSecret
       });
     },
@@ -33,7 +33,7 @@ define(function (require) {
       var attrs = OauthService.__super__.toJSON.apply(this, arguments);
       if (attrs.clientId || attrs.clientSecret) {
         attrs.connectionData = {
-          clientId: attrs.clientId,
+          clientID: attrs.clientId,
           clientSecret: attrs.clientSecret
         };
       }
