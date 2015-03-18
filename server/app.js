@@ -41,7 +41,8 @@ app.db.once('open', function () {
 // use mongo for session storage
 app.use(session({
   secret: config.cryptoKey,
-  store: new MongoStore({ url: config.mongodb.uri })
+  store: new MongoStore({ url: config.mongodb.uri }),
+  cookie: { maxAge: 2592000000 } // 1 Month in milliseconds
 }));
 
 // config data models
