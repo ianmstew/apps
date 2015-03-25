@@ -13,7 +13,7 @@ function redirectToAppCallback(res, oauthCallback, clientAppToken) {
     urlObj.search += '&appToken=' + clientAppToken;
   }
   else {
-    urlObj.search = '&appToken=' + clientAppToken;
+    urlObj.search = 'appToken=' + clientAppToken;
   }
   oauthCallback = url.format(urlObj);
 
@@ -44,6 +44,8 @@ var oauthController = {
   auth: function (req, res) {
     var clientId = req.params.clientId;
     var session = req.session;
+
+    __count = 0;
 
     req.app.db.models.App
       // Find App model from clientId
@@ -176,7 +178,6 @@ var oauthController = {
       return;
     }
 
-    // TODO: Solve redirect loop here
     req.app.db.models.ServiceToken
       .findOne({
         service: serviceId,
@@ -195,12 +196,16 @@ var oauthController = {
         else {
           return req.app.db.models.ServiceToken.createQ({
             service: serviceId,
-            owner: req.user._id,
+            clientAppToken: clientAppToken,
             credentials: credentials
           });
         }
       })
-      .then(function () {
+      .then(function (serviceToken) {
+        if (!serviceToken) {
+          throw new Error('Issue saving service token');
+        }
+        console.log.apply(console, ['>>> arguments'].concat(arguments));
         res.redirect('/oauth/subauth');
       })
       .catch(function (error) {
