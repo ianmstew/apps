@@ -8,12 +8,14 @@ define(function (require) {
     apps: [{
       name: 'App one',
       description: 'Bacon ipsum dolor sit amet culpa sirloin do ham hock pig cupidatat ut tail'
-        + 'consequat. Cow commodo sunt frankfurter pork excepteur.'
+        + 'consequat. Cow commodo sunt frankfurter pork excepteur.',
+      oauthCallback: 'http://myapp.com/auth/callback"'
     }, {
       name: 'App two',
       description: 'Pancetta rump dolore, fugiat cow exercitation porchetta esse commodo quis '
         + 'chuck ham hock dolore drumstick ham.',
-      services: []
+      services: [],
+      oauthCallback: 'http://myotherapp.com/auth/callback"'
     }],
 
     services: [{

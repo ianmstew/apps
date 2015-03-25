@@ -50,5 +50,5 @@ require.config({
 if (window && window.MODE_TEST) {
   require(['test/spec-runner']);
 } else {
-  require(['start-dev']);
+  require(['start-prod']);
 }

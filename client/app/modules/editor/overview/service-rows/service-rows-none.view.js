@@ -3,8 +3,14 @@ define(function (require) {
   var template = require('hgn!modules/editor/overview/service-rows/service-rows-none.view');
 
   var ServiceRowsNoneView = Marionette.ItemView.extend({
+    
     template: template,
-    tagName: 'tr'
+    tagName: 'tr',
+
+    initialize: function (options) {
+      options = options || {};
+      this.model = options.app;
+    }
   });
 
   return ServiceRowsNoneView;

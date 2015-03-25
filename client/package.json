@@ -9,7 +9,6 @@
   "devDependencies": {
     "chai": "^1.10.0",
     "chai-as-promised": "^4.1.1",
-    "chai-jquery": "^2.0.0",
     "grunt": "^0.4.5",
     "grunt-bower-task": "^0.4.0",
     "grunt-concurrent": "^1.0.0",

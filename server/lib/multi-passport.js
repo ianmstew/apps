@@ -16,12 +16,12 @@ module.exports = {
       'facebook',
       require('passport-facebook').Strategy,
       function (options) {
-        return _.extend(_.cloneDeep(options), {
-          // Set this here - don't rely on the client API to specify where we should come back to
-          // for security reasons.
+        options = _.merge({}, options, {
           callbackURL: 'http://local.apinetwork.co:3000/oauth/subauth/callback/',
           passReqToCallback: true
         });
+        console.log('>>>', options);
+        return options;
       },
       function () {
         return function (req, accessToken, refreshToken, profile, done) {
@@ -38,12 +38,11 @@ module.exports = {
       'twitter',
       require('passport-twitter').Strategy,
       function (options) {
-        return _.extend(_.cloneDeep(options), {
+        return _.merge({}, options, {
           requestTokenURL: 'https://api.twitter.com/oauth/request_token/',
           userAuthorizationURL: 'https://api.twitter.com/oauth/authorize/',
           accessTokenURL: 'https://api.twitter.com/oauth/access_token/',
           callbackUrl: 'http://local.apinetwork.co:3000/oauth/subauth/callback/',
-          // This one is required by passport strategies that extend OAuth.
           passReqToCallback: true
         });
       },

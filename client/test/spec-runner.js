@@ -2,7 +2,6 @@ define(function (require) {
   require('appstrap');
   var mocha = require('mocha');
   var chai = require('chai');
-  var chaiJquery = require('chai-jquery');
   var chaiAsPromised = require('chai-as-promised');
   var sinon = require('sinon');
   var sinonChai = require('sinon-chai');
@@ -39,7 +38,6 @@ define(function (require) {
   mocha.setup('bdd');
   mocha.checkLeaks();
   mocha.globals(['stub', 'spy']);
-  chai.use(chaiJquery);
   chai.use(sinonChai);
   chai.use(chaiAsPromised);
   chai.should();

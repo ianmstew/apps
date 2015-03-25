@@ -16,18 +16,15 @@
         <th>
           Date Added
         </th>
-        <th>
+        <th class="table-app-services-callback">
           Callback URL
         </th>
         <th>
           Client ID
         </th>
-        <th>
-          Client Secret
-        </th>
       </tr>
     </thead>
-    <tbody class="js-service-rows">
+    <tbody class="js-service-rows service-rows">
     </tbody>
   </table>
 </div>
@@ -59,10 +56,18 @@
       </tr>
       <tr>
         <th>
-          Oauth Callback URL:
+          Callback URL:
         </th>
         <td>
           {{oauthCallback}}
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Client ID:
+        </th>
+        <td>
+          {{clientId}}
         </td>
       </tr>
     </tbody>

@@ -80,9 +80,6 @@ module.exports = function (grunt) {
           src: 'node_modules/chai/chai.js',
           dest: '<%- path.vendor %>/chai/chai.js'
         }, {
-          src: 'node_modules/chai-jquery/chai-jquery.js',
-          dest: '<%- path.vendor %>/chai-jquery/chai-jquery.js'
-        }, {
           src: 'node_modules/mocha/mocha.js',
           dest: '<%- path.vendor %>/mocha/mocha.js'
         }, {
@@ -144,7 +141,7 @@ module.exports = function (grunt) {
       build: {
         options: {
           baseUrl: '<%- path.app %>',
-          out: '<%- path.build %>/app.js',
+          out: '<%- path.build %>/app/app.js',
           mainConfigFile: '<%- path.app %>/main.js',
           name: '../vendor/almond/almond',
           include: ['start-prod'],

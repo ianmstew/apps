@@ -7,7 +7,7 @@ exports.mongodb = {
 exports.companyName = 'API Network Foundation, Inc.';
 exports.projectName = 'API Network';
 exports.systemEmail = 'support@engine.co';
-exports.cryptoKey = 'pk8B6ivfw8Y8wVU';
+exports.cryptoKey = 'HlWb0ewbpkcY2LNSrfCzFgtQjOGuanhYEACxCy0m5Bxgk46mgkaZTdWVE1wSIyt';
 exports.loginAttempts = {
   forIp: 50,
   forIpAndUser: 7,

@@ -5,7 +5,7 @@ module.exports = function (grunt) {
       develop: {
         projects: {
           'client': 'develop',
-          'server': 'develop'
+          'server': 'build'
         }
       },
       build: {

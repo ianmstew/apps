@@ -1,6 +1,7 @@
 var validator = require('../util/validator');
 var uuid = require('node-uuid');
 var _ = require('lodash');
+var url = require('url');
 
 var appController = {
 
@@ -42,6 +43,7 @@ var appController = {
       .done();
   },
 
+  // Must validate
   create: function (req, res) {
     var _app = _.extend({
       clientId: uuid.v4(),
@@ -52,6 +54,19 @@ var appController = {
       'name',
       'oauthCallback'
     ]));
+    var urlObj;
+
+    // Catch null oauthCallback
+    if (!_app.oauthCallback) {
+      validator.failParam(res, 'Must supply \'oauthCallback\'.');
+      return;
+    }
+    // Catch an incomplete oauthCallback
+    urlObj = url.parse(_app.oauthCallback);
+    if (!/^https?:/.test(urlObj.protocol)) {
+      validator.failParam(res, '\'oauthCallback\' must be a complete URL.');
+      return;
+    }
 
     req.app.db.models.App
       .createQ(_app)
@@ -74,6 +89,19 @@ var appController = {
       'name',
       'oauthCallback'
     ]));
+    var urlObj;
+
+    // Catch a nullified oauthCallback
+    if (!_.isUndefined(_app.oauthCallback) && !_app.oauthCallback) {
+      validator.failParam(res, '\'oauthCallback\' cannot be null.');
+      return;
+    }
+    // Catch an incomplete oauthCallback
+    urlObj = url.parse(_app.oauthCallback);
+    if (!/^https?:/.test(urlObj.protocol)) {
+      validator.failParam(res, '\'oauthCallback\' must be a complete URL.');
+      return;
+    }
 
     req.app.db.models.App
       .updateQ({

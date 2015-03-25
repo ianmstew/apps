@@ -27,6 +27,10 @@ define(function (require, exports, module) {
     },
 
     model: function (attrs, options) {
+      return Services.newModel(attrs, options);
+    }
+  }, {
+    newModel: function (attrs, options) {
       switch (attrs.type) {
         case 'facebook':
           return new FacebookService(attrs, options);

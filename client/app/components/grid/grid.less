@@ -20,6 +20,7 @@
   .border-radius(3px);
   box-sizing: border-box;
   color: @gray-darker;
+  font-size: 14px;
   background-color: @gray-even-lighter;
   word-wrap: break-word;
   .transition(background-color 0.2s ease);
@@ -44,13 +45,18 @@
 
     li {
       float: left;
-      padding: 0 1%;
+    }
+
+    .fa {
+      font-size: 30px;
+      padding: 0 7px;
     }
   }
 }
 
 .grid-description {
   width: 100%;
+  margin-top: 5px;
 
   th {
     width: 100px;
@@ -60,6 +66,10 @@
   td {
     word-break: break-word;
   }
+}
+
+.grid-attribute {
+  margin-top: 10px;
 }
 
 .grid-create {
@@ -88,6 +98,12 @@
   }
 }
 
+.grid-logo-icon {
+  float: right;
+  font-size: 18px;
+  line-height: 40px;
+}
+
 .grid-logo {
   float: right;
   width: @grid-logo-width;
@@ -105,9 +121,4 @@
 .grid-name {
   font-size: @font-size-h4;
   line-height: @grid-logo-width;
-}
-
-.grid-description {
-  clear: both;
-  font-size: 12px;
 }
