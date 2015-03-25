@@ -4,10 +4,7 @@ define(function (require) {
   var OauthService = Service.extend({
 
     defaults: _.defaults({
-      // connectionData: {
-      //   clientId:     undefined,
-      //   clientSecret: undefined
-      // },
+      connectionData: undefined,
 
       // View only
       callbackUrl:    'https://apinetwork.co/oauth/subauth/callback/',
@@ -15,28 +12,22 @@ define(function (require) {
       clientSecret:   undefined
     }, Service.prototype.defaults),
 
-    constructor: function () {
-      this.on({
-        'change:connectionData': this.onConnectionDataChanged
-      }, this);
-      OauthService.__super__.constructor.apply(this, arguments);
-    },
-
-    onConnectionDataChanged: function (oauthService, connectionData) {
-      this.set({
-        clientId: connectionData.clientID,
-        clientSecret: connectionData.clientSecret
-      });
+    parse: function () {
+      var attrs = OauthService.__super__.parse.apply(this, arguments);
+      if (attrs.connectionData) {
+        attrs.clientId = attrs.connectionData.clientId;
+        attrs.clientSecret = attrs.connectionData.clientSecret;
+      }
+      return attrs;
     },
 
     toJSON: function () {
-      var attrs = OauthService.__super__.toJSON.apply(this, arguments);
-      if (attrs.clientId || attrs.clientSecret) {
-        attrs.connectionData = {
-          clientID: attrs.clientId,
-          clientSecret: attrs.clientSecret
-        };
-      }
+      var attrs = _.clone(this.attributes);
+      attrs.connectionData = {
+        clientId: attrs.clientId,
+        clientSecret: attrs.clientSecret
+      };
+      // Omitting view-only attributes from transmission to server
       return _.omit(attrs, 'callbackUrl', 'clientId', 'clientSecret');
     }
   });

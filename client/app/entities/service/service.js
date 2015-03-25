@@ -39,15 +39,9 @@ define(function (require) {
 
     constructor: function () {
       this.on({
-        'change:createdAt': this.onChangeCreatedAt,
-        'change:type': this.onChangeType,
-        'change:clientId': this.onChangeClientId
+        'change:type': this.onChangeType
       }, this);
       Service.__super__.constructor.apply(this, arguments);
-    },
-
-    onChangeClientId: function () {
-      //debugger;
     },
 
     validate: function (attrs, options) {
@@ -62,18 +56,19 @@ define(function (require) {
       }
     },
 
-    onChangeCreatedAt: function (service, createdAt) {
-      var dateFormatted = 'N/A';
+    parse: function () {
+      var attrs = Service.__super__.parse.apply(this, arguments);
 
-      if (createdAt) {
-        var dateTime = new Date(Date.parse(createdAt)),
-          month = monthNames[dateTime.getMonth()],
-          day = dateTime.getDate(),
-          year = dateTime.getFullYear();
-        dateFormatted = month + ' ' + day + ', ' + year;
+      if (attrs.createdAt) {
+        var dateTime = new Date(Date.parse(attrs.createdAt));
+        var month = monthNames[dateTime.getMonth()];
+        var day = dateTime.getDate();
+        var year = dateTime.getFullYear();
+        var dateFormatted = month + ' ' + day + ', ' + year;
+        attrs.dateAdded = dateFormatted;
       }
 
-      this.set('dateAdded', dateFormatted);
+      return attrs;
     },
 
     toJSON: function () {

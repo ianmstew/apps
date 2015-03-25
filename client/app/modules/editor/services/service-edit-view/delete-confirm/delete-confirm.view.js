@@ -1,6 +1,5 @@
 define(function (require) {
   var Marionette = require('marionette');
-  // var Syphon = require('backbone.syphon');
   var Radio = require('backbone.radio');
   var template = require('hgn!modules/editor/services/service-edit-view/delete-confirm/delete-confirm.view');
 
@@ -9,12 +8,12 @@ define(function (require) {
     className: 'delete-service-form',
 
     events: {
-      'click .btn-delete': 'onClickRemoveService'
+      'click .js-confirm': 'onConfirm'
     },
 
-    onClickRemoveService: function () {
+    onConfirm: function () {
+      this.trigger('confirm');
       Radio.command('modal', 'close:modal');
-      this.trigger('remove:service');
     }
   });
 

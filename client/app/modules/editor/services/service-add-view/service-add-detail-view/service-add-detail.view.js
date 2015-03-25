@@ -7,6 +7,7 @@ define(function (require) {
   var ServiceAddDetailView = Marionette.ItemView.extend ({
 
     template: template,
+    className: 'service-add-detail',
 
     templateHelpers: function () {
       return {
@@ -23,7 +24,7 @@ define(function (require) {
     },
 
     initialize: function (options) {
-      this.type = (options || {}).type;
+      this.type = this.model.get('type');
     },
 
     onAttach: function () {

@@ -1,25 +1,20 @@
 <a tabindex="0" class="grid-item">
-  <div class="grid-logo">
-    <img src="http://placekitten.com/g/200/300" alt="kittenz yo" title="kittenz yo" />
-    <!-- {{icon}} -->
+  <div class="grid-logo-icon">
+    <i class="fa {{iconClass}}"></i>
   </div>
   <div class="grid-name">{{name}}</div>
-  <table class="grid-description">
-    <tr class="service-date-added">
-      <th>Added:</th>
-      <td>{{dateAdded}}</td>
-    </tr>
-    <tr class="service-callback-url">
-      <th>Callback URL:</th>
-      <td>{{callbackUrl}}</td>
-    </tr>
-    <tr class="service-client-id">
-      <th>Client ID:</th>
-      <td>{{clientId}}</td>
-    </tr>
-    <tr class="service-client-secret">
-      <th>Client Secret:</th>
-      <td>{{clientSecret}}</td>
-    </tr>
-  </table>
+  <div class="grid-description">
+    <div class="grid-attribute">
+      <strong>Added:</strong>
+      <div>{{dateAdded}}</div>
+    </div>
+    <div class="grid-attribute">
+      <strong>Callback URL:</strong>
+      <div>{{callbackUrl}}</div>
+    </div>
+    <div class="grid-attribute">
+      <strong>Client ID:</strong>
+      <div>{{clientId}}</div>
+    </div>
+  </div>
 </a>

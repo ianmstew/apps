@@ -13,6 +13,12 @@ define(function (require) {
 
     modelEvents: {
       'change': 'render'
+    },
+
+    initialize: function () {
+      this.childViewOptions = {
+        app: this.model
+      };
     }
   });
 

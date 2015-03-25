@@ -17,7 +17,7 @@ define(function (require) {
       'submit @ui.form': 'onSubmit'
     },
 
-    onShow: function () {
+    onAttach: function () {
       this.ui.form.parsley();
     },
 

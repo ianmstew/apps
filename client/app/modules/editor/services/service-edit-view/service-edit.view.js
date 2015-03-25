@@ -34,8 +34,8 @@ define(function (require) {
     },
 
     deleteConfirm: function () {
-      var deleteConfirmView = new DeleteConfirmView({ model: this.model });
-      this.listenToOnce(deleteConfirmView, 'remove:service', this.onRemoveService);
+      var deleteConfirmView = new DeleteConfirmView();
+      this.listenToOnce(deleteConfirmView, 'confirm', this.onRemoveService);
       Radio.channel('modal').command('show:modal', deleteConfirmView);
     },
 

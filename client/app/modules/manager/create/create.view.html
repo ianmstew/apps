@@ -21,12 +21,13 @@
     <div class="error-messages"></div>
   </div>
   <div class="form-group">
-    <label for="application-callbackUrl" class="required">Oauth Callback URL</label>
+    <label for="application-callbackUrl" class="required">Callback URL</label>
     <input type="text" class="form-control" name="oauthCallback" id="application-callbackURL" placeholder="Enter callback URL"
         data-parsley-required
-        data-parsley-required-message="Please enter a callback URL.">
+        data-parsley-required-message="Please enter a callback URL."
+        data-parsley-type="url"
+        data-parsley-type-message="Please enter a complete URL.">
     <div class="error-messages"></div>
-    <div class="callback-url-notice">Please note: you can leave this empty and/or change this later on.</div>
   </div>
 
   <h3>Terms &amp; Conditions</h3>
@@ -43,12 +44,13 @@
     <div class="checkbox">
       <label>
         <input type="checkbox" id="tos-checkbox"
-            data-parsley-check="[1]"
-            data-parsley-error-message="Please select the checkbox to confirm that you agree with our terms &amp; services." require > Yes, I agree to the above Terms and Conditions
+            data-parsley-required
+            data-parsley-required-message="Please confirm that you agree with our terms &amp; services.">
+        Yes, I agree to the above Terms and Conditions
       </label>
+      <div class="error-messages"></div>
     </div>
-    <div class="error-messages"></div>
   </div>
 
-  <button type="submit" class="btn-action">Connect App to API Network</button>
+  <button type="submit" class="btn-action js-submit">Connect App to API Network</button>
 </form>
