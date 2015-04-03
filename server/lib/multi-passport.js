@@ -1,4 +1,48 @@
-var _ = require('lodash');
+function saveServiceToken(req, tokenSet, done) {
+  var session = req.session;
+  if (!session.appTokens) session.appTokens = {};
+  var clientId = session.lastClientId;
+  var serviceId = session.lastServiceId;
+  var appToken = session.appTokens[clientId];
+
+  if (!appToken || !serviceId) {
+    done(new Error('Problem retrieving appToken or serviceId. Please report to support.'));
+    return;
+  }
+
+  req.app.db.models.ServiceToken
+    .findOne({
+      service: serviceId,
+      appToken: appToken
+    })
+    .execQ()
+    .then(function (serviceToken) {
+      // If this service has tokens already, update and move on
+      if (serviceToken) {
+        serviceToken.tokenSet = tokenSet;
+        return serviceToken.saveQ();
+      }
+      // If this service does not have tokens, create them and move on
+      else {
+        return req.app.db.models.ServiceToken.createQ({
+          service: serviceId,
+          appToken: appToken,
+          tokenSet: tokenSet
+        });
+      }
+    })
+    .then(function (serviceToken) {
+      if (!serviceToken) {
+        throw new Error('Issue saving service token');
+      }
+      done(null, {});
+    })
+    .catch(function (error) {
+      console.log('>>>', error.stack);
+      done(error);
+    })
+    .done();
+}
 
 module.exports = {
 
@@ -12,48 +56,42 @@ module.exports = {
       return done(new Error('Unimplemented'));
     });
 
-    multipass.register(
-      'facebook',
-      require('passport-facebook').Strategy,
-      function (options) {
-        options = _.merge({}, options, {
+    multipass.register('facebook', require('passport-facebook').Strategy,
+      // Prepare Passport request with client credentials
+      function (connectionData) {
+        return {
+          clientID: connectionData.clientId,
+          clientSecret: connectionData.clientSecret,
           callbackURL: 'http://local.apinetwork.co:3000/oauth/subauth/callback/',
           passReqToCallback: true
-        });
-        console.log('>>>', options);
-        return options;
+        };
       },
       function () {
+        // Handle successful authorization response
         return function (req, accessToken, refreshToken, profile, done) {
-          req.session.serviceTokens = {
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-            profile: profile
+          var tokenSet = {
+            accessToken: accessToken
           };
-          done(null, profile);
+          saveServiceToken(req, tokenSet, done);
         };
       });
 
-    multipass.register(
-      'twitter',
-      require('passport-twitter').Strategy,
-      function (options) {
-        return _.merge({}, options, {
-          requestTokenURL: 'https://api.twitter.com/oauth/request_token/',
-          userAuthorizationURL: 'https://api.twitter.com/oauth/authorize/',
-          accessTokenURL: 'https://api.twitter.com/oauth/access_token/',
+    multipass.register('twitter', require('passport-twitter').Strategy,
+      function (connectionData) {
+        return {
+          consumerKey: connectionData.clientId,
+          consumerSecret: connectionData.clientSecret,
           callbackUrl: 'http://local.apinetwork.co:3000/oauth/subauth/callback/',
           passReqToCallback: true
-        });
+        };
       },
       function () {
         return function (req, token, tokenSecret, profile, done) {
-          req.session.serviceTokens = {
+          var tokenSet = {
             token: token,
-            tokenSecret: tokenSecret,
-            profile: profile
+            tokenSecret: tokenSecret
           };
-          done(null, profile);
+          saveServiceToken(req, tokenSet, done);
         };
       });
 

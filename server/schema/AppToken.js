@@ -5,12 +5,11 @@
 module.exports = function (app, mongoose) {
   var appTokenSchema = new mongoose.Schema({
     app: { type: mongoose.Schema.Types.ObjectId, ref: 'App' },
-    clientAppToken: { type: String },
+    token: { type: String },
     createdAt: { type: Date, default: Date.now }
   });
 
-  appTokenSchema.index({ owner: 1 });
-  appTokenSchema.index({ clientId: 1 });
+  appTokenSchema.index({ app: 1 });
   appTokenSchema.index({ token: 1 });
 
   appTokenSchema.set('autoIndex', (app.get('env') === 'development'));
