@@ -1,8 +1,6 @@
 var oauthController = require('../controllers/oauth-controller');
 
-var apiRoutes = function (app, passport) {
-
-  // NOTE: These routes are also referenced in lib/multi-passport.js
+var apiRoutes = function (app) {
 
   app.get('/oauth/auth/:clientId/', oauthController.auth);
   app.get('/oauth/subauth/', oauthController.subauth);

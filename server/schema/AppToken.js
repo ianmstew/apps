@@ -1,7 +1,5 @@
 'use strict';
 
-// TODO: AppToken should expire (delete itself) one month from creation, along with its child
-//   ServiceTokens.
 module.exports = function (app, mongoose) {
   var appTokenSchema = new mongoose.Schema({
     app: { type: mongoose.Schema.Types.ObjectId, ref: 'App' },
