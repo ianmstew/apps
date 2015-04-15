@@ -15,6 +15,10 @@ var routes = function (app, passport) {
     res.send('OK');
   });
 
+  app.get('/fail', function (req, res) {
+    res.send('Fail');
+  });
+
   // route not found
   app.all('*', httpController.http404);
 };

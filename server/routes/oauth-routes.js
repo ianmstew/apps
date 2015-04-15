@@ -6,7 +6,8 @@ var apiRoutes = function (app, passport) {
 
   app.get('/oauth/auth/:clientId/', oauthController.auth);
   app.get('/oauth/subauth/', oauthController.subauth);
-  app.get('/oauth/subauth/callback/', oauthController.subauthCallback);
+  app.get('/oauth/subauth/callback/',
+    oauthController.subauthCallback, oauthController.subauthCallbackComplete);
   app.get('/oauth/authorized/', oauthController.authorized);
 };
 

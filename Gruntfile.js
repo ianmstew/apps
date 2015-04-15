@@ -10,7 +10,7 @@ module.exports = function (grunt) {
       },
       build: {
         projects: {
-          'client': 'build',  // TODO
+          'client': 'build',
           'server': 'build'
         }
       }
