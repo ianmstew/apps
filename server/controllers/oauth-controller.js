@@ -4,16 +4,18 @@ var Q = require('q');
 var url = require('url');
 var NOT_AUTHENTICATED = 'Not authenticated';
 
-function redirectToAppCallback(res, oauthCallback, appToken) {
+function redirectToAppCallback(res, app, appToken) {
+  var oauthCallback = app.oauthCallback;
+  var token = appToken.token;
   var urlObj;
 
   // Parse callback URL and add client app token to query parameter
   urlObj = url.parse(oauthCallback);
   if (urlObj.search) {
-    urlObj.search += '&appToken=' + appToken;
+    urlObj.search += '&appToken=' + token;
   }
   else {
-    urlObj.search = 'appToken=' + appToken;
+    urlObj.search = 'appToken=' + token;
   }
   oauthCallback = url.format(urlObj);
 
@@ -67,7 +69,7 @@ var oauthController = {
           appToken = req.app.db.models.AppToken
             .findOne({
               app: app._id,
-              token: appToken
+              token: appToken.token
             })
             .execQ();
         }
@@ -89,8 +91,9 @@ var oauthController = {
       })
       // Save AppToken to session
       .spread(function (app, appToken) {
-        session.appTokens[clientId] = appToken.token;
+        session.appTokens[clientId] = appToken;
         session.lastClientId = clientId;
+        session.lastApp = app;
         return Q.denodeify(session.save.bind(session))();
       })
       // Redirect to subauth
@@ -119,7 +122,7 @@ var oauthController = {
       throw error;
     }
     else if (!appToken) {
-      throw new Error('Problem retrieving appToken. Please report to support.');
+      throw new Error('Problem retrieving appToken. Please contact support.');
     }
 
     req.app.db.models.App
@@ -139,9 +142,10 @@ var oauthController = {
       // Attempt authentication with services
       .spread(function (app, services) {
         if (!services) {
-          redirectToAppCallback(res, app.oauthCallback, appToken);
+          // There are no services registered with the app; redirect back to the app.
+          redirectToAppCallback(res, app, appToken);
         } else {
-          return oauthController._authServices(req, res, next, app, services, appToken);
+          return oauthController._authServices(req, res, next, app, appToken, services);
         }
       })
       .catch(function (error) {
@@ -154,28 +158,8 @@ var oauthController = {
       .done();
   },
 
-  subauthCallback: function (req, res, next) {
-    var session = req.session;
-    var serviceId = session.lastServiceId;
-    var serviceType = session.lastServiceType;
-
-    if (!serviceId || !serviceType) {
-      validator.failServer(res, 'Problem retrieving serviceId/Type. Please report to support.');
-      return;
-    }
-
-    req.app.passport.authenticate('remote', {
-      type: serviceType,
-      next: next
-    }, next)(req, res, next);
-  },
-
-  subauthCallbackComplete: function (req, res) {
-    res.send('Success');
-  },
-
   // Given the list of all services for an app, authenticate the first un-authenticated service.
-  _authServices: function (req, res, next, app, services, appToken) {
+  _authServices: function (req, res, next, app, appToken, services) {
     // Perform a serial iteration over services and authenticate with the first service
     // without recent tokens.
     // Array reduce approach based loosely on https://github.com/kriskowal/q#sequences
@@ -185,7 +169,7 @@ var oauthController = {
         .then(function () {
           return req.app.db.models.ServiceToken
             .findOne({
-              appToken: appToken,
+              appToken: appToken.token,
               service: service._id
             })
             .execQ();
@@ -202,33 +186,64 @@ var oauthController = {
     }, Q())
     // All services have service tokens. Redirect to app callback with appToken.
     .then(function () {
-      redirectToAppCallback(res, app.oauthCallback, appToken);
+      redirectToAppCallback(res, app, appToken);
     })
     .catch(function (error) {
       if (error.type === NOT_AUTHENTICATED) {
+        var service = error.service;
         // Caught NOT_AUTHENTICATED; go ahead and authenticate
-        return oauthController._authService(req, res, next, app, error.service);
+        return oauthController._authService(req, res, next, appToken, service);
       } else {
         throw error;
       }
     });
   },
 
-  _authService: function (req, res, next, app, service) {
+  _authService: function (req, res, next, appToken, service) {
     var session = req.session;
-    session.lastServiceId = service._id;
-    session.lastServiceType = service.type;
+    session.lastService = service;
 
     // Save service id to session.
     return Q.denodeify(session.save.bind(session))()
       // Trigger multi-passport authentication for service.
       .then(function () {
-        req.app.passport.authenticate('remote', {
+        req.app.passport.authenticate('multi', {
           type: service.type,
+          clientApp: appToken.token,
           connectionData: service.connectionData,
           next: next
         })(req, res, next);
       });
+  },
+
+  subauthCallback: function (req, res, next) {
+    var session = req.session;
+    var appToken = session.appTokens[session.lastClientId];
+    var service = session.lastService;
+
+    if (!appToken || !service) {
+      validator.failServer(res, 'Problem retrieving appToken or service. Please contact support.');
+      return;
+    }
+
+    req.app.passport.authenticate('multi', {
+      type: service.type,
+      clientApp: appToken.token,
+      next: next
+    })(req, res, next);
+  },
+
+  subauthCallbackComplete: function (req, res) {
+    var session = req.session;
+    var app = session.lastApp;
+    var appToken = session.appTokens[session.lastClientId];
+
+    if (!app || !appToken) {
+      validator.failServer(res, 'Problem retrieving app or appToken. Please contact support.');
+      return;
+    }
+
+    redirectToAppCallback(res, app, appToken);
   }
 };
 

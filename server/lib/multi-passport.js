@@ -1,19 +1,22 @@
+var multiPassport = require('multi-passport');
+var PassportFacebook = require('passport-facebook');
+var PassportTwitter = require('passport-twitter');
+
 function saveServiceToken(req, tokenSet, done) {
   var session = req.session;
   if (!session.appTokens) session.appTokens = {};
-  var clientId = session.lastClientId;
-  var serviceId = session.lastServiceId;
-  var appToken = session.appTokens[clientId];
+  var appToken = session.appTokens[session.lastClientId];
+  var service = session.lastService;
 
-  if (!appToken || !serviceId) {
+  if (!appToken || !service) {
     done(new Error('Problem retrieving appToken or serviceId. Please report to support.'));
     return;
   }
 
   req.app.db.models.ServiceToken
     .findOne({
-      service: serviceId,
-      appToken: appToken
+      service: service._id,
+      appToken: appToken.token
     })
     .execQ()
     .then(function (serviceToken) {
@@ -25,8 +28,8 @@ function saveServiceToken(req, tokenSet, done) {
       // If this service does not have tokens, create them and move on
       else {
         return req.app.db.models.ServiceToken.createQ({
-          service: serviceId,
-          appToken: appToken,
+          service: service._id,
+          appToken: appToken.token,
           tokenSet: tokenSet
         });
       }
@@ -38,7 +41,6 @@ function saveServiceToken(req, tokenSet, done) {
       done(null, {});
     })
     .catch(function (error) {
-      console.log('>>>', error.stack);
       done(error);
     })
     .done();
@@ -50,14 +52,10 @@ module.exports = {
   // TODO: Account for IMAP (ask Curtis if need be?)
   strategies: function (passport) {
 
-    var multipass = new (require('multi-passport').Strategy)({
-      passport: passport
-    }, function (username, password, done) {
-      return done(new Error('Unimplemented'));
-    });
+    var multipass = new multiPassport.Strategy(passport);
 
-    multipass.register('facebook', require('passport-facebook').Strategy,
-      // Prepare Passport request with client credentials
+    multipass.register('facebook', PassportFacebook.Strategy,
+      // Prepare Passport request with app tokens
       function (connectionData) {
         return {
           clientID: connectionData.clientId,
@@ -66,17 +64,15 @@ module.exports = {
           passReqToCallback: true
         };
       },
-      function () {
-        // Handle successful authorization response
-        return function (req, accessToken, refreshToken, profile, done) {
-          var tokenSet = {
-            accessToken: accessToken
-          };
-          saveServiceToken(req, tokenSet, done);
+      // Handle successful authorization response
+      function (req, accessToken, refreshToken, profile, done) {
+        var tokenSet = {
+          accessToken: accessToken
         };
+        saveServiceToken(req, tokenSet, done);
       });
 
-    multipass.register('twitter', require('passport-twitter').Strategy,
+    multipass.register('twitter', PassportTwitter.Strategy,
       function (connectionData) {
         return {
           consumerKey: connectionData.clientId,
@@ -85,16 +81,14 @@ module.exports = {
           passReqToCallback: true
         };
       },
-      function () {
-        return function (req, token, tokenSecret, profile, done) {
-          var tokenSet = {
-            token: token,
-            tokenSecret: tokenSecret
-          };
-          saveServiceToken(req, tokenSet, done);
+      function (req, token, tokenSecret, profile, done) {
+        var tokenSet = {
+          token: token,
+          tokenSecret: tokenSecret
         };
+        saveServiceToken(req, tokenSet, done);
       });
 
-    passport.use('remote', multipass);
+    passport.use(multipass);
   }
 };

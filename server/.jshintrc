@@ -25,13 +25,13 @@
   "unused": "vars",
 
   // Avoid long function definitions
-  "maxparams": 5,
+  "maxparams": 6,
 
   // Prevent deep nesting
   "maxdepth": 2,
 
   // Concise functions
-  "maxstatements": 15,
+  "maxstatements": 20,
 
   // Prevent excessive branching
   "maxcomplexity": 6
