@@ -84,7 +84,7 @@ var oauthController = {
       })
       .spread(function (app, appToken) {
         if (!appToken) {
-          throw new HttpError(404, 'No appToken; must authenticate first.');
+          throw new HttpError(404, 'No or invalid appToken; must authenticate first.');
         } else if (appToken.used) {
           throw new HttpError(400, 'appToken has already been used.');
         }

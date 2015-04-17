@@ -2,8 +2,8 @@
 
 module.exports = function (app, mongoose) {
   var appTokenSchema = new mongoose.Schema({
-    app: { type: mongoose.Schema.Types.ObjectId, ref: 'App' },
     token: { type: String },
+    app: { type: mongoose.Schema.Types.ObjectId, ref: 'App' },
     used: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now }
   });
