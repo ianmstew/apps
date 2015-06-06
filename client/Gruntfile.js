@@ -130,10 +130,6 @@ module.exports = function (grunt) {
           'rm -f "<%- path.build %>"',
           'ln -s "$PROJ_ROOT/<%- path.build %>" "<%- path.build %>"'
         ].join('&&')
-      },
-
-      bower_backbone_master: {
-        command: 'echo 1 | bower install backbone'
       }
     },
 
@@ -216,7 +212,6 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('libs', [
-    'shell:bower_backbone_master',
     'bower',
     'copy:npm_assets'
   ]);

@@ -12,7 +12,8 @@ define(function (require) {
       'apps': ['reply', 'getApps'],
       'new:app': ['reply', 'newApp'],
       'update:app': ['comply', 'updateApp'],
-      'destroy:app': ['comply', 'destroyApp']
+      'destroy:app': ['comply', 'destroyApp'],
+      'refresh:apps': ['comply', 'refreshApps']
     },
 
     apps: undefined,
@@ -27,6 +28,10 @@ define(function (require) {
     onStart: function () {
       // TODO: Do we really want to load all apps on start?  If so, we should move the apps
       // service to a higher (global) level.
+      this.apps.fetch();
+    },
+
+    refreshApps: function () {
       this.apps.fetch();
     },
 

@@ -25,6 +25,7 @@ define(function (require) {
 
       // I own a region; show the List layout in it
       var listLayout = new ListLayout();
+      this.channel.command('refresh:apps');
       this.show(listLayout);
     },
 
