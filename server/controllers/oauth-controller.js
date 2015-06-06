@@ -24,10 +24,10 @@ function redirectToAppCallback(res, app, appToken) {
   // Parse callback URL and add client app token to query parameter
   urlObj = url.parse(oauthCallback);
   if (urlObj.search) {
-    urlObj.search += '&appToken=' + token;
+    urlObj.search += '&app_token=' + token;
   }
   else {
-    urlObj.search = 'appToken=' + token;
+    urlObj.search = 'app_token=' + token;
   }
   oauthCallback = url.format(urlObj);
 
@@ -38,7 +38,11 @@ function redirectToAppCallback(res, app, appToken) {
 var oauthController = {
 
   authorized: function (req, res) {
-    var appToken = req.query.appToken;
+    if (validator.failOnMissing(res, req.query, 'app_token')) {
+      return;
+    }
+    var appToken = req.query.app_token;
+
     req.app.db.models.ServiceToken
       // Find App model from clientId
       .find({
@@ -56,9 +60,12 @@ var oauthController = {
   },
 
   accessToken: function (req, res) {
-    var clientId = req.params.clientId;
-    var clientSecret = req.query.clientSecret;
-    var token = req.query.appToken;
+    if (validator.failOnMissing(res, req.query, 'app_token', 'client_secret')) {
+      return;
+    }
+    var clientId = req.params.client_id;
+    var clientSecret = req.query.client_secret;
+    var token = req.query.app_token;
 
     req.app.db.models.App
       // Find App model from clientId
@@ -84,9 +91,9 @@ var oauthController = {
       })
       .spread(function (app, appToken) {
         if (!appToken) {
-          throw new HttpError(404, 'No or invalid appToken; must authenticate first.');
+          throw new HttpError(404, 'Invalid app_token; must authenticate first.');
         } else if (appToken.used) {
-          throw new HttpError(400, 'appToken has already been used.');
+          throw new HttpError(400, 'app_token has already been used.');
         }
 
         var accessToken = req.app.db.models.AccessToken
@@ -110,7 +117,7 @@ var oauthController = {
           validator.failServer(res, new Error('Problem creating accessToken.'));
           return;
         } else if (!appToken) {
-          validator.failServer(res, new Error('Problem updating appToken.'));
+          validator.failServer(res, new Error('Problem updating app_token.'));
           return;
         }
 
@@ -124,7 +131,7 @@ var oauthController = {
 
   auth: function (req, res) {
     var session = req.session;
-    var clientId = req.params.clientId;
+    var clientId = req.params.client_id;
 
     if (!session.appTokens) session.appTokens = {};
 
@@ -134,7 +141,7 @@ var oauthController = {
         clientId: clientId
       })
       .execQ()
-      // Find AppToken for App model
+      // Create AppToken for App model
       .then(function (app) {
         if (!app) {
           throw new HttpError(404, 'Invalid clientId');
@@ -174,7 +181,7 @@ var oauthController = {
     if (!clientId) {
       throw new HttpError(400, 'Bad request. Call /oauth/auth first.');
     } else if (!appToken) {
-      throw new HttpError(500, 'Problem retrieving appToken.');
+      throw new HttpError(500, 'Problem retrieving app_token.');
     }
 
     req.app.db.models.App
@@ -266,7 +273,7 @@ var oauthController = {
     var service = session.lastService;
 
     if (!appToken || !service) {
-      validator.failServer(res, new Error('Problem retrieving appToken or service.'));
+      validator.failServer(res, new Error('Problem retrieving app_token or service.'));
       return;
     }
 
@@ -283,7 +290,7 @@ var oauthController = {
     var appToken = session.appTokens[session.lastClientId];
 
     if (!app || !appToken) {
-      validator.failServer(res, new Error('Problem retrieving app or appToken.'));
+      validator.failServer(res, new Error('Problem retrieving app or app_token.'));
       return;
     }
 

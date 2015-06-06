@@ -58,7 +58,7 @@ var validator = {
     var missing = this.missing(obj, required);
 
     if (missing.length) {
-      this.failParam(res, 'Required field(s) are missing: ' + missing.join(', '));
+      this.failBadRequest(res, 'Required field(s) are missing: ' + missing.join(', '));
       return true;
     } else {
       return false;
@@ -84,7 +84,6 @@ var validator = {
   },
 
   failNotFound: function (res, error) {
-    debugger;
     var errorMsg = error instanceof Error ? error.message : error || 'Not Found';
     console.warn(404, error);
     res.status(404).json({ error: errorMsg });

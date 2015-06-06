@@ -65,6 +65,7 @@ module.exports = {
       // Handle successful authorization response
       function (req, accessToken, refreshToken, profile, done) {
         var tokenSet = {
+          accountId: profile.id,
           accessToken: accessToken
         };
         saveServiceToken(req, tokenSet, done);
@@ -81,6 +82,7 @@ module.exports = {
       },
       function (req, token, tokenSecret, profile, done) {
         var tokenSet = {
+          accountId: profile.id,
           token: token,
           tokenSecret: tokenSecret
         };

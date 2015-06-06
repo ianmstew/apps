@@ -2,6 +2,7 @@
 
 module.exports = function (app, mongoose) {
   var accessTokenSchema = new mongoose.Schema({
+    accountId: { type: String },
     token: { type: String },
     app: { type: mongoose.Schema.Types.ObjectId, ref: 'App' },
     appToken: { type: String },

@@ -14,38 +14,6 @@ block body
     div.col-sm-6
       div.page-header
         h1 Sign Up
-      div#signup
-      if oauthTwitter || oauthGitHub || oauthFacebook || oauthGoogle || oauthTumblr
-        hr
-        p Or sign up using...
-        if oauthMessage
-          div.alerts
-            div.alert.alert-info.alert-dismissable
-              button.close(type='button', data-dismiss='alert') &times;
-              |#{oauthMessage}&nbsp;
-              b
-                a(href='/login/') Login Here
-        div.btn-group.btn-group-justified
-          if oauthTwitter
-            a.btn.btn-info(href='/signup/twitter/')
-              i.fa.fa-twitter.fa-lg
-              |  Twitter
-          if oauthGitHub
-            a.btn.btn-info(href='/signup/github/')
-              i.fa.fa-github.fa-lg
-              |  GitHub
-          if oauthFacebook
-            a.btn.btn-info(href='/signup/facebook/')
-              i.fa.fa-facebook-square.fa-lg
-              |  Facebook
-          if oauthGoogle
-            a.btn.btn-info(href='/signup/google/')
-              i.fa.fa-google-plus-square.fa-lg
-              |  Google
-          if oauthTumblr
-            a.btn.btn-info(href='/signup/tumblr/')
-              i.fa.fa-tumblr-square.fa-lg
-              |  Tumblr
     div.col-sm-6.marketing
       div.page-header
         h1 Campy Benefits

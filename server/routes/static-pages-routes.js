@@ -21,34 +21,6 @@ var staticPagesRoutes = function (app) {
   // sign up
   app.get('/signup/', signupController.init);
   app.post('/signup/', signupController.signup);
-
-  // social sign up
-  // app.post('/signup/social/', signupController.signupSocial);
-  // app.get('/signup/twitter/',
-  //   app.passport.authenticate('twitter', {
-  //     callbackURL: '/signup/twitter/callback/'
-  //   }));
-  // app.get('/signup/twitter/callback/', signupController.signupTwitter);
-  // app.get('/signup/github/',
-  //   app.passport.authenticate('github', {
-  //     callbackURL: '/signup/github/callback/', scope: ['user:email']
-  //   }));
-  // app.get('/signup/github/callback/', signupController.signupGitHub);
-  // app.get('/signup/facebook/',
-  //   app.passport.authenticate('facebook', {
-  //     callbackURL: '/signup/facebook/callback/', scope: ['email']
-  //   }));
-  // app.get('/signup/facebook/callback/', signupController.signupFacebook);
-  // app.get('/signup/google/',
-  //   app.passport.authenticate('google', {
-  //     callbackURL: '/signup/google/callback/', scope: ['profile email']
-  //   }));
-  // app.get('/signup/google/callback/', signupController.signupGoogle);
-  // app.get('/signup/tumblr/',
-  //   app.passport.authenticate('tumblr', {
-  //     callbackURL: '/signup/tumblr/callback/'
-  //   }));
-  // app.get('/signup/tumblr/callback/', signupController.signupTumblr);
 };
 
 module.exports = staticPagesRoutes;

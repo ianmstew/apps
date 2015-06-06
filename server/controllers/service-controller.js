@@ -52,7 +52,7 @@ var serviceController = {
     }
 
     // Set app based on path param
-    var _service = _.extend({
+    var attrs = _.extend({
       app: req.params.app,
       owner: req.user._id
     }, _.pick(req.body, [
@@ -61,7 +61,7 @@ var serviceController = {
     ]));
 
     req.app.db.models.Service
-      .createQ(_service)
+      .createQ(attrs)
       .then(function (service) {
         return res.json(service);
       })
@@ -76,7 +76,7 @@ var serviceController = {
     }
 
     // Do not allow changing of app
-    var _service = _.extend({}, _.pick(req.body, [
+    var attrs = _.extend({}, _.pick(req.body, [
       'type',
       'connectionData'
     ]));
@@ -86,7 +86,7 @@ var serviceController = {
         _id: req.params.id,
         app: req.params.app,
         owner: req.user._id
-      }, _service)
+      }, attrs)
       .execQ()
       .then(function (service) {
         if (!service) {

@@ -20,38 +20,6 @@ var accountRoutes = function (app) {
   app.put('/account/settings/', settingsController.update);
   app.put('/account/settings/identity/', settingsController.identity);
   app.put('/account/settings/password/', settingsController.password);
-
-  // account > settings > social
-  // app.get('/account/settings/twitter/',
-  //   app.passport.authenticate('twitter', {
-  //     callbackURL: '/account/settings/twitter/callback/'
-  //   }));
-  // app.get('/account/settings/twitter/callback/', settingsController.connectTwitter);
-  // app.get('/account/settings/twitter/disconnect', settingsController.disconnectTwitter);
-  // app.get('/account/settings/github/',
-  //   app.passport.authenticate('github', {
-  //     callbackURL: '/account/settings/github/callback/'
-  //   }));
-  // app.get('/account/settings/github/callback/', settingsController.connectGitHub);
-  // app.get('/account/settings/github/disconnect', settingsController.disconnectGitHub);
-  // app.get('/account/settings/facebook/',
-  //   app.passport.authenticate('facebook', {
-  //     callbackURL: '/account/settings/facebook/callback/'
-  //   }));
-  // app.get('/account/settings/facebook/callback/', settingsController.connectFacebook);
-  // app.get('/account/settings/facebook/disconnect', settingsController.disconnectFacebook);
-  // app.get('/account/settings/google/',
-  //   app.passport.authenticate('google', {
-  //     callbackURL: '/account/settings/google/callback/', scope: ['profile email']
-  //   }));
-  // app.get('/account/settings/google/callback/', settingsController.connectGoogle);
-  // app.get('/account/settings/google/disconnect', settingsController.disconnectGoogle);
-  // app.get('/account/settings/tumblr/',
-  //   app.passport.authenticate('tumblr', {
-  //     callbackURL: '/account/settings/tumblr/callback/'
-  //   }));
-  // app.get('/account/settings/tumblr/callback/', settingsController.connectTumblr);
-  // app.get('/account/settings/tumblr/disconnect', settingsController.disconnectTumblr);
 };
 
 module.exports = accountRoutes;

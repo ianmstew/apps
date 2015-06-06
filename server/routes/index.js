@@ -8,7 +8,7 @@ var routes = function (app) {
   require('./account-routes')(app);
   require('./api-routes')(app);
   require('./user-routes')(app);
-  require('./pdm-routes')(app);
+  require('./data-routes')(app);
 
   // Used by Phusion Passenger to "wake up" node process on nginx server start
   app.get('/status', function (req, res) {

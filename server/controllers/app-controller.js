@@ -45,7 +45,7 @@ var appController = {
 
   // Must validate
   create: function (req, res) {
-    var _app = _.extend({
+    var attrs = _.extend({
       clientId: uuid.v4(),
       clientSecret: uuid.v4(),
       owner: req.user._id
@@ -57,19 +57,19 @@ var appController = {
     var urlObj;
 
     // Catch null oauthCallback
-    if (!_app.oauthCallback) {
+    if (!attrs.oauthCallback) {
       validator.failBadRequest(res, 'Must supply \'oauthCallback\'.');
       return;
     }
     // Catch an incomplete oauthCallback
-    urlObj = url.parse(_app.oauthCallback);
+    urlObj = url.parse(attrs.oauthCallback);
     if (!/^https?:/.test(urlObj.protocol)) {
       validator.failBadRequest(res, '\'oauthCallback\' must be a complete URL.');
       return;
     }
 
     req.app.db.models.App
-      .createQ(_app)
+      .createQ(attrs)
       .then(function (app) {
         res.json(app);
       })
@@ -84,21 +84,21 @@ var appController = {
     }
 
     // Update attributes whitelist
-    var _app = _.extend({}, _.pick(req.body, [
+    var attrs = _.extend({}, _.pick(req.body, [
       'description',
       'name',
       'oauthCallback'
     ]));
 
     // Only test oauthCallback if it exists in the request
-    if (!_.isUndefined(_app.oauthCallback)) {
+    if (!_.isUndefined(attrs.oauthCallback)) {
       // Catch a nullified oauthCallback
-      if (!_app.oauthCallback) {
+      if (!attrs.oauthCallback) {
         validator.failBadRequest(res, '\'oauthCallback\' cannot be null.');
         return;
       }
       // Catch an incomplete oauthCallback
-      else if (!/^https?:/.test(url.parse(_app.oauthCallback).protocol)) {
+      else if (!/^https?:/.test(url.parse(attrs.oauthCallback).protocol)) {
         validator.failBadRequest(res, '\'oauthCallback\' must be a complete URL.');
         return;
       }
@@ -108,7 +108,7 @@ var appController = {
       .findOneAndUpdate({
         _id: req.params.id,
         owner: req.user._id
-      }, _app)
+      }, attrs)
       .execQ()
       .then(function (app) {
         if (!app) {

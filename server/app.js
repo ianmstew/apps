@@ -16,7 +16,7 @@ var MongoStore     = require('connect-mongo')(session);
 var http           = require('http');
 var path           = require('path');
 var passport       = require('passport');
-// Wrapping mongoose in mongoose-q for conversion to q promises
+// Wrapping mongoose in mongoose-q for Q-promise methods.
 var mongoose       = require('mongoose-q')(require('mongoose'));
 var helmet         = require('helmet');
 var serveStatic    = require('serve-static');
@@ -54,7 +54,10 @@ app.db.once('open', function () {
 app.use(session({
   secret: config.cryptoKey,
   store: new MongoStore({ url: config.mongodb.uri }),
-  cookie: { maxAge: 2592000000 } // 1 Month in milliseconds
+  cookie: { maxAge: 2592000000 }, // 1 Month
+  saveUnintialized: true,
+  resave: false,
+  touchAfter: 24 * 3600 // Only resave once in a day
 }));
 
 // config data models
